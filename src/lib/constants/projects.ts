@@ -1,4 +1,4 @@
-type P:wroject = {
+type Project = {
 	name: string;
 	description: string | string[];
 	tags: string[];
@@ -10,6 +10,7 @@ type P:wroject = {
 	additionalLinks?: ({ url: string; label: string } | string)[];
 	collaborators?: string[];
 };
+
 export const projects: Project[] = [
 	/*
 	* {
@@ -252,15 +253,20 @@ export const projects: Project[] = [
 
 		]
 	},
-	{
-		name:"Copywriter's Website",
-		description:"A personal website for a copywriter.",
+	/*{
+		name:"SarfoVerse Portfolio",
+		description:"A personal portfolio website for a Sarfo, a copywriter. It features a blog which displays live data from substack, a portfolio, and a contact form with SMS notifications.",
 		client: 'Mikegold Sarfo Ashong Listowell',
 		tags:[
+			"Blog",
+			"Substack",
+			"Portfolio",
+			"Contact Form",
+			"SMS Notifications",
 		],
+		url:"sarfoverse.online",
 		images:[],
-		url:"",
-	},
+	}*/,
 	{
 		name: 'Church Management System',
 		description:

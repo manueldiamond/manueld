@@ -40,3 +40,16 @@ export const nav = [
 	{ label: 'contact', url: '/#contact' },
 	{ label: '󰒋' }
 ];
+
+export const metadata = {
+	'og:title': 'Manuel Diamond',
+	'og:description':
+		'Full-stack software engineer and founder building products across web and mobile',
+	'og:image': 'https://manuel.tesites.online/diamond.png',
+	'og:url': 'https://manuel.tesites.online',
+	'twitter:title': 'Manuel Diamond',
+	'twitter:description':
+		'Manuel is a freelance software engineer with a large array of projects. He also claims to be a founder-in-progress.',
+	'twitter:image': 'https://manuel.tesites.online/diamond.png',
+	'twitter:url': 'https://manuel.tesites.online'
+};
