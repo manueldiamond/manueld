@@ -4,6 +4,7 @@
 		SiGithub,
 		SiInstagram,
 		SiInstapaper,
+		SiWhatsapp,
 		SiX,
 		SiYoutube
 	} from '@icons-pack/svelte-simple-icons';
@@ -483,10 +484,10 @@
 
 	const contactDetails = [
 		{ url: 'mailto:manuel@tesites.online', icon: Mail, label: 'manuel@tesites.online' },
-		{ url: 'tel:+233539512886', icon: Phone, label: '+233539512886' },
-		{ url: 'wa.me/+233539512886', icon: Phone, label: 'Whatsapp' },
-		{ url: 'wa.me/+233539512886', icon: SiX, label: '@manueldiamond' },
-		{ url: 'https://github.com/manueldiamond', icon: SiGithub, label: 'Github' },
+		{ url: 'tel:+233539512886', icon: Phone, label: '(+233) 53 951 2886' },
+		{ url: 'https://wa.me/+233539512886', icon: SiWhatsapp, label: 'Whatsapp' },
+		{ url: 'https://x.com/manuel_diamond', icon: SiX, label: '@manuel_diamond' },
+		{ url: 'https://github.com/manueldiamond', icon: SiGithub, label: 'manueldiamond' },
 		{
 			url: 'https://www.instagram.com/manuel.diamond/',
 			icon: SiInstagram,
@@ -595,18 +596,18 @@
 				</p>
 
 				<div class="flex gap-2 flex-col sm:flex-row">
-					<button class="pri-button">
+					<a href="#projects" class="pri-button">
 						<div class="centered gap-2">
 							See my work
-							<Briefcase class="opacity-70" />
+							<Briefcase class="opacity-80" />
 						</div>
-					</button>
-					<button class="button">
+					</a>
+					<a href="#contact" class="button">
 						<div class="centered gap-2">
 							<span>Get in touch</span>
 							<ArrowRight class="" />
 						</div>
-					</button>
+					</a>
 				</div>
 			</div>
 			<div
@@ -834,52 +835,61 @@ max-sm:absolute right-0 top-12
 
 	<!-- CONTACT SECTION -->
 
-	<section id="contact" class=" overflow-hidden container mx-auto mt-20 pb-20 relative">
-		<h3 class="mb-10 text-cream text-3xl text-right flex items-center justify-end gap-5">
-			Contact
-			<div class="diamond-bullet"></div>
-		</h3>
-		<div class="flex flex-col gap-5 md:flex-row">
-			<div
-				class=" grid grid-cols-1 sm:grid-cols-2 gap-5 border border-cream/50 p-5 max-sm:p-3 max-sm:gap-3 text-pewter shadow-lg shadow-black/40 bg-linear-to-br from-transparent via-white/10 to-white/5 w-full max-w-[500px] max-md:text-sm"
+	<section id="contact" class="py-20">
+		<div class="container mx-auto relative overflow-hidden">
+			<h3
+				class="mb-10 text-cream text-3xl overflow-hidden text-right flex items-center justify-end gap-5"
 			>
-				<p class="text-lg max-sm:text-base text-cream col-span-full">Send a message</p>
-				<input required type="text" placeholder="Name" class="w-full input" />
-				<input required type="text" placeholder="Contact" class="w-full input" />
-				<textarea
-					placeholder="Message"
-					class=" col-span-full w-full h-24 input"
-					defaultValue="Let's get in touch!"
-				></textarea>
-				<button class="col-span-full pri-button flex gap-2 centered">Send <Send class="" /></button>
-			</div>
-			<div class="flex flex-col border border-cream/50 text-cream p-5">
-				<p class="text-base sm:text-lg pb-5 max-sm:pb-2.5">Contact Details</p>
-				<div class="grid grid-cols-2 lg:grid-cols-3 gap-5 max-sm:gap-2.5">
-					{#each contactDetails as { url, icon: Icon, label }}
-						<a href={url} class="block button max-sm:text-sm">
-							<div class="flex flex-col gap-2">
-								<Icon />
-								<span>{label}</span>
-							</div>
-						</a>
-					{/each}
+				Contact
+				<div class="diamond-bullet"></div>
+			</h3>
+			<div class="flex flex-col gap-5 md:flex-row">
+				<div
+					class=" grid grid-cols-1 sm:grid-cols-2 gap-5 border border-cream/50 p-5 max-sm:p-3 max-sm:gap-3 text-pewter shadow-lg shadow-black/40 bg-linear-to-br from-transparent via-white/10 to-white/5 w-full max-w-[500px] max-md:text-sm backdrop-blur-md"
+				>
+					<p class="text-lg max-sm:text-base text-cream col-span-full">Send a message</p>
+					<input required type="text" placeholder="Name" class="w-full input" />
+					<input required type="text" placeholder="Contact" class="w-full input" />
+					<textarea
+						placeholder="Message"
+						class="flex-1 col-span-full w-full min-h-32 input"
+						defaultValue="Let's get in touch!"
+					></textarea>
+					<button class="col-span-full pri-button flex gap-2 centered"
+						>Send <Send class="" /></button
+					>
+				</div>
+				<div
+					class="flex flex-col border border-cream/50 text-cream p-5 backdrop-blur-md shadow-lg shadow-black/40"
+				>
+					<p class="text-base sm:text-lg pb-5 max-sm:pb-2.5">Contact Details</p>
+					<div class="grid grid-cols-2 lg:grid-cols-3 gap-5 max-sm:gap-2.5">
+						{#each contactDetails as { url, icon: Icon, label }}
+							<a href={url} class="block button max-sm:text-xs overfl-hi text-sm overflow-hidden">
+								<div class="flex flex-col gap-2">
+									<Icon />
+									<span>{label}</span>
+								</div>
+							</a>
+						{/each}
+					</div>
 				</div>
 			</div>
+			<img
+				src="/me/coooollll_shiizz-removebg-preview.png"
+				alt="Manual standing in the corner"
+				class="bottom-0 right-0 grayscale-50 brightness-200 w-auto absolute h-[200px] object-contain drop-shadow-xl drop-shadow-black"
+			/>
 		</div>
-		<img
-			src="/me/coooollll_shiizz-removebg-preview.png"
-			alt="Manual standing in the corner"
-			class="-bottom-[60%] right-0 grayscale-50 brightness-200 w-auto absolute h-[200px] object-contain drop-shadow-xl drop-shadow-black"
-		/>
-	</section>
-	<!-- FOOTER SECTION -->
-	<footer class="text-cream bg-cream/10! neumorphic overflow-hidden">
-		<div class="container mx-auto relative pt-10">
-			<div class="aspect-square -z-10 absolute bottom-0 left-0 rotate-45 w-[80%]">
+		<div class="container mx-auto relative">
+			<div class="aspect-square -z-10 absolute bottom-0 translate-y-1/3 left-0 rotate-45 w-[80%]">
 				{@render box(20, 90)}
 			</div>
-
+		</div>
+	</section>
+	<!-- FOOTER SECTION -->
+	<footer class="text-cream bg-cream/10! neumorphic overflow-hidde">
+		<div class="container mx-auto relative pt-10">
 			<div class="footer-content text-[10px] py-4 max-sm:text-center relative">
 				<div class="flex gap-2 flex-col sm:flex-row text-base mb-4 justify-end">
 					<a href="/manuel-diamond-cv.pdf" class="block button">
