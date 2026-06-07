@@ -3,7 +3,7 @@
 	import '@fontsource-variable/nunito';
 	import favicon from '$lib/assets/favicon.ico';
 	import '../app.css';
-	import { meta } from '$lib/constants/misc';
+	import { metadata as meta } from '$lib/constants/misc';
 
 	let { children } = $props();
 </script>

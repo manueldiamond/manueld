@@ -7,12 +7,11 @@ type Project = {
 	images: string[];
 	techstack?: string[];
 	technical_description?: [];
-	additionalLinks?: ({ url: string; label: string } | string)[];
+	additionalLinks?: { url: string; label: string }[];
 	collaborators?: string[];
 };
 
-export const projects: Project[] = [
-	/*
+/*
 	* {
 	* }
 	* ,{
@@ -25,6 +24,8 @@ export const projects: Project[] = [
 		images:[],
 		url:"l",
 	},*/
+
+export const projects: Project[] = [
 	{
 		name: 'BridgeX Mobile App',
 		description:
@@ -136,7 +137,6 @@ export const projects: Project[] = [
 		images: ['/rs-chatbot.png'],
 		url: 'https://rsgroupgh.com/'
 	},
-
 	{
 		name: 'RS Notify',
 		description:
@@ -249,10 +249,9 @@ export const projects: Project[] = [
 			'A Dental Management System for TE Sites. It features a micro CRM, for keeping and accessing customer records, micro CMS for updating some content and blogs for the website, and most importantly SMS notifications for both the customer and the dental practice to keep up with appointments',
 		client: 'TE Sites',
 		tags: ['SMS Integration', 'CRM Tools', 'CMS Tools', 'Fullstack Development'],
-		images: [
-
-		]
+		images: []
 	},
+
 	/*{
 		name:"SarfoVerse Portfolio",
 		description:"A personal portfolio website for a Sarfo, a copywriter. It features a blog which displays live data from substack, a portfolio, and a contact form with SMS notifications.",
@@ -266,8 +265,7 @@ export const projects: Project[] = [
 		],
 		url:"sarfoverse.online",
 		images:[],
-	}*/,
-	{
+	}*/ {
 		name: 'Church Management System',
 		description:
 			'An administrative dashboard for managing the church members, groups and activities. It features a dashboard, member management, church groups & ministires, church events, and a communications module for broadcasting messages to all church members',
@@ -304,17 +302,12 @@ export const projects: Project[] = [
 		description:
 			'A demo web app that allows users to place orders for food online. It includes, a product catalogue, a shopping cart, and a checkout page. This was one of my early stage projects developed for a university presentation.',
 		client: 'Demo',
-		tags: [
-			'Food Ordering App',
-			'Paystack Payment',
-			'Mobile First Design'
-			'NextJS',
-		],
+		tags: ['Food Ordering App', 'Paystack Payment', 'Mobile First Design', 'NextJS'],
 		images: [
-			"/TastyChef/tasty.jpeg",
-			"/TastyChef/favourites.jpg",
-			"/TastyChef/detail.jpg",
-			"/TastyChef/auth.jpg",
+			'/TastyChef/tasty.jpeg',
+			'/TastyChef/favourites.jpg',
+			'/TastyChef/detail.jpg',
+			'/TastyChef/auth.jpg'
 		],
 		url: 'https://tastychef.vercel.app/'
 	}
