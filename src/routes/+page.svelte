@@ -310,53 +310,160 @@
 	];
 
 	const tools = [
+		// Frontend libs / frameworks
 		{
-			name: 'TypeScript',
-			image: '/tools/neovim.png'
+			name: 'React',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg'
 		},
 		{
-			name: 'TailwindCSS',
-			image: '/tools/tailwindcss.png'
-		},
-		{
-			name: 'Svelte',
-			image: '/tools/svelte.png'
-		},
-		{
-			name: 'TypeScript',
-			image: '/tools/typescript.png'
-		},
-		{
-			name: 'Node.js',
-			image: '/tools/nodejs.png'
-		},
-		{
-			name: 'Git',
-			image: '/tools/git.png'
-		},
-		{
-			name: 'Neovim',
-			image: '/tools/neovim.png'
-		},
-		{
-			name: 'TailwindCSS',
-			image: '/tools/tailwindcss.png'
+			name: 'Next.js',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg'
 		},
 		{
 			name: 'Svelte',
-			image: '/tools/svelte.png'
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/svelte/svelte-original.svg'
+		},
+		{
+			name: 'SvelteKit',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/svelte/svelte-original.svg'
+		},
+		{
+			name: 'TailwindCSS',
+			image:
+				'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg'
+		},
+		{
+			name: 'HTML5',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg'
+		},
+		{
+			name: 'CSS3',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg'
+		},
+		// Backend runtimes / frameworks
+		{
+			name: 'Node.js',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg'
+		},
+		{
+			name: 'Express',
+			image:
+				'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg'
+		},
+		{
+			name: 'Spring Boot',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg'
+		},
+		{
+			name: 'FastAPI',
+			image:
+				'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg'
+		},
+		{
+			name: 'Laravel',
+			image:
+				'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg'
+		},
+		{
+			name: 'WordPress',
+			image:
+				'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-original.svg'
+		},
+		// Databases / ORMs
+		{
+			name: 'AWS',
+			image:
+				'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg'
+		}
+	];
+
+	const languages = [
+		{
+			name: 'JavaScript',
+			image:
+				'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg'
 		},
 		{
 			name: 'TypeScript',
-			image: '/tools/typescript.png'
+			image:
+				'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg'
 		},
 		{
-			name: 'Node.js',
-			image: '/tools/nodejs.png'
+			name: 'Python',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg'
+		},
+		{
+			name: 'C',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg'
+		},
+		{
+			name: 'C++',
+			image:
+				'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg'
+		},
+		{
+			name: 'Java',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg'
+		},
+		{
+			name: 'PHP',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg'
+		},
+		{
+			name: 'Bash',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg'
+		},
+		{
+			name: 'SQL',
+			image:
+				'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg'
+		},
+		{
+			name: 'PostgreSQL',
+			image:
+				'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg'
+		},
+		{
+			name: 'MySQL',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg'
+		},
+		{
+			name: 'MongoDB',
+			image:
+				'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg'
+		},
+		{
+			name: 'SQLite',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg'
+		},
+		{
+			name: 'Prisma',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prisma/prisma-original.svg'
+		},
+		{
+			name: 'Drizzle',
+			image: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/drizzle.svg'
+		},
+		// Infrastructure & DevOps
+		{
+			name: 'Docker',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg'
+		},
+		{
+			name: 'Linux',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg'
+		},
+		{
+			name: 'Nginx',
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg'
+		},
+		{
+			name: 'Traefik',
+			image: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/traefikproxy.svg'
 		},
 		{
 			name: 'Git',
-			image: '/'
+			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg'
 		}
 	];
 </script>
@@ -445,14 +552,14 @@
 max-sm:absolute right-0 top-12
 				-mb-30 relative flex bg-mblack/40 backdrop-blur-sm border-cream max-w-[380px] w-[38vw] aspect-square shadow-lg shadow-black/50 rotate-45 min-w-[200px] select-none"
 			>
-				{@render box(36)}
+				{@render box(24)}
 			</div>
 		</div>
 	</section>
 
 	<section class=" mt-20 marquee-wrapper container mx-auto overflow-hidden pb-10">
 		<div class="marquee-1">
-			{#each credibilityStrips.top as thing}
+			{#each [...credibilityStrips.top, ...credibilityStrips.top] as thing}
 				<div
 					class="min-w-max px-8 py-2 border-carafe-light border bg-linear-to-b from-50% to-50% from-carafe to-carafe-light border-b-carafe shadow-lg text-sm font-semibold text-mblack brightness-125"
 				>
@@ -461,7 +568,7 @@ max-sm:absolute right-0 top-12
 			{/each}
 		</div>
 		<div class="mt-1 marquee-2 flex flex-row gap-1">
-			{#each credibilityStrips.bottom as thing}
+			{#each [...credibilityStrips.bottom, ...credibilityStrips.bottom] as thing}
 				<div
 					class="min-w-max px-8 py-2 border-carafe-light border bg-linear-to-b from-50% to-50% from-carafe to-carafe-light border-b-carafe scale-z-1 shadow-lg text-sm font-semibold text-mblack brightness-125"
 				>
@@ -610,30 +717,35 @@ max-sm:absolute right-0 top-12
 			</div>
 		</div>
 	</section>
+
+	<!-- TOOLS SECTION -->
 	<section class="">
 		<div
-			class="container mx-auto bg-pewter p-12 relative -translate-y-1/2 shadow-2xl shadow-black/50"
+			class=" container mx-auto border-pewter border-[32px] bg-linear-120 from-transparent to-white/20 from-[] to-[51%] backdrop-blur-md p-12 px-0! relative -translate-y-1/2 shadow-2xl shadow-black/50
+
+			relative
+			"
 		>
-			<div class="absolute inset-6 bg-black/5" />
-			<div class="p-6 marquee-wrapper">
+			<div class="absolute inset-0 neumorphic-inner bg-transparent" />
+			<div class="">
 				<h3
-					class=" mb-10 text-mblack/60 uppercase font-bold text-2xl text-left flex items-center justify-start gap-5"
+					class=" px-8 mb-10 text-pewter uppercase font-bold text-2xl text-left flex items-center justify-start gap-5"
 				>
 					Tools and technologies used
 				</h3>
-				<div class="marquee-1">
-					{#each tools as tool}
-						<div class="">
-							<span>{tool.name}</span>
-							<img src={tool.image} alt={tool.name} class="w-full h-full object-contain" />
-						</div>
-					{/each}
-				</div>
-				<div class="marquee-2">
-					{#each tools as tool}
-						<div class="">
-							<span>{tool.name}</span>
-							<img src={tool.image} alt={tool.name} class="w-full h-full object-contain" />
+				<div class=" marquee-wrapper flex flex-col gap-4">
+					{#each [tools, languages] as techstack, id}
+						<div class=" {(id + 1) % 2 === 1 ? 'marquee-1' : 'marquee-2'} gap-4">
+							{#each [...techstack, ...techstack] as tech}
+								<div class="centered flex flex-col gap-0.5 min-w-24 min-h-10">
+									<img
+										src={tech.image}
+										alt={tech.name}
+										class="object-contain flex-1 aspect-square w-1/2 grayscale-50"
+									/>
+									<span class="font-medium text-sm text-mblack/80">{tech.name}</span>
+								</div>
+							{/each}
 						</div>
 					{/each}
 				</div>
