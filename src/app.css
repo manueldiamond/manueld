@@ -139,3 +139,7 @@ debug * {
 .grain {
 	filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' /%3E%3C/filter%3E%3C/svg%3E#n");
 }
+
+@utility input {
+	@apply button bg-black/20! text-cream/80! placeholder:text-cream/50 focus:outline-none focus:ring-transparent;
+}

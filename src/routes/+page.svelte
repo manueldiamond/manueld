@@ -1,5 +1,24 @@
 <script lang="ts">
-	import { ArrowRight, Briefcase, FileIcon, Link, Lock } from 'lucide-svelte';
+	import {
+		SiFacebook,
+		SiGithub,
+		SiInstagram,
+		SiInstapaper,
+		SiX,
+		SiYoutube
+	} from '@icons-pack/svelte-simple-icons';
+	import {
+		ArrowRight,
+		Briefcase,
+		FileIcon,
+		Link,
+		Lock,
+		Mail,
+		Phone,
+		Plane,
+		Send,
+		X
+	} from 'lucide-svelte';
 
 	const titles = [
 		{ label: 'CurveLabz', title: 'CTO', url: 'https://curvelabz.com' },
@@ -252,6 +271,7 @@
 			url: 'https://tastychef.vercel.app/'
 		}
 	];
+
 	const buzzwordStrips = {
 		top: [
 			'ERP System',
@@ -373,6 +393,7 @@
 		}
 	];
 
+	//TODO: rename this shii
 	const languages = [
 		{
 			name: 'JavaScript',
@@ -436,22 +457,10 @@
 			name: 'Drizzle',
 			image: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/drizzle.svg'
 		},
-		// Infrastructure & DevOps
+		// Infra shii
 		{
 			name: 'Docker',
 			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg'
-		},
-		{
-			name: 'Linux',
-			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg'
-		},
-		{
-			name: 'Nginx',
-			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg'
-		},
-		{
-			name: 'Traefik',
-			image: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/traefikproxy.svg'
 		},
 		{
 			name: 'Git',
@@ -466,20 +475,43 @@
 		{ label: 'Projects', url: '/#projects' },
 		{ label: '󰒋' }
 	];
+
+	const contact = {
+		email: 'manuel@tesites.online',
+		phoneno: '+233539512886'
+	};
+
+	const contactDetails = [
+		{ url: 'mailto:manuel@tesites.online', icon: Mail, label: 'manuel@tesites.online' },
+		{ url: 'tel:+233539512886', icon: Phone, label: '+233539512886' },
+		{ url: 'wa.me/+233539512886', icon: Phone, label: 'Whatsapp' },
+		{ url: 'wa.me/+233539512886', icon: SiX, label: '@manueldiamond' },
+		{ url: 'https://github.com/manueldiamond', icon: SiGithub, label: 'Github' },
+		{
+			url: 'https://www.instagram.com/manuel.diamond/',
+			icon: SiInstagram,
+			label: '@manuel.diamond'
+		},
+		{
+			url: 'https://web.facebook.com/profile.php?id=61590373957773&sk=directory_links',
+			icon: SiFacebook,
+			label: 'Manuel Diamond'
+		},
+		{ url: 'https://www.youtube.com/channel/@manueldiamond', icon: SiYoutube, label: 'YouTube' }
+	];
 </script>
 
-{#snippet box(count: number)}
+{#snippet box(count: number, rotation = 0)}
 	{#each Array(count) as _, i}
 		{@const scale = 1 - Math.pow((i + 1) / count, 0.8)}
 
 		{@const tval = `calc(-50% + min(-25px, 2.75vw) * (${i / count}))`}
-		,
 		<div
 			style="translate: {tval} {tval};
 			width: {scale * 100}%;
 			height: {scale * 100}%;
 			filter: blur({1 + Math.pow(i / count, 2) * 3}px);
-			rotate: {(i / count) * 0}deg;
+			rotate: {(i / count) * rotation}deg;
 			"
 			class="border-inherit bg-mblack/50 absolute --border left-1/2 top-1/2 shadow-xl shadow-black/50 rotate-0 group cursor-pointer select-none"
 		>
@@ -724,7 +756,7 @@ max-sm:absolute right-0 top-12
 					</div>
 				</div>
 				<div class="flex-7 pb-30 md:pb-40">
-					<div class="text-cream/80 text-lg leading-[200%]">
+					<div class="text-cream/80 text-base md:text-lg leading-[200%]">
 						{#each aboutSections as about}
 							<p class="opacity-50 font-medium text-base mb-4 uppercase">{about.title}</p>
 							<p class="text-justify mb-12">
@@ -758,34 +790,39 @@ max-sm:absolute right-0 top-12
 
 	<section class="px-4 md:px-8">
 		<div
-			class=" container mx-auto border-pewter border-[24px] md:border-[32px] bg-linear-120 from-transparent to-white/20 from-[] to-[51%] backdrop-blur-md md:py-12 py-6 px-0! relative -translate-y-1/2 shadow-2xl shadow-black/50
+			class=" container mx-auto border-pewter border-[16px] sm:border-[24px] md:border-[32px] bg-linear-120 from-transparent to-white/20 from-[] to-[51%] backdrop-blur-md md:py-12 py-6 px-0! relative -mt-[160px] shadow-2xl shadow-black/50
 
 			relative
 			"
 		>
 			<div class="absolute inset-0 neumorphic-inner bg-transparent overflow-hidden">
-				<div class=" mix-blend-lighten absolute -z-10 inset-0 opacity-15 grain" />
+				<div class=" mix-blend-lighten absolute -z-10 inset-0 opacity-15 grain"></div>
 			</div>
 			<div class="">
 				<div class="md:px-8 px-4 mb-10">
 					<h3
-						class=" text-pewter uppercase font-bold text-2xl text-left flex items-center justify-start gap-5"
+						class=" text-pewter uppercase font-bold text-2xl max-sm:text-xl text-left flex items-center justify-start gap-5"
 					>
 						POWERED BY
 					</h3>
-					<p class="text-base text-pewter">Tools and libraries i'm familiar with</p>
+					<p class="max-sm:text-sm text-base text-pewter">Tools and libraries i'm familiar with</p>
 				</div>
 				<div class="w-full marquee-wrapper flex flex-col gap-4">
 					{#each [tools, languages] as techstack, id}
-						<div class=" {(id + 1) % 2 === 1 ? 'marquee-1' : 'marquee-2'} gap-4">
+						<div
+							class=" {(id + 1) % 2 === 1 ? 'marquee-1' : 'marquee-2'} gap-8! max-md:gap-4! flex"
+						>
 							{#each [...techstack, ...techstack] as tech}
-								<div class="centered flex flex-col gap-0.5 w-24 md:w-36 min-h-10">
+								<div class="">
 									<img
 										src={tech.image}
 										alt={tech.name}
-										class="object-contain flex-1 aspect-square w-1/2 grayscale-50 drop-shadow-lg drop-shadow-black/50"
+										class=" w-8 sm:w-12 md:w-18
+										object-contain aspect-square grayscale-50 drop-shadow-lg drop-shadow-black/50"
 									/>
-									<span class="font-medium text-sm text-white/80">{tech.name}</span>
+									<span class="font-medium md:text-sm text-white/80 sm:tex-xs text-[10px] min-w-max"
+										>{tech.name}</span
+									>
 								</div>
 							{/each}
 						</div>
@@ -797,5 +834,73 @@ max-sm:absolute right-0 top-12
 
 	<!-- CONTACT SECTION -->
 
+	<section id="contact" class=" overflow-hidden container mx-auto mt-20 pb-20 relative">
+		<h3 class="mb-10 text-cream text-3xl text-right flex items-center justify-end gap-5">
+			Contact
+			<div class="diamond-bullet"></div>
+		</h3>
+		<div class="flex flex-col gap-5 md:flex-row">
+			<div
+				class=" grid grid-cols-1 sm:grid-cols-2 gap-5 border border-cream/50 p-5 max-sm:p-3 max-sm:gap-3 text-pewter shadow-lg shadow-black/40 bg-linear-to-br from-transparent via-white/10 to-white/5 w-full max-w-[500px] max-md:text-sm"
+			>
+				<p class="text-lg max-sm:text-base text-cream col-span-full">Send a message</p>
+				<input required type="text" placeholder="Name" class="w-full input" />
+				<input required type="text" placeholder="Contact" class="w-full input" />
+				<textarea
+					placeholder="Message"
+					class=" col-span-full w-full h-24 input"
+					defaultValue="Let's get in touch!"
+				></textarea>
+				<button class="col-span-full pri-button flex gap-2 centered">Send <Send class="" /></button>
+			</div>
+			<div class="flex flex-col border border-cream/50 text-cream p-5">
+				<p class="text-base sm:text-lg pb-5 max-sm:pb-2.5">Contact Details</p>
+				<div class="grid grid-cols-2 lg:grid-cols-3 gap-5 max-sm:gap-2.5">
+					{#each contactDetails as { url, icon: Icon, label }}
+						<a href={url} class="block button max-sm:text-sm">
+							<div class="flex flex-col gap-2">
+								<Icon />
+								<span>{label}</span>
+							</div>
+						</a>
+					{/each}
+				</div>
+			</div>
+		</div>
+		<img
+			src="/me/coooollll_shiizz-removebg-preview.png"
+			alt="Manual standing in the corner"
+			class="-bottom-[60%] right-0 grayscale-50 brightness-200 w-auto absolute h-[200px] object-contain drop-shadow-xl drop-shadow-black"
+		/>
+	</section>
 	<!-- FOOTER SECTION -->
+	<footer class="text-cream bg-cream/10! neumorphic overflow-hidden">
+		<div class="container mx-auto relative pt-10">
+			<div class="aspect-square -z-10 absolute bottom-0 left-0 rotate-45 w-[80%]">
+				{@render box(20, 90)}
+			</div>
+
+			<div class="footer-content text-[10px] py-4 max-sm:text-center relative">
+				<div class="flex gap-2 flex-col sm:flex-row text-base mb-4 justify-end">
+					<a href="/manuel-diamond-cv.pdf" class="block button">
+						<div class="centered gap-2">
+							Download CV
+							<FileIcon class="" />
+						</div>
+					</a>
+				</div>
+				<p class="">
+					Copyright © {new Date().getFullYear()} Manuel Diamond.
+				</p>
+				<p>
+					No rights reserved, this website is <a href="https://github.com/manueldiamond/manueld"
+						>opensource</a
+					>.
+				</p>
+			</div>
+		</div>
+		<p class="text-center text-[10px] relative z-10 bg-mblack neumorphic-inner">
+			Powered by <a href="https://tesites.online">TE Sites</a>
+		</p>
+	</footer>
 </main>
