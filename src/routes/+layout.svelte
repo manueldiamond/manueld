@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '@fontsource-variable/montserrat';
+	import '@fontsource/fira-code';
 	import '@fontsource-variable/nunito';
 	import favicon from '$lib/assets/favicon.svg';
 	import '../app.css';
