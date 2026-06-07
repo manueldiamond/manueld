@@ -41,16 +41,16 @@ body {
 
 @keyframes marquee-left {
 	from {
-		transform: translateX(0);
+		transform: translateX(0) w-24;
 	}
 	to {
-		transform: translateX(-200%);
+		transform: translateX(-50%);
 	}
 }
 
 @keyframes marquee-right {
 	from {
-		transform: translateX(-200%);
+		transform: translateX(-50%);
 	}
 	to {
 		transform: translateX(0);
@@ -59,7 +59,7 @@ body {
 
 .marquee-1,
 .marquee-2 {
-	@apply flex flex-row gap-1;
+	@apply flex flex-row gap-1 w-max max-w-max;
 }
 .marquee-1 {
 	animation: marquee-left 20s linear infinite;

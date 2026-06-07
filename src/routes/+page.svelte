@@ -252,7 +252,7 @@
 			url: 'https://tastychef.vercel.app/'
 		}
 	];
-	const credibilityStrips = {
+	const buzzwordStrips = {
 		top: [
 			'ERP System',
 			'E-Commerce;',
@@ -292,7 +292,7 @@
 			title: 'Work',
 			content: [
 				'Eight years across multiple industries has given me a practical understanding of how businesses actually run, and what it takes to build software that fits into that.',
-				'I work directly with founders, business owners, and end users. My workflow revolves around truely understanding the operation before touching the code. This has led to happier users and high customer satisfaction'
+				'I work directly with founders, business owners, and end users. My workflow revolves around truly understanding the operation before touching the code. This has led to happier users and high customer satisfaction'
 			]
 		},
 		{
@@ -458,6 +458,14 @@
 			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg'
 		}
 	];
+
+	const nav = [
+		{ label: '󰅱' },
+		{ label: 'Home', url: '/#top' },
+		{ label: 'About', url: '/#about' },
+		{ label: 'Projects', url: '/#projects' },
+		{ label: '󰒋' }
+	];
 </script>
 
 {#snippet box(count: number)}
@@ -487,9 +495,39 @@
 {/snippet}
 
 <main>
-	<!-- HERO SECTION -->
+	<!-- HEADER -->
+	<nav
+		class="sticky top-0 backdrop-blur-sm border-cream/50 border-b flex flex-col gap-5 relative z-50 justify-center overflow-hidden shadow-black shadow-xl bg-mblack/85"
+	>
+		<div
+			class=" uppercase flex-1 w-full h-full flex py-1 container mx-auto font-medium justify-between text-sm max-sm:text-xs max-sm:justify-center"
+		>
+			<a
+				href="/"
+				class="text-pewter hover:bg-white hover:font-semibold cursor-pointer hover:px-1 hover:text-black max-sm:hidden"
+			>
+				<span class="font-extrabold">[ MM ]</span> : HOME
+			</a>
+			<ul class="flex">
+				{#each nav as item}
+					<li class="flex text-pewter group">
+						<a
+							href={item.url}
+							class="max-sm:py-2 max-sm:border-t border-cream block px-0.5 hover:text-cream hover-font-semibold text-pewter"
+						>
+							<span class="group-hover:visible invisible">[</span>
+							<span>{item.label}</span>
+							<span class="group-hover:visible invisible">]</span>
+						</a>
+					</li>
+				{/each}
+			</ul>
+		</div>
+	</nav>
 
+	<!-- HERO SECTION -->
 	<section
+		id="top"
 		class="bg-linear-to-tl from-black/0 to-black flex flex-col gap-5 relative z-10 justify-center h-[75vh] overflow-hidden"
 	>
 		<div
@@ -549,9 +587,10 @@ max-sm:absolute right-0 top-12
 		</div>
 	</section>
 
+	<!-- BUZZWORDS -->
 	<section class=" mt-20 marquee-wrapper container mx-auto overflow-hidden pb-10">
 		<div class="marquee-1">
-			{#each [...credibilityStrips.top, ...credibilityStrips.top] as thing}
+			{#each [...buzzwordStrips.top, ...buzzwordStrips.top] as thing}
 				<div
 					class="min-w-max px-8 py-2 border-carafe-light border bg-linear-to-b from-50% to-50% from-carafe to-carafe-light border-b-carafe shadow-lg text-sm font-semibold text-mblack brightness-125"
 				>
@@ -560,7 +599,7 @@ max-sm:absolute right-0 top-12
 			{/each}
 		</div>
 		<div class="mt-1 marquee-2 flex flex-row gap-1">
-			{#each [...credibilityStrips.bottom, ...credibilityStrips.bottom] as thing}
+			{#each [...buzzwordStrips.bottom, ...buzzwordStrips.bottom] as thing}
 				<div
 					class="min-w-max px-8 py-2 border-carafe-light border bg-linear-to-b from-50% to-50% from-carafe to-carafe-light border-b-carafe scale-z-1 shadow-lg text-sm font-semibold text-mblack brightness-125"
 				>
@@ -571,7 +610,8 @@ max-sm:absolute right-0 top-12
 	</section>
 
 	<!--PROJECTS SECTION -->
-	<section class=" mt-20 container mx-auto">
+
+	<section id="projects" class=" mt-20 container mx-auto">
 		<h3 class="mb-10 text-cream text-3xl text-right flex items-center justify-end gap-5">
 			My Projects
 			<div class="diamond-bullet"></div>
@@ -646,8 +686,12 @@ max-sm:absolute right-0 top-12
 	</section>
 
 	<!--ABOUT SECTION TOTALLY VIBE CODED(no human)-->
-	<section class=" py-20 pb-20 mx-auto overflow-hidden bg-linear-to-b from-transparent to-black/70">
-		<div class="container flex flex-col mx-auto pb-30">
+
+	<section
+		id="about"
+		class=" py-20 pb-20 mx-auto overflow-hidden bg-linear-to-b from-transparent to-black/70"
+	>
+		<div class="container flex flex-col mx-auto">
 			<h3 class="mb-10 text-cream text-3xl text-right flex items-center justify-end gap-5">
 				About Me
 				<div class="diamond-bullet"></div>
@@ -679,7 +723,7 @@ max-sm:absolute right-0 top-12
 						></div>
 					</div>
 				</div>
-				<div class="flex-7">
+				<div class="flex-7 pb-30 md:pb-40">
 					<div class="text-cream/80 text-lg leading-[200%]">
 						{#each aboutSections as about}
 							<p class="opacity-50 font-medium text-base mb-4 uppercase">{about.title}</p>
@@ -689,7 +733,7 @@ max-sm:absolute right-0 top-12
 						{/each}
 					</div>
 					<div class="my-6 flex gap-2 flex-col sm:flex-row">
-						<a href="/manuel-diamond-cv.pdf" class="block button">
+						<a href="/me/manuel-diamond-cv.pdf" class="block button">
 							<div class="centered gap-2">
 								Download Full CV
 								<FileIcon class="" />
@@ -711,6 +755,7 @@ max-sm:absolute right-0 top-12
 	</section>
 
 	<!-- TOOLS SECTION -->
+
 	<section class="px-4 md:px-8">
 		<div
 			class=" container mx-auto border-pewter border-[24px] md:border-[32px] bg-linear-120 from-transparent to-white/20 from-[] to-[51%] backdrop-blur-md md:py-12 py-6 px-0! relative -translate-y-1/2 shadow-2xl shadow-black/50
@@ -730,11 +775,11 @@ max-sm:absolute right-0 top-12
 					</h3>
 					<p class="text-base text-pewter">Tools and libraries i'm familiar with</p>
 				</div>
-				<div class=" marquee-wrapper flex flex-col gap-4">
+				<div class="w-full marquee-wrapper flex flex-col gap-4">
 					{#each [tools, languages] as techstack, id}
 						<div class=" {(id + 1) % 2 === 1 ? 'marquee-1' : 'marquee-2'} gap-4">
 							{#each [...techstack, ...techstack] as tech}
-								<div class="centered flex flex-col gap-0.5 min-w-24 min-h-10">
+								<div class="centered flex flex-col gap-0.5 w-24 md:w-36 min-h-10">
 									<img
 										src={tech.image}
 										alt={tech.name}
@@ -749,4 +794,8 @@ max-sm:absolute right-0 top-12
 			</div>
 		</div>
 	</section>
+
+	<!-- CONTACT SECTION -->
+
+	<!-- FOOTER SECTION -->
 </main>
