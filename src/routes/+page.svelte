@@ -320,10 +320,6 @@
 			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg'
 		},
 		{
-			name: 'Svelte',
-			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/svelte/svelte-original.svg'
-		},
-		{
 			name: 'SvelteKit',
 			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/svelte/svelte-original.svg'
 		},
@@ -393,11 +389,7 @@
 			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg'
 		},
 		{
-			name: 'C',
-			image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg'
-		},
-		{
-			name: 'C++',
+			name: 'C/C++',
 			image:
 				'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg'
 		},
@@ -655,7 +647,7 @@ max-sm:absolute right-0 top-12
 
 	<!--ABOUT SECTION TOTALLY VIBE CODED(no human)-->
 	<section class=" py-20 pb-20 mx-auto overflow-hidden bg-linear-to-b from-transparent to-black/70">
-		<div class="container flex flex-col mx-auto">
+		<div class="container flex flex-col mx-auto pb-30">
 			<h3 class="mb-10 text-cream text-3xl text-right flex items-center justify-end gap-5">
 				About Me
 				<div class="diamond-bullet"></div>
@@ -719,20 +711,25 @@ max-sm:absolute right-0 top-12
 	</section>
 
 	<!-- TOOLS SECTION -->
-	<section class="">
+	<section class="px-4 md:px-8">
 		<div
-			class=" container mx-auto border-pewter border-[32px] bg-linear-120 from-transparent to-white/20 from-[] to-[51%] backdrop-blur-md p-12 px-0! relative -translate-y-1/2 shadow-2xl shadow-black/50
+			class=" container mx-auto border-pewter border-[24px] md:border-[32px] bg-linear-120 from-transparent to-white/20 from-[] to-[51%] backdrop-blur-md md:py-12 py-6 px-0! relative -translate-y-1/2 shadow-2xl shadow-black/50
 
 			relative
 			"
 		>
-			<div class="absolute inset-0 neumorphic-inner bg-transparent" />
+			<div class="absolute inset-0 neumorphic-inner bg-transparent overflow-hidden">
+				<div class=" mix-blend-lighten absolute -z-10 inset-0 opacity-15 grain" />
+			</div>
 			<div class="">
-				<h3
-					class=" px-8 mb-10 text-pewter uppercase font-bold text-2xl text-left flex items-center justify-start gap-5"
-				>
-					Tools and technologies used
-				</h3>
+				<div class="md:px-8 px-4 mb-10">
+					<h3
+						class=" text-pewter uppercase font-bold text-2xl text-left flex items-center justify-start gap-5"
+					>
+						POWERED BY
+					</h3>
+					<p class="text-base text-pewter">Tools and libraries i'm familiar with</p>
+				</div>
 				<div class=" marquee-wrapper flex flex-col gap-4">
 					{#each [tools, languages] as techstack, id}
 						<div class=" {(id + 1) % 2 === 1 ? 'marquee-1' : 'marquee-2'} gap-4">
@@ -741,9 +738,9 @@ max-sm:absolute right-0 top-12
 									<img
 										src={tech.image}
 										alt={tech.name}
-										class="object-contain flex-1 aspect-square w-1/2 grayscale-50"
+										class="object-contain flex-1 aspect-square w-1/2 grayscale-50 drop-shadow-lg drop-shadow-black/50"
 									/>
-									<span class="font-medium text-sm text-mblack/80">{tech.name}</span>
+									<span class="font-medium text-sm text-white/80">{tech.name}</span>
 								</div>
 							{/each}
 						</div>
