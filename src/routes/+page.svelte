@@ -10,6 +10,8 @@
 	} from '@icons-pack/svelte-simple-icons';
 	import {
 		ArrowRight,
+		ArrowUp,
+		ArrowUpAz,
 		Briefcase,
 		FileIcon,
 		Link,
@@ -473,7 +475,7 @@
 		{ label: '󰅱' },
 		{ label: 'Home', url: '/#top' },
 		{ label: 'About', url: '/#about' },
-		{ label: 'Projects', url: '/#projects' },
+		{ label: 'contact', url: '/#contact' },
 		{ label: '󰒋' }
 	];
 
@@ -561,7 +563,7 @@
 	<!-- HERO SECTION -->
 	<section
 		id="top"
-		class="bg-linear-to-tl from-black/0 to-black flex flex-col gap-5 relative z-10 justify-center h-[75vh] overflow-hidden"
+		class="bg-linear-to-tl from-black/0 to-black flex flex-col gap-5 relative z-10 justify-center h-[75vh] overflow-hidden min-h-[600px]"
 	>
 		<div
 			class="absolute bg-linear-to-tr from-black/50 via-black to-black/20 left-[min(-20%,120px)] max-w-[700px] w-[60%] aspect-[5/3] min-w-100 -bottom-[min(16vw,200px)] via-10% rotate-30 shadow-2xl shadow-black/90"
@@ -835,8 +837,8 @@ max-sm:absolute right-0 top-12
 
 	<!-- CONTACT SECTION -->
 
-	<section id="contact" class="py-20">
-		<div class="container mx-auto relative overflow-hidden">
+	<section id="contact" class="overflow-hidden pt-20">
+		<div class="container mx-auto relative">
 			<h3
 				class="mb-10 text-cream text-3xl overflow-hidden text-right flex items-center justify-end gap-5"
 			>
@@ -860,10 +862,10 @@ max-sm:absolute right-0 top-12
 					>
 				</div>
 				<div
-					class="flex flex-col border border-cream/50 text-cream p-5 backdrop-blur-md shadow-lg shadow-black/40"
+					class="flex flex-col border border-cream/50 text-cream sm:p-5 p-3 backdrop-blur-md shadow-lg shadow-black/40 relative overflow-hidden"
 				>
 					<p class="text-base sm:text-lg pb-5 max-sm:pb-2.5">Contact Details</p>
-					<div class="grid grid-cols-2 lg:grid-cols-3 gap-5 max-sm:gap-2.5">
+					<div class="grid grid-cols-2 lg:grid-cols-3 gap-3 max-sm:gap-2">
 						{#each contactDetails as { url, icon: Icon, label }}
 							<a href={url} class="block button max-sm:text-xs overfl-hi text-sm overflow-hidden">
 								<div class="flex flex-col gap-2">
@@ -873,44 +875,45 @@ max-sm:absolute right-0 top-12
 							</a>
 						{/each}
 					</div>
+
+					<img
+						src="/me/coooollll_shiizz-removebg-preview.png"
+						alt="Manual standing in the corner"
+						class="bottom-0 right-[-45px] grayscale-50 brightness-200 w-auto absolute h-[200px] object-contain drop-shadow-xl drop-shadow-black"
+					/>
 				</div>
 			</div>
-			<img
-				src="/me/coooollll_shiizz-removebg-preview.png"
-				alt="Manual standing in the corner"
-				class="bottom-0 right-0 grayscale-50 brightness-200 w-auto absolute h-[200px] object-contain drop-shadow-xl drop-shadow-black"
-			/>
 		</div>
 		<div class="container mx-auto relative">
 			<div class="aspect-square -z-10 absolute bottom-0 translate-y-1/3 left-0 rotate-45 w-[80%]">
 				{@render box(20, 90)}
 			</div>
 		</div>
-	</section>
-	<!-- FOOTER SECTION -->
-	<footer class="text-cream bg-cream/10! neumorphic overflow-hidde">
-		<div class="container mx-auto relative pt-10">
-			<div class="footer-content text-[10px] py-4 max-sm:text-center relative">
-				<div class="flex gap-2 flex-col sm:flex-row text-base mb-4 justify-end">
-					<a href="/manuel-diamond-cv.pdf" class="block button">
-						<div class="centered gap-2">
-							Download CV
-							<FileIcon class="" />
-						</div>
-					</a>
+		<!-- FOOTER SECTION -->
+		<footer class="text-cream bg-cream/10! neumorphic overflow-hidden mt-20">
+			<div class="container mx-auto relative pt-10">
+				<div class="footer-content text-xs py-4 max-sm:text-center relative">
+					<div class="flex gap-2 flex-col sm:flex-row text-base mb-4 justify-end">
+						<a href="#top" class="block button">
+							<div class="centered gap-2">
+								Back to Top
+								<ArrowUp class="" />
+							</div>
+						</a>
+					</div>
+					<p class="">
+						Copyright © {new Date().getFullYear()} Manuel Diamond.
+					</p>
+					<p>
+						No rights reserved, this website is <a href="https://github.com/manueldiamond/manueld"
+							>opensource</a
+						>.
+					</p>
 				</div>
-				<p class="">
-					Copyright © {new Date().getFullYear()} Manuel Diamond.
-				</p>
-				<p>
-					No rights reserved, this website is <a href="https://github.com/manueldiamond/manueld"
-						>opensource</a
-					>.
-				</p>
 			</div>
-		</div>
-		<p class="text-center text-[10px] relative z-10 bg-mblack neumorphic-inner">
-			Powered by <a href="https://tesites.online">TE Sites</a>
-		</p>
-	</footer>
+			<p class="text-center text-[10px] relative z-10 bg-mblack neumorphic-inner">
+				Powered by <a href="https://tesites.online">TE Sites</a>
+			</p>
+		</footer>
+	</section>
 </main>
