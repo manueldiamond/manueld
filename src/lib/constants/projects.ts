@@ -11,6 +11,19 @@ type Project = {
 	collaborators?: string[];
 };
 export const projects: Project[] = [
+	/*
+	* {
+	* }
+	* ,{
+		name:"Living Stars School Website",
+		description:"Website for a primary and secondary school in Nigeria. The website features live blogs section, Virtual tour of the school environment,",
+		client: 'Living Stars School',
+		tags:[
+			"Responsive Design", " 
+		],
+		images:[],
+		url:"l",
+	},*/
 	{
 		name: 'BridgeX Mobile App',
 		description:
@@ -235,7 +248,31 @@ export const projects: Project[] = [
 			'A Dental Management System for TE Sites. It features a micro CRM, for keeping and accessing customer records, micro CMS for updating some content and blogs for the website, and most importantly SMS notifications for both the customer and the dental practice to keep up with appointments',
 		client: 'TE Sites',
 		tags: ['SMS Integration', 'CRM Tools', 'CMS Tools', 'Fullstack Development'],
-		images: []
+		images: [
+
+		]
+	},
+{
+		name: 'HealNest',
+		description: '',
+		client: 'Mikegold Sarfo Ashong Listowell',
+		tags: [
+			'Food Ordering App',
+			'Secure Payment',
+			'Mobile First Design'
+			'NextJS',
+		],
+		images: ['/tasty chef/tasty chef.png'],
+		url: 'https://tastychef.vercel.app/'
+	},
+	{
+		name:"Copywriter's Website",
+		description:"A personal website for a copywriter.",
+		client: 'Mikegold Sarfo Ashong Listowell',
+		tags:[
+		],
+		images:[],
+		url:"",
 	},
 	{
 		name: 'Church Management System',
@@ -272,16 +309,13 @@ export const projects: Project[] = [
 	{
 		name: 'Tasty Chef',
 		description:
-			'A demo web app that allows users to place orders for food online. It includes, a product catalogue, a shopping cart, and a checkout page. The app also features a dashboard for managing orders and a user profile page for viewing and editing personal information. The app is built using Next.js, PostgreSQL, TypeScript, TailwindCSS, NextAuth, and Paystack',
+			'A demo web app that allows users to place orders for food online. It includes, a product catalogue, a shopping cart, and a checkout page. ',
 		client: 'Demo',
 		tags: [
-			'Food Delivery App',
+			'Food Ordering App',
+			'Secure Payment',
+			'Mobile First Design'
 			'NextJS',
-			'PostgreSQL',
-			'TypeScript',
-			'TailwindCSS',
-			'NextAuth',
-			'Paystack'
 		],
 		images: ['/tasty chef/tasty chef.png'],
 		url: 'https://tastychef.vercel.app/'
