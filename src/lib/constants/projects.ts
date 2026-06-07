@@ -1,4 +1,4 @@
-type Project = {
+type P:wroject = {
 	name: string;
 	description: string | string[];
 	tags: string[];
@@ -252,19 +252,6 @@ export const projects: Project[] = [
 
 		]
 	},
-{
-		name: 'HealNest',
-		description: '',
-		client: 'Mikegold Sarfo Ashong Listowell',
-		tags: [
-			'Food Ordering App',
-			'Secure Payment',
-			'Mobile First Design'
-			'NextJS',
-		],
-		images: ['/tasty chef/tasty chef.png'],
-		url: 'https://tastychef.vercel.app/'
-	},
 	{
 		name:"Copywriter's Website",
 		description:"A personal website for a copywriter.",
@@ -309,15 +296,20 @@ export const projects: Project[] = [
 	{
 		name: 'Tasty Chef',
 		description:
-			'A demo web app that allows users to place orders for food online. It includes, a product catalogue, a shopping cart, and a checkout page. ',
+			'A demo web app that allows users to place orders for food online. It includes, a product catalogue, a shopping cart, and a checkout page. This was one of my early stage projects developed for a university presentation.',
 		client: 'Demo',
 		tags: [
 			'Food Ordering App',
-			'Secure Payment',
+			'Paystack Payment',
 			'Mobile First Design'
 			'NextJS',
 		],
-		images: ['/tasty chef/tasty chef.png'],
+		images: [
+			"/TastyChef/tasty.jpeg",
+			"/TastyChef/favourites.jpg",
+			"/TastyChef/detail.jpg",
+			"/TastyChef/auth.jpg",
+		],
 		url: 'https://tastychef.vercel.app/'
 	}
 ];
