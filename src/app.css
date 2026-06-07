@@ -1,0 +1,136 @@
+@import 'tailwindcss';
+
+/*Note to self, css doesnt use ''*/
+@theme {
+	--font-nunito: 'nunito variable';
+	--color-cream: hsl(33.3 39.3% 95.1%);
+	--color-carafe: hsl(47.6 21.3% 32.2%);
+	--color-carafe-light: hsl(47.6 21.3% 42.2%);
+	--color-mblack: hsl(220 3.7% 14.3%);
+	--color-pewter: hsl(38.6 5.8% 52.5%);
+}
+
+body {
+	font-family: 'Montserrat variable';
+	background: var(--color-mblack) !important;
+}
+.container {
+	@apply px-4;
+}
+@utility button {
+	@apply hover:font-medium border-cream text-cream border rounded-none px-6 py-4 hover:bg-cream hover:text-mblack cursor-pointer;
+}
+
+@utility pri-button {
+	@apply hover:border-transparent hover:font-medium hover:bg-pewter border-cream hover:text-cream border rounded-none px-6 py-4 bg-cream text-mblack cursor-pointer;
+}
+@utility centered {
+	@apply flex justify-center items-center;
+}
+@utility diamond-bullet {
+	@apply flex centered relative shadow-md shadow-black bg-cream overflow-hidden rotate-45 w-5 h-5
+
+	after:w-full after:h-full after:flex-1 after:absolute after:left-[10px] after:bg-black/35 after:origin-left after:scale-200 after:-rotate-45
+
+	before:w-full before:h-full before:flex-1 before:absolute before:left-[10px] before:bg-black/35 before:origin-left before:scale-200 before:rotate-45;
+
+	translate: -25% 0%;
+	/*--before:border before:border-white
+				--after:border after:border-white;*/
+}
+
+@keyframes marquee-left {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
+}
+
+@keyframes marquee-right {
+	from {
+		transform: translateX(-50%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+.marquee-1,
+.marquee-2 {
+	@apply flex flex-row gap-1;
+}
+.marquee-1 {
+	animation: marquee-left 20s linear infinite;
+}
+
+.marquee-2 {
+	animation: marquee-right 20s linear infinite;
+}
+
+.marquee-wrapper {
+	mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.neumorphic {
+	border-radius: 0px;
+	background: #232426;
+	box-shadow:
+		35px 35px 70px #1f2022,
+		-35px -35px 70px #27282a;
+}
+
+.neumorphic-inner {
+	border-radius: 0px;
+	background: rgba(0, 0, 0, 0);
+	box-shadow:
+		inset 15px 15px 30px rgba(0, 0, 0, 0.1),
+		inset -15px -15px 30px #27282a;
+}
+
+.glass-card {
+	width: 240px;
+	height: 360px;
+	background: rgba(255, 255, 255, 0.4);
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	border-radius: 20px;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	box-shadow:
+		0 8px 32px rgba(0, 0, 0, 0.1),
+		inset 0 1px 0 rgba(255, 255, 255, 0.5),
+		inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+		inset 0 0 22px 11px rgba(255, 255, 255, 1.1);
+	position: relative;
+	overflow: hidden;
+}
+
+.glass-card::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 1px;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
+.glass-card::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1px;
+	height: 100%;
+	background: linear-gradient(
+		180deg,
+		rgba(255, 255, 255, 0.8),
+		transparent,
+		rgba(255, 255, 255, 0.3)
+	);
+}
+
+debug * {
+	outline: 1px solid red;
+}
