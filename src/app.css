@@ -59,7 +59,7 @@ body {
 
 .marquee-1,
 .marquee-2 {
-	@apply flex flex-row gap-1 w-max max-w-max;
+	@apply flex flex-row gap-1 w-max max-w-max min-w-max;
 }
 .marquee-1 {
 	animation: marquee-left 20s linear infinite;

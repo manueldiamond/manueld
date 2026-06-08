@@ -96,7 +96,15 @@ export const projects: Project[] = [
 		tags: ['Hostel Management System', 'Dashboard', 'Secure Payments'],
 		client: 'Curve Labz',
 
-		images: ['/curvebookings.png'],
+		images: [
+			'/Curve/curvebookings-1780887823.png',
+			'/Curve/curvebookings-1780887719.png',
+			'/Curve/curvebookings-1780887641.png',
+			'/Curve/curvebookings-1780887595.png',
+			'/Curve/curvebookings-1780887584.png',
+			'/Curve/curvebookings-1780887530.png',
+			'/Curve/curvebookings-1780887505.png'
+		].reverse(),
 		url: 'https://curvebookings.vercel.app'
 	},
 	{
@@ -282,10 +290,18 @@ export const projects: Project[] = [
 			'An administrative dashboard for managing the church members, groups and activities. It features a dashboard, member management, church groups & ministires, church events, and a communications module for broadcasting messages to all church members',
 		client: 'Newness Chapel',
 		tags: ['Administrative Dashboard', 'Records keeping System'],
-		images: []
+		images: [
+			'/ChMS/1780881442.png',
+			'/ChMS/1780881426.png',
+			'/ChMS/1780881414.png',
+			'/ChMS/1780881356.png',
+			'/ChMS/1780881351.png',
+			'/ChMS/chms-login.png',
+			'/ChMS/dash.png'
+		]
 	},
 	{
-		name: 'First Online Money Transfer Website',
+		name: 'FirstBank Online Money Transfer',
 		description:
 			"A demo website for FirstBank's cross country money transfer system. It included an admin Dashboard with  Developed under ITANDT Solutions in 2023.",
 		client: 'FirstBank Nigeria, under ITANDT Solutions',
@@ -299,6 +315,7 @@ export const projects: Project[] = [
 			'/FirstOnline/dashboard2.png',
 			'/FirstOnline/dashboard1.png',
 			'/FirstOnline/frontpage-2.png',
+			'/FirstOnline/converterwidget.png',
 			'/FirstOnline/hero.png'
 		].reverse()
 	},
@@ -308,7 +325,12 @@ export const projects: Project[] = [
 			'A logistics management system that allows for tracking and managing of goods and services. It features a dashboard, a tracking system, and a reporting module for tracking and analyzing goods and services.',
 		client: 'RMB Logistics',
 		tags: ['Logistics Management System', 'Dashboard', 'Tracking System'],
-		images: ['logistics app.png']
+		images: [
+			'/LogisticsSystem/dash.png',
+			'/LogisticsSystem/login.png',
+			'/LogisticsSystem/1780886561.png',
+			'/LogisticsSystem/1780886528.png'
+		]
 	},
 	{
 		name: 'Gift-Beneficiariy System',
