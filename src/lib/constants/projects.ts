@@ -1,4 +1,4 @@
-type Project = {
+export type Project = {
 	name: string;
 	description: string | string[];
 	tags: string[];
@@ -166,6 +166,7 @@ export const projects: Project[] = [
 
 		tags: ['React', 'Database Design', 'Secure Payment', 'KYC integration', '10+ Dev team'],
 		images: [
+			'/vehiville/vehiville-v2-car-sale.png',
 			'/vehiville/vehivilleV2-main.png',
 			'/vehiville/vehivilleV2-1780710011.png',
 			'/vehiville/vehivilleV2-1780709992.png'

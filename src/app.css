@@ -10,6 +10,8 @@
 	--color-pewter: hsl(38.6 5.8% 52.5%);
 }
 
+@variant hover ( &:hover, &:active);
+
 body {
 	font-family: 'Fira Code';
 	background: var(--color-mblack) !important;
@@ -18,11 +20,11 @@ body {
 	@apply px-4;
 }
 @utility button {
-	@apply hover:font-medium border-cream text-cream border rounded-none px-6 py-4 hover:bg-cream hover:text-mblack cursor-pointer;
+	@apply hover:font-medium border-cream text-cream border rounded-none px-6 py-4 hover:bg-cream active:bg-cream active:text-mblack hover:text-mblack cursor-pointer;
 }
 
 @utility pri-button {
-	@apply hover:border-transparent hover:font-medium hover:bg-pewter border-cream hover:text-cream border rounded-none px-6 py-4 bg-cream text-mblack cursor-pointer;
+	@apply hover:border-transparent hover:font-medium border-cream  hover:bg-pewter hover:text-cream active:bg-pewter active:text-cream  border rounded-none px-6 py-4 bg-cream text-mblack cursor-pointer;
 }
 @utility centered {
 	@apply flex justify-center items-center;
@@ -41,7 +43,7 @@ body {
 
 @keyframes marquee-left {
 	from {
-		transform: translateX(0) w-24;
+		transform: translateX(0);
 	}
 	to {
 		transform: translateX(-50%);
@@ -62,11 +64,11 @@ body {
 	@apply flex flex-row gap-1 w-max max-w-max min-w-max;
 }
 .marquee-1 {
-	animation: marquee-left 20s linear infinite;
+	animation: marquee-left 40s linear infinite;
 }
 
 .marquee-2 {
-	animation: marquee-right 20s linear infinite;
+	animation: marquee-right 40s linear infinite;
 }
 
 .marquee-wrapper {

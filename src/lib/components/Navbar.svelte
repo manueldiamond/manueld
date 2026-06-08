@@ -20,7 +20,7 @@
 				<li class="flex text-pewter group">
 					<a
 						href={item.url}
-						class="max-sm:py-2 max-sm:border-t border-cream block px-0.5 hover:text-cream hover-font-semibold text-pewter"
+						class="max-sm:pt-2 pb-1.5 max-sm:mt-1 max-sm:border-t border-cream block px-0.5 hover:text-cream hover-font-semibold text-pewter"
 					>
 						<span class="group-hover:visible invisible">[</span>
 						<span>{item.label}</span>

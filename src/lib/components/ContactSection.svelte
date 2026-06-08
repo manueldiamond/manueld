@@ -6,7 +6,7 @@
 </script>
 
 <section id="contact" class="overflow-hidden pt-20">
-	<div class="container mx-auto relative">
+	<div class="container mx-auto relative pointer-events-auto">
 		<h3
 			class="mb-10 text-cream text-3xl overflow-hidden text-right flex items-center justify-end gap-5"
 		>
