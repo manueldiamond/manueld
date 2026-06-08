@@ -87,7 +87,7 @@ export const projects: Project[] = [
 		images: [
 			'https://curvelabz.com/wp-content/uploads/2026/03/Screenshot-2026-03-18-at-4.54.39-PM-scaled-e1773853271695-768x406.png'
 		],
-		url: 'https://curvelabz.com'
+		url: 'https://curverentals.com'
 	},
 	{
 		name: 'Curve Bookings',
@@ -122,7 +122,7 @@ export const projects: Project[] = [
 	},
 	{
 		name: 'RS Lantern',
-		description: 'A web app that allows users to book appointments with other users.',
+		description: 'A website for one the logistics subsidiary of RS group of companies.',
 		client: 'RS Group of Companies',
 		url: 'https://rslantern.rsgroupgh.com/',
 		tags: ['Wordpress', 'Frontend Development', 'Responsive Design'],
@@ -143,7 +143,12 @@ export const projects: Project[] = [
 			'A micro crm tool that allows managing and grouping customers and staff in an organisation for easy communication. The system supports SMS and Email message broadcasts for customers, staff memebers and curated groups. It handles automatically scheduled messaging, Marketing campaigns and Birthday Messages',
 		tags: ['CRM Tools', 'SMS Integration', 'Laravel', 'Fullstack develpment'],
 		client: 'RS Group of Companies',
-		images: ['/rsnotify/rsnotify1.png']
+		images: [
+			'/RS/notify-dash.png',
+			'/RS/notify-contacts.png',
+			'/RS/notify message.png',
+			'/RS/notify-select.png'
+		]
 	},
 	{
 		name: 'Vehiville Web (v2)',
@@ -249,7 +254,13 @@ export const projects: Project[] = [
 			'A Dental Management System for TE Sites. It features a micro CRM, for keeping and accessing customer records, micro CMS for updating some content and blogs for the website, and most importantly SMS notifications for both the customer and the dental practice to keep up with appointments',
 		client: 'TE Sites',
 		tags: ['SMS Integration', 'CRM Tools', 'CMS Tools', 'Fullstack Development'],
-		images: []
+		images: [
+			'/TE Sites/te-appointmentsdash.png',
+			'/TE Sites/te-appointments1780879297.png',
+			'/TE Sites/te-appointments1780879291.png',
+			'/TE Sites/te-appointments1780879271.png',
+			'/TE Sites/te-appointments1780879234.png'
+		]
 	},
 
 	/*{
@@ -279,7 +290,17 @@ export const projects: Project[] = [
 			"A demo website for FirstBank's cross country money transfer system. It included an admin Dashboard with  Developed under ITANDT Solutions in 2023.",
 		client: 'FirstBank Nigeria, under ITANDT Solutions',
 		tags: ['Website', 'Admin Dashboard', 'Responsive Design'],
-		images: []
+		images: [
+			'/FirstOnline/1780880656.png',
+			'/FirstOnline/1780880645.png',
+			'/FirstOnline/1780880527.png',
+			'/FirstOnline/1780880466.png',
+			'/FirstOnline/1780880446.png',
+			'/FirstOnline/dashboard2.png',
+			'/FirstOnline/dashboard1.png',
+			'/FirstOnline/frontpage-2.png',
+			'/FirstOnline/hero.png'
+		].reverse()
 	},
 	{
 		name: 'Logistics Management System',
@@ -295,7 +316,16 @@ export const projects: Project[] = [
 			'A web app that allows Churches to view and manage items available for destribution and their beneficiaries. distributions. It features a dashboard, a distribution management system, and a reporting module for tracking and analyzing distributions.',
 		client: ' Under ITANDT Solutions',
 		tags: ['Church Management System', 'Barcode Scanner'],
-		images: []
+		images: [
+			'/Gifts-System/dona.png',
+			'/Gifts-System/idcard.png',
+			'/Gifts-System/create beneficiary.png',
+			'/Gifts-System/main.png',
+			'/Gifts-System/1780878962.png',
+			'/Gifts-System/1780878949.png',
+			'/Gifts-System/1780878887.png',
+			'/Gifts-System/login.png'
+		]
 	},
 	{
 		name: 'Tasty Chef',

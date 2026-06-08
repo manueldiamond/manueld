@@ -25,7 +25,7 @@ export const contactDetails = [
 		label: '@manuel.diamond'
 	},
 	{
-		url: 'https://web.facebook.com/profile.php?id=61590373957773&sk=directory_links',
+		url: 'https://web.facebook.com/profile.php?id=61590373957773',
 		icon: SiFacebook,
 		label: 'Manuel Diamond'
 	},
