@@ -7,29 +7,34 @@ export const titles = [
 export const buzzwordStrips = {
 	top: [
 		'ERP System',
-		'E-Commerce;',
+		'E-Commerce',
 		'CMS Development',
-		'Whatsapp Bot',
+		'WhatsApp Automation',
 		'CRM Development',
 		'Mobile App Development',
 		'Realtime Systems',
 		'Web Development',
 		'AI Powered Systems',
 		'Lead Capture Systems',
-		'Dashboards'
+		'Dashboards',
+		'Multi-Tenant Platforms',
+		'SMS Automation',
+		'Webhook Integrations',
+		'Role-Based Access Control',
+		'API Integrations'
 	],
 	bottom: [
 		'Secure Payment Systems',
-		'Speed and Scalability',
+		'High-Performance Architecture',
 		'Appointment Booking Systems',
 		'Logistics Management Systems',
 		'Event Management Systems',
 		'Project Management Solutions',
 		'Marketing Support Systems',
-		'100% Compliant KYC',
-		'Low Cost Scaling',
-		'Desktop Application',
-		'Top Notch Functionality'
+		'KYC Integration',
+		'Cost-Efficient Infrastructure',
+		'Desktop Applications',
+		'Multi-Portal Systems'
 	]
 };
 
@@ -45,9 +50,11 @@ export const metadata = {
 		'Full-stack software engineer and founder building products across web and mobile',
 	'og:image': 'https://manuel.tesites.online/diamond.png',
 	'og:url': 'https://manuel.tesites.online',
+	'twitter:card': 'summary_large_image',
 	'twitter:title': 'Manuel Diamond',
 	'twitter:description':
-		'Manuel is a freelance software engineer with a large array of projects. He also claims to be a founder-in-progress.',
+		'Full-stack software engineer and founder building products across web and mobile',
 	'twitter:image': 'https://manuel.tesites.online/diamond.png',
-	'twitter:url': 'https://manuel.tesites.online'
+	'twitter:url': 'https://manuel.tesites.online',
+	'description': 'Full-stack software engineer and founder building products across web and mobile'
 };

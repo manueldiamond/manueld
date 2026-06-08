@@ -2,7 +2,7 @@
 	import { ArrowUp } from 'lucide-svelte';
 </script>
 
-<footer class="text-cream bg-cream/10! neumorphic overflow-hidden mt-20">
+<footer class="text-cream bg-carafe-light/60! backdrop-blur-md neumorphic overflow-hidden mt-20">
 	<div class="container mx-auto relative pt-10">
 		<div class="footer-content text-xs py-4 max-sm:text-center relative">
 			<div class="flex gap-2 flex-col sm:flex-row text-base mb-4 justify-end">

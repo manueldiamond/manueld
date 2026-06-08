@@ -29,9 +29,9 @@ export const projects: Project[] = [
 		description:
 			'A services marketplace that allows users to request services, find work and connect with local artisans nearby. A 2-in-one platform for Service Users and Service Providers. Features realtime notifications and location tracking. ',
 		tags: [
-			'Andrond',
+			'Android',
 			'iOS',
-			'Fullstack develpment',
+			'Fullstack Development',
 			'Location Based',
 			'Realtime Systems',
 			'Chat Systems',
@@ -57,7 +57,7 @@ export const projects: Project[] = [
 		name: 'BridgeX Website',
 		description:
 			'A website for the BridgeX mobile app. A 2-in-one platform for Service Users and Service Providers.',
-		tags: ['Website', 'NextJS', 'Responsive Design', 'Blog'],
+		tags: ['Website', 'Next.js', 'Responsive Design', 'Blog'],
 		client: { name: 'Bridge and Ladder Synergy', url: 'https://bridgexng.com' },
 		clientLabel: 'Built for',
 		url: 'https://bridgexng.com',
@@ -74,7 +74,7 @@ export const projects: Project[] = [
 		name: 'BridgeX Admin Dashboard',
 		description:
 			'Admin dashboard for managing the BridgeX mobile app. A 2-in-one platform for Service Users and Service Providers.',
-		tags: ['Analytics', 'Platform Management', 'Fullstack develpment', 'Admin Dashboard'],
+		tags: ['Analytics', 'Platform Management', 'Fullstack Development', 'Admin Dashboard'],
 		client: { name: 'Bridge and Ladder Synergy', url: 'https://bridgexng.com' },
 		clientLabel: 'Built for',
 		images: [
@@ -95,7 +95,7 @@ export const projects: Project[] = [
 	{
 		name: 'Curve Rentals App',
 		description: 'A web app that allows users to rent out their spare time to other users.',
-		tags: ['AI Chatbot', 'AWS', 'Fullstack develpment', 'Admin Dashboard'],
+		tags: ['AI Chatbot', 'Fullstack Development', 'Admin Dashboard'],
 		client: { name: 'Curve Labz', url: 'https://curvelabz.com' },
 		clientLabel: 'Built under',
 		images: [
@@ -206,7 +206,7 @@ export const projects: Project[] = [
 		name: 'RS Notify',
 		description:
 			'A micro crm tool that allows managing and grouping customers and staff in an organisation for easy communication. The system supports SMS and Email message broadcasts for customers, staff memebers and curated groups. It handles automatically scheduled messaging, Marketing campaigns and Birthday Messages',
-		tags: ['CRM Tools', 'SMS Integration', 'Laravel', 'Fullstack develpment'],
+		tags: ['CRM Tools', 'SMS Integration', 'Fullstack Development'],
 		client: { name: 'RS Group of Companies', url: 'https://rsgroupgh.com' },
 		clientLabel: 'Built under',
 		images: [
@@ -228,7 +228,7 @@ export const projects: Project[] = [
 			'A vehicle solutions platform allowing users to buy, rent, sell and request maintenance of their vehicles. It features a dual user system for regular users to buy and rent, as well as for dealers to list their vehicles on the platform. This is the success or the the original project(v2) and is in active development. Team developed',
 		client: { name: 'RS Group of Companies', url: 'https://rsgroupgh.com' },
 		clientLabel: 'Built under',
-		tags: ['React', 'Database Design', 'Secure Payment', 'KYC integration', '10+ Dev team'],
+		tags: ['Database Design', 'Secure Payment', 'KYC integration'],
 		images: [
 			'/vehiville/vehiville-v2-car-sale.png',
 			'/vehiville/vehivilleV2-main.png',
@@ -246,7 +246,7 @@ export const projects: Project[] = [
 		]
 	},
 	{
-		name: 'Vehivile Admin System (v2)',
+		name: 'Vehiville Admin System (v2)',
 		description:
 			'Under the new development of Vehiville, a dedicated administrative platform designed to manage users, compliance, vehicles, rentals, sales, business algorithm constraints,  and maintenance of vehicles. This project(v2) was discontinued in favour a mobile application',
 		client: { name: 'RS Group of Companies', url: 'https://rsgroupgh.com' },
@@ -286,7 +286,7 @@ export const projects: Project[] = [
 		name: 'AREF 2026 Admission Portal',
 		description:
 			'Fullstack development of the ticket validation and management system for the biggest real estate event in Africa (Africa Real Estate Festival 2026). ',
-		tags: ['Event Ticket Management System', 'PHP', 'Laravel', 'Fullstack development'],
+		tags: ['Event Ticket Management System', 'Laravel', 'Fullstack Development'],
 		client: { name: 'Curve Labz', url: 'https://curvelabz.com' },
 		clientLabel: 'Built under',
 		images: [
@@ -311,7 +311,7 @@ export const projects: Project[] = [
 			"A customized CRM fork that captures leads from BlueWhales's RealEstate website opportunities, and sales. It features a dashboard, CRM, sales, marketing, and customer service modules.",
 		client: { name: 'Curve Labz', url: 'https://curvelabz.com' },
 		clientLabel: 'Built under',
-		tags: ['CRM', 'System Customization', 'Meta Ads Integration', 'Laravel', 'Vue'],
+		tags: ['CRM', 'System Customization', 'Meta Ads Integration'],
 		images: [
 			'/Labadi/dash.png',
 			'/Labadi/leads.png',
@@ -340,7 +340,7 @@ export const projects: Project[] = [
 			'A Dental website template developed for TE Sites. It features a responsive design, contact form and a Book Appointment Form which feeds into the TE Sites Appointment Booking system',
 		client: { name: 'TE Sites', url: 'https://tesites.online' },
 		clientLabel: 'Built under',
-		tags: ['Website', 'Responsive Design', 'Cloudflare', 'SMS Integration'],
+		tags: ['Website', 'Responsive Design', 'SMS Integration'],
 		images: [
 			'/TE Sites/homepage.png',
 			'/TE Sites/1780866349.png',
@@ -443,7 +443,7 @@ export const projects: Project[] = [
 			'A web app that allows Churches to view and manage items available for destribution and their beneficiaries. distributions. It features a dashboard, a distribution management system, and a reporting module for tracking and analyzing distributions.',
 		client: { name: 'ITANDT Solutions', url: 'https://itandtsolutions.net' },
 		clientLabel: 'Built under',
-		tags: ['Church Management System', 'Barcode Scanner'],
+		tags: ['Distribution Management', 'Barcode Scanner'],
 		images: [
 			'/Gifts-System/dona.png',
 			'/Gifts-System/idcard.png',
@@ -466,7 +466,7 @@ export const projects: Project[] = [
 			'A demo web app that allows users to place orders for food online. It includes, a product catalogue, a shopping cart, and a checkout page. This was one of my early stage projects developed for a university presentation.',
 		client: { name: '' },
 		clientLabel: 'Demo',
-		tags: ['Food Ordering App', 'Paystack Payment', 'Mobile First Design', 'NextJS'],
+		tags: ['Food Ordering App', 'Paystack Payment', 'Mobile First Design', 'Next.js'],
 		images: [
 			'/TastyChef/tasty.jpeg',
 			'/TastyChef/favourites.jpg',

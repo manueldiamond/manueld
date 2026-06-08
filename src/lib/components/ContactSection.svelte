@@ -66,16 +66,19 @@
 		</h3>
 		<div class="flex flex-col gap-5 md:flex-row">
 			<div
-				class=" grid grid-cols-1 sm:grid-cols-2 gap-5 border border-cream/50 p-5 max-sm:p-3 max-sm:gap-3 text-pewter shadow-lg shadow-black/40 bg-linear-to-br from-transparent via-white/10 to-white/5 w-full max-w-[500px] max-md:text-sm backdrop-blur-md"
+				class=" content-start max-sm:grid-rows-[auto_auto_auto_1fr_auto] grid-rows-[auto_auto_1fr_auto] grid grid-cols-1 sm:grid-cols-2 gap-3 border border-pewter p-5 max-sm:p-3 max-sm:gap-2.5 text-pewter shadow-lg shadow-black/40 bg-carafe-light/5! ---bg-linear-to-br from-carafe-light/5 via-carafe-light to-carafe/50 via-70% flex-2 md:max-w-[500px] max-md:text-sm backdrop-blur-md"
 			>
 				<p class="text-lg max-sm:text-base text-cream col-span-full">Send a message</p>
 				<input required type="text" placeholder="Name" class="w-full input" bind:value={name} />
-				<input required type="email" placeholder="Email" class="w-full input" bind:value={email} />
+				<input required type="text" placeholder="Contact" class="w-full input" bind:value={email} />
 				<textarea
 					placeholder="Message"
-					class="flex-1 col-span-full w-full min-h-32 input"
+					class="min-h-full col-span-full w-full min-h-32 input"
 					bind:value={message}
 				></textarea>
+				{#if error}
+					<p class="text-xs sm:text-sm text-red-300">{error}</p>
+				{/if}
 				<button
 					class="col-span-full pri-button flex gap-2 centered"
 					onclick={handleSend}
@@ -94,15 +97,19 @@
 				</button>
 			</div>
 			<div
-				class="flex flex-col border border-cream/50 text-cream sm:p-5 p-3 backdrop-blur-md shadow-lg shadow-black/40 relative overflow-hidden"
+				class="flex flex-col flex-1 border border-pewter text-cream sm:p-5 p-3 backdrop-blur-md shadow-lg shadow-black/40 relative overflow-hidden"
 			>
 				<p class="text-base sm:text-lg pb-5 max-sm:pb-2.5">Contact Details</p>
 				<div class="grid grid-cols-2 lg:grid-cols-3 gap-3 max-sm:gap-2">
-					{#each contactDetails as { url, icon: Icon, label }}
-						<a href={url} class="block button max-sm:text-xs overfl-hi text-sm overflow-hidden">
-							<div class="flex flex-col gap-2">
+					{#each contactDetails as { url, icon: Icon, label }, id}
+						<a
+							href={url}
+							class:col-span-full={id === 0}
+							class="block button max-sm:text-xs overfl-hi text-sm overflow-hidden"
+						>
+							<div class="flex flex-col gap-2" class:md:centered={id !== 0}>
 								<Icon />
-								<span>{label}</span>
+								<span class:md:hidden={id !== 0} class=" sm:block xl:block">{label}</span>
 							</div>
 						</a>
 					{/each}
@@ -111,7 +118,7 @@
 				<img
 					src="/me/coooollll_shiizz-removebg-preview.png"
 					alt="Manual in the corner"
-					class="bottom-[-90px] right-[-45px] grayscale-50 brightness-200 w-auto absolute h-[200px] object-contain drop-shadow-xl drop-shadow-black"
+					class="pointer-events-none bottom-[-90px] right-[-45px] grayscale-50 brightness-200 w-auto absolute h-[200px] object-contain drop-shadow-xl drop-shadow-black"
 				/>
 			</div>
 		</div>

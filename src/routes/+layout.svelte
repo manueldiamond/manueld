@@ -11,7 +11,13 @@
 <svelte:head>
 	<link rel="icon" href={favicon} />
 	{#each Object.entries(meta) as [key, value]}
-		<meta property={key} content={value} />
+		{#if key === 'description'}
+			<meta name="description" content={value} />
+		{:else if key.startsWith('twitter:')}
+			<meta name={key} content={value} />
+		{:else}
+			<meta property={key} content={value} />
+		{/if}
 	{/each}
 </svelte:head>
 

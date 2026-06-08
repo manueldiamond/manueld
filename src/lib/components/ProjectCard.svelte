@@ -71,7 +71,7 @@
 		</p>
 
 		<div class="flex-1"></div>
-		<span class="text-carafe-light font-bold text-sm">{project.client}</span>
+		<span class="text-carafe-light font-bold text-sm">{project.client.name}</span>
 
 		<button onclick={onViewAll} class="button flex justify-between gap-2">
 			<span>View Project</span>

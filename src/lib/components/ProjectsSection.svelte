@@ -23,7 +23,5 @@
 			/>
 		{/each}
 	</div>
-	{#if currentProjectDetailsId > -1}
-		<ProjectDetails id={currentProjectDetailsId} close={() => (currentProjectDetailsId = -1)} />
-	{/if}
+	<ProjectDetails id={currentProjectDetailsId} close={() => (currentProjectDetailsId = -1)} />
 </section>

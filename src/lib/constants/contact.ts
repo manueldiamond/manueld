@@ -1,11 +1,4 @@
-import {
-	SiFacebook,
-	SiGithub,
-	SiInstagram,
-	SiWhatsapp,
-	SiX,
-	SiYoutube
-} from '@icons-pack/svelte-simple-icons';
+import { SiGithub, SiInstagram, SiWhatsapp, SiX, SiYoutube } from '@icons-pack/svelte-simple-icons';
 import { Mail, Phone } from 'lucide-svelte';
 
 export const contact = {
@@ -23,11 +16,6 @@ export const contactDetails = [
 		url: 'https://www.instagram.com/manuel.diamond/',
 		icon: SiInstagram,
 		label: '@manuel.diamond'
-	},
-	{
-		url: 'https://web.facebook.com/profile.php?id=61590373957773',
-		icon: SiFacebook,
-		label: 'Manuel Diamond'
 	},
 	{ url: 'https://www.youtube.com/channel/@manueldiamond', icon: SiYoutube, label: 'YouTube' }
 ];
