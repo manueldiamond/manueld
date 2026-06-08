@@ -34,11 +34,9 @@ export const buzzwordStrips = {
 };
 
 export const nav = [
-	{ label: '󰅱' },
 	{ label: 'Home', url: '/#top' },
 	{ label: 'About', url: '/#about' },
-	{ label: 'contact', url: '/#contact' },
-	{ label: '󰒋' }
+	{ label: 'contact', url: '/#contact' }
 ];
 
 export const metadata = {

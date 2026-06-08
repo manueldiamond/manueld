@@ -4,7 +4,7 @@
 	import ProjectCard from './ProjectCard.svelte';
 	import ProjectDetails from './ProjectDetails.svelte';
 
-	let currentProjectDetailsId: number = $state(1);
+	let currentProjectDetailsId = $state(-1);
 </script>
 
 <section id="projects" class="relative mt-20 container mx-auto">
@@ -23,5 +23,7 @@
 			/>
 		{/each}
 	</div>
-	<ProjectDetails id={currentProjectDetailsId} close={() => (currentProjectDetailsId = -1)} />
+	{#if currentProjectDetailsId > -1}
+		<ProjectDetails id={currentProjectDetailsId} close={() => (currentProjectDetailsId = -1)} />
+	{/if}
 </section>
