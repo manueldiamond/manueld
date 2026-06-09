@@ -7,7 +7,7 @@
 	let currentProjectDetailsId = $state(-1);
 </script>
 
-<section id="projects" class="relative mt-20 container mx-auto">
+<section id="projects" class=" relative scroll-m-20 container mx-auto">
 	<h3 class="mb-10 text-cream text-3xl text-right flex items-center justify-end gap-5">
 		My Projects
 		<div class="diamond-bullet"></div>

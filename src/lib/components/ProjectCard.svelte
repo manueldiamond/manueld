@@ -1,10 +1,11 @@
 <script lang="ts">
 	import type { Project } from '$lib/constants/projects';
 	import { Expand, Link, Lock } from 'lucide-svelte';
+	import { blur, fade } from 'svelte/transition';
 
 	const { project, onViewAll }: { project: Project; onViewAll: () => void } = $props();
 
-	let currentImage = $state(0);
+	let currentImageId = $state(0);
 
 	$effect(() => {
 		if (!project.images?.length) return;
@@ -12,7 +13,7 @@
 		const randomTimeout = () => {
 			const randInterval = 5000 + Math.floor(Math.random() * 5000);
 			timeoutId = setTimeout(() => {
-				currentImage = (currentImage + 1) % project.images.length;
+				currentImageId = (currentImageId + 1) % project.images.length;
 				randomTimeout();
 			}, randInterval);
 		};
@@ -27,19 +28,28 @@
 	if (project.tags.length > 4) {
 		displayedTags[3] = `+${project.tags.length - 3}`;
 	}
+
+	const currentImageSrc = $derived(project?.images[currentImageId]);
 </script>
 
-<div class="bg-black/10 hover:bg-black/20 flex flex-col group" onclick={onViewAll}>
-	{#if project.images?.length > 0}
+<div class="bg-black/10 hover:bg-black/20 flex flex-col group">
+	{#if currentImageSrc}
 		<div class=" overflow-hidden relative aspect-[3/2.2] w-full">
 			<div class="flex-1 flex items-end w-full h-full flex p-4 relative">
-				<img
-					src={project?.images[currentImage]}
-					alt="{project.name} featured image"
-					class="object-cover w-[95%] mx-auto drop-shadow-xl drop-shadow-black drop-shadow-2xl h-[95%] object-top
-					
-					group-hover:mt-0 group-hover:w-full transition-all group-hover:h-full"
-				/>
+				<div
+					class="w-[95%] mx-auto h-[95%]
+					group-hover:mt-0 group-hover:w-full transition-all group-hover:h-full flex relative"
+				>
+					{#key currentImageSrc}
+						<img
+							onclick={onViewAll}
+							src={currentImageSrc}
+							alt="{project.name} featured image"
+							class="object-cover drop-shadow-xl drop-shadow-black drop-shadow-2xl object-top absolute w-full h-full"
+							transition:blur={{ duration: 1000 }}
+						/>
+					{/key}
+				</div>
 			</div>
 
 			<div
@@ -73,7 +83,13 @@
 		<div class="flex-1"></div>
 		<span class="text-carafe-light font-bold text-sm">{project.client.name}</span>
 
-		<button onclick={onViewAll} class="button flex justify-between gap-2">
+		<button
+			onclick={(e) => {
+				e.stopPropagation();
+				onViewAll();
+			}}
+			class="button flex gap-2 centered"
+		>
 			<span>View Project</span>
 			<Expand class="aspect-square w-4" />
 		</button>
