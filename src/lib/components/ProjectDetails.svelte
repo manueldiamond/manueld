@@ -58,7 +58,7 @@
 		<div class="sm:container mx-auto relative w-full h-[90%] mt-auto">
 			<div
 				onclick={(e) => e.stopPropagation()}
-				class=" m-auto absolute lg:inset-22 min-h-[400px] sm:inset-16 inset-1 border-pewter border bg-mblack to-transparent shadow-black shadow-xl overflow-hidden flex flex-col"
+				class=" m-auto absolute min-h-[400px] sm:inset-16 inset-1 border-pewter border bg-mblack to-transparent shadow-black shadow-xl overflow-hidden flex flex-col"
 				in:fly={{ duration: 200, y: 50 }}
 			>
 				<div
@@ -120,7 +120,7 @@
 							<div class=" flex gap-1 flex-row flex-wrap my-1">
 								{#each project.tags as tag}
 									<div
-										class="over bg-carafe-light/20 text-carafe-light text-sm font-semibold px-2 py-1 flex gap-0.5 flex-1 min-w-max"
+										class="over bg-carafe-light/20 text-carafe-light text-sm font-semibold px-2 py-1 flex gap-0.5 flex-1 min-w-max max-w-[120px] text-center centered"
 									>
 										{tag}
 									</div>
@@ -139,7 +139,7 @@
 							<div class=" flex gap-1 flex-row flex-wrap my-1">
 								{#each project.techstack as tag}
 									<div
-										class="over bg-pewter/20 text-pewter text-sm font-semibold px-2 py-1 flex gap-0.5 flex-1 min-w-max"
+										class="max-w-[120px] centered bg-pewter/20 text-pewter text-sm font-semibold px-2 py-1 flex gap-0.5 flex-1 min-w-max"
 									>
 										{tag}
 									</div>
