@@ -72,13 +72,7 @@
 			class="footer-content text-xs py-4 max-sm:text-center relative flex flex-col sm:flex-row justify-between items-center gap-3"
 		>
 			<p>
-				Copyright © {new Date().getFullYear()} Manuel Diamond. All rights reserved, but this project is
-				<a
-					class="hover:underline"
-					target="_blank"
-					rel="noopener"
-					href="https://github.com/manueldiamond/manueld">opensource</a
-				>.
+				Copyright © {new Date().getFullYear()} Manuel Diamond. All rights reserved.
 			</p>
 		</div>
 	</div>
