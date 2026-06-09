@@ -58,19 +58,33 @@
 		<div class="sm:container mx-auto relative w-full h-[90%] mt-auto">
 			<div
 				onclick={(e) => e.stopPropagation()}
-				class=" m-auto absolute min-h-[400px] sm:inset-16 inset-1 border-pewter border bg-mblack to-transparent shadow-black shadow-xl overflow-hidden flex flex-col"
+				class=" m-auto absolute min-h-[400px] sm:inset-6 inset-1 border-pewter border bg-mblack to-transparent shadow-black shadow-xl overflow-hidden flex flex-col"
 				in:fly={{ duration: 200, y: 50 }}
 			>
 				<div
-					class="container flex justify-between items-center py-3 mx-auto text-lg sm:text-xl font-medium text-cream bg-black/40"
+					class="container flex justify-between items-center py-1 mx-auto text-lg font-medium text-cream bg-black/40 border-b border-pewter"
 				>
-					<p>{project.name}</p>
-					<button
-						class="cursor-pointer hover:bg-cream-hover:text-mblack text-cream font-medium text-base"
-						onclick={close}
-					>
-						<MinimizeIcon />
-					</button>
+					<div class="flex gap-2 centered flex-row">
+						<div class="diamond-bullet scale-50"></div>
+						<p>{project.name}</p>
+					</div>
+					<div class="centered flex gap-2">
+						{#if project.url}
+							<a
+								href={project.url}
+								class="cursor-pointer hover:bg-cream-hover:text-mblack text-cream font-medium text-base"
+							>
+								<ExternalLinkIcon size={20} />
+							</a>
+						{/if}
+
+						<button
+							class="cursor-pointer hover:bg-cream-hover:text-mblack text-cream font-medium text-base"
+							onclick={close}
+						>
+							<MinimizeIcon size={20} />
+						</button>
+					</div>
 				</div>
 
 				<div class="flex flex-col overflow-y-scroll flex-1">
@@ -226,7 +240,7 @@
 							<div class="">
 								{#if project.url}
 									<a href={project.url} class="min-w-max button centered flex gap-2">
-										<span>Open Project</span>
+										<span>View Live</span>
 										<ExternalLink class="aspect-square w-4" />
 									</a>
 								{:else}
