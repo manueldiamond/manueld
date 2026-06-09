@@ -69,11 +69,23 @@
 				class=" content-start max-sm:grid-rows-[auto_auto_auto_1fr_auto] grid-rows-[auto_auto_1fr_auto] grid grid-cols-1 sm:grid-cols-2 gap-3 border border-pewter p-5 max-sm:p-3 max-sm:gap-2.5 text-pewter shadow-lg shadow-black/40 bg-carafe-light/5! ---bg-linear-to-br from-carafe-light/5 via-carafe-light to-carafe/50 via-70% flex-2 md:max-w-[500px] max-md:text-sm backdrop-blur-md"
 			>
 				<p class="text-lg max-sm:text-base text-cream col-span-full">Send a message</p>
-				<input required type="text" placeholder="Name" class="w-full input" bind:value={name} />
-				<input required type="text" placeholder="Contact" class="w-full input" bind:value={email} />
+				<input
+					required
+					type="text"
+					placeholder="Name"
+					class="w-full input text-base"
+					bind:value={name}
+				/>
+				<input
+					required
+					type="text"
+					placeholder="Contact"
+					class="w-full input text-base"
+					bind:value={email}
+				/>
 				<textarea
 					placeholder="Message"
-					class="min-h-full col-span-full w-full min-h-32 input"
+					class=" col-span-full w-full min-h-32 max-sm:min-h-24 input text-base"
 					bind:value={message}
 				></textarea>
 				{#if error}

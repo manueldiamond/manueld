@@ -480,8 +480,8 @@ export const projects: Project[] = [
 		name: 'Tasty Chef',
 		description:
 			'A demo web app that allows users to place orders for food online. It includes, a product catalogue, a shopping cart, and a checkout page. This was one of my early stage projects developed for a university presentation.',
-		client: { name: '' },
-		clientLabel: 'Demo',
+		client: { name: 'Demo Project' },
+		clientLabel: 'Built as',
 		tags: ['Food Ordering App', 'Paystack Payment', 'Mobile First Design', 'Next.js'],
 		images: [
 			'/TastyChef/tasty.jpeg',

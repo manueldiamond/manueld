@@ -71,23 +71,23 @@
 					class="container flex justify-between items-center py-1 mx-auto text-lg font-medium text-cream bg-black/40 border-b border-pewter"
 				>
 					<div class="flex gap-2 centered flex-row">
-						<div class="diamond-bullet scale-50"></div>
+						<div class="diamond-bullet scale-75"></div>
 						<p>{project.name}</p>
 					</div>
-					<div class="centered flex gap-2">
+					<div class="centered flex gap-4">
 						{#if project.url}
 							<a
 								href={project.url}
 								target="_blank"
 								rel="noopener"
-								class="cursor-pointer hover:bg-cream-hover:text-mblack text-cream font-medium text-base"
+								class="cursor-pointer p-1 hover:bg-cream-hover:text-mblack text-cream font-medium text-base"
 							>
 								<ExternalLinkIcon size={20} />
 							</a>
 						{/if}
 
 						<button
-							class="cursor-pointer hover:bg-cream-hover:text-mblack text-cream font-medium text-base"
+							class="cursor-pointer p-1 hover:bg-cream-hover:text-mblack text-cream font-medium text-base"
 							onclick={close}
 						>
 							<MinimizeIcon size={20} />
@@ -199,7 +199,9 @@
 											'hover:text-carafe hover:underline cursor-pointer'} text-carafe-light font-bold text-sm"
 									>
 										{project.client.name}
-										<ExternalLinkIcon class="inline-block w-4 h-4 ml-1" />
+										{#if project.client.url}
+											<ExternalLinkIcon class="inline-block w-4 h-4 ml-1" />
+										{/if}
 									</a>
 								</div>
 							{/if}
@@ -253,7 +255,12 @@
 
 							<div class="">
 								{#if project.url}
-									<a href={project.url} target="_blank" rel="noopener" class="min-w-max button centered flex gap-2">
+									<a
+										href={project.url}
+										target="_blank"
+										rel="noopener"
+										class="min-w-max button centered flex gap-2"
+									>
 										<span>View Live</span>
 										<ExternalLink class="aspect-square w-4" />
 									</a>
