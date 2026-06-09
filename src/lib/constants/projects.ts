@@ -238,7 +238,7 @@ export const projects: Project[] = [
 			'/RS/notify-select.png'
 		],
 		techstack: ['React', 'Supabase', 'TanStack Query', 'Recharts'],
-		collaborators: [manuelDiamond, isaacAheto, christopherOdor]
+		collaborators: [manuelDiamond]
 	},
 	{
 		name: 'Vehiville Web (v2)',
@@ -303,7 +303,7 @@ export const projects: Project[] = [
 			{ name: 'Programming Sai', url: 'https://github.com/Programming-Sai' },
 			{ name: 'Michael Gyamfi', url: 'https://github.com/mikegyamfi' },
 			{ name: 'Erasmus Charwey', url: 'https://github.com/ErasmusBill' },
-			{ name: 'Michael Perry Nii Dromo Tettey', url: 'https://github.com/theniitettey' },
+			{ name: 'Michael Perry', url: 'https://github.com/theniitettey' },
 			{ name: 'Raymond Jnr' }
 		]
 	},
@@ -451,7 +451,10 @@ export const projects: Project[] = [
 			'/LogisticsSystem/1780886528.png'
 		],
 		techstack: ['React', 'React Hook Form', 'Framer Motion', 'Fuse.js'],
-		collaborators: [manuelDiamond, { name: 'Ali Seidu', url: 'https://github.com/aliseidu8855' }]
+		collaborators: [
+			{ ...manuelDiamond, role: 'Frontend' },
+			{ name: 'Ali Seidu', url: 'https://github.com/aliseidu8855', role: 'Backend' }
+		]
 	},
 	{
 		name: 'Gift-Beneficiariy System',

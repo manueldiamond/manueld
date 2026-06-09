@@ -22,7 +22,11 @@
 
 	const project = $derived(id >= 0 ? projects[id] : null);
 
-	let currentImageId = $state(0);
+	let currentImageId = $state();
+
+	$effect(() => {
+		currentImageId = startImageIdx ?? 0;
+	});
 
 	$effect(() => {
 		if (project) {
@@ -74,6 +78,8 @@
 						{#if project.url}
 							<a
 								href={project.url}
+								target="_blank"
+								rel="noopener"
 								class="cursor-pointer hover:bg-cream-hover:text-mblack text-cream font-medium text-base"
 							>
 								<ExternalLinkIcon size={20} />
@@ -167,6 +173,8 @@
 									{#each project.additionalLinks as { label, url }}
 										<a
 											href={url}
+											target="_blank"
+											rel="noopener"
 											class="over text-pewter text-sm font-semibold py-1 flex gap-0.5 flex-1 min-w-max"
 										>
 											<Link class="inline-block w-4 h-4 ml-1" />
@@ -185,6 +193,8 @@
 									<p class="uppercase text-carafe/80 font-bold text-xs">{project.clientLabel}</p>
 									<a
 										href={project.client.url}
+										target="_blank"
+										rel="noopener"
 										class="{project.client.url &&
 											'hover:text-carafe hover:underline cursor-pointer'} text-carafe-light font-bold text-sm"
 									>
@@ -226,6 +236,8 @@
 												>
 												<a
 													href={collaborator.url}
+													target="_blank"
+													rel="noopener"
 													class="{collaborator.url &&
 														'hover:text-carafe hover:underline cursor-pointer'} text-pewter text-sm"
 												>
@@ -241,7 +253,7 @@
 
 							<div class="">
 								{#if project.url}
-									<a href={project.url} class="min-w-max button centered flex gap-2">
+									<a href={project.url} target="_blank" rel="noopener" class="min-w-max button centered flex gap-2">
 										<span>View Live</span>
 										<ExternalLink class="aspect-square w-4" />
 									</a>

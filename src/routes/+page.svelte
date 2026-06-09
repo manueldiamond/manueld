@@ -8,7 +8,7 @@
 	import Navbar from '$lib/components/Navbar.svelte';
 </script>
 
-<main>
+<main class="scroll-smooth">
 	<Navbar />
 	<HeroSection />
 	<Buzzbanner />

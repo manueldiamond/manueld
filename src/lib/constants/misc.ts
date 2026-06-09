@@ -39,9 +39,9 @@ export const buzzwordStrips = {
 };
 
 export const nav = [
-	{ label: 'Home', url: '/#top' },
-	{ label: 'About', url: '/#about' },
-	{ label: 'contact', url: '/#contact' }
+	{ label: 'Home', url: '#top' },
+	{ label: 'About', url: '#about' },
+	{ label: 'contact', url: '#contact' }
 ];
 
 export const metadata = {
@@ -56,5 +56,5 @@ export const metadata = {
 		'Full-stack software engineer and founder building products across web and mobile',
 	'twitter:image': 'https://manuel.tesites.online/diamond.png',
 	'twitter:url': 'https://manuel.tesites.online',
-	'description': 'Full-stack software engineer and founder building products across web and mobile'
+	description: 'Full-stack software engineer and founder building products across web and mobile'
 };

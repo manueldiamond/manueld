@@ -105,6 +105,8 @@
 						<a
 							href={url}
 							class:col-span-full={id === 0}
+							target="_blank"
+							rel="noopener"
 							class="block button max-sm:text-xs min-w-max text-sm overflow-hidden"
 						>
 							<div class="flex flex-col gap-2 xl:items-start" class:md:centered={id !== 0}>

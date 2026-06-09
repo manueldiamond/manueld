@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Project } from '$lib/constants/projects';
-	import { Expand, Link, Lock } from 'lucide-svelte';
+	import { Expand } from 'lucide-svelte';
 	import { blur, fade } from 'svelte/transition';
 
 	const { project, onViewDetails }: { project: Project; onViewDetails: (imgIdx?: number) => void } =
@@ -67,7 +67,7 @@
 		<div class=" flex gap-1 flex-row flex-wrap mb-1">
 			{#each displayedTags as tag}
 				<div
-					class="over bg-carafe-light/20 text-carafe-light text-sm font-semibold px-2 py-1 flex gap-0.5 flex-1 min-w-max"
+					class="over bg-carafe-light/20 text-carafe-light text-sm font-semibold px-2 py-1 flex gap-0.5 flex-1 min-w-max max-w-[120px] text-center centered"
 				>
 					{tag}
 				</div>
@@ -94,19 +94,5 @@
 			<span>View Project</span>
 			<Expand class="aspect-square w-4" />
 		</button>
-
-		<div class="hidden">
-			{#if project.url}
-				<a href={project.url} class="button flex gap-2">
-					<Link class="aspect-square w-4" />
-					<span>View Project</span>
-				</a>
-			{:else}
-				<div class="pri-button cursor-not-allowed opacity-30 flex gap-2">
-					<Lock class="aspect-square w-4" />
-					<span>Private Project</span>
-				</div>
-			{/if}
-		</div>
 	</div>
 </div>

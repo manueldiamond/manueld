@@ -18,7 +18,7 @@
 				class="uppercase absolute right-5 top-5 font-bold text-black/40 text-base max-md:text-sm flex flex-col items-end"
 			>
 				{#each titles as thing}
-					<a href={thing.url} class="cursor-pointer hover:text-cream/10">
+					<a href={thing.url} target="_blank" rel="noopener" class="cursor-pointer hover:text-cream/10">
 						{thing.label} • {thing.title}
 					</a>
 				{/each}
