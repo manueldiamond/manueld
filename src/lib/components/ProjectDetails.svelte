@@ -2,13 +2,25 @@
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import Autoplay from 'embla-carousel-autoplay';
 	import { projects } from '$lib/constants/projects';
-	import { ExternalLink, ExternalLinkIcon, Link, Lock, MinimizeIcon } from 'lucide-svelte';
+	import {
+		ChevronsLeft,
+		ChevronsRight,
+		ExternalLink,
+		ExternalLinkIcon,
+		Fullscreen,
+		Link,
+		Lock,
+		MinimizeIcon,
+		Play
+	} from 'lucide-svelte';
 	import { fade, fly, slide } from 'svelte/transition';
-	import type { EmblaEventType } from 'embla-carousel';
+	import type { EmblaCarouselType, EmblaEventType, EmblaOptionsType } from 'embla-carousel';
 
-	const { id, close } = $props();
+	const { id, close, startImageIdx } = $props();
 
 	const project = $derived(id >= 0 ? projects[id] : null);
+
+	let currentImageId = $state(0);
 
 	$effect(() => {
 		if (project) {
@@ -23,12 +35,16 @@
 		};
 	});
 
-	let currentImageId = $state(0);
-	const initEmbla = (e) => {
-		e.startsWith.on('select', (e) => e.detail.selectedScrollSnap());
+	let emblaApi: EmblaCarouselType | undefined = $state();
+	const initEmbla = (e: CustomEvent<EmblaCarouselType>) => {
+		emblaApi = e.detail;
+		emblaApi.on('select', (e) => {
+			currentImageId = e.selectedScrollSnap();
+		});
 	};
 
 	const plugins = [Autoplay({ delay: 4000 })];
+	const options: EmblaOptionsType = $derived({ startIndex: startImageIdx });
 </script>
 
 {#if project}
@@ -59,17 +75,41 @@
 
 				<div class="flex flex-col overflow-y-scroll flex-1">
 					<div
-						class="overflow-hidden flex min-h-max container relative"
-						use:emblaCarouselSvelte={{ options: {}, plugins }}
+						class="overflow-hidden flex min-h-max container relative group"
+						use:emblaCarouselSvelte={{ options, plugins }}
+						onemblaInit={initEmbla}
 					>
-						<div class="flex gap-3 h-max">
+						<div class="flex gap-3 h-max w-full">
 							{#each project.images as imgSrc, id}
 								<img
-									class="drop-shadow-xl object-contain w-full min-w-full h-auto object-[top_center] max-h-[min(400px,60vh)]"
+									class="drop-shadow-xl object-contain w-full min-w-full object-center max-h-[min(400px,60vh)]"
 									src={imgSrc}
 									alt="{project.name} image {id + 1}"
 								/>
 							{/each}
+						</div>
+						<div
+							class="bg-mblack/60 gap-6 backdrop-blur-md centered mx-auto absolute bottom-0 left-1/2 -translate-x-1/2 text-cream font-medium hidde group-hover:flex group-hover:opacity-100 transition-opacity opacity-0"
+						>
+							<button
+								onclick={() => {
+									emblaApi?.scrollPrev();
+								}}
+								class=" p-2 px-4 centered cursor-pointer hover:bg-mblack/50"
+							>
+								<ChevronsLeft class="aspect-square w-4" />
+							</button>
+
+							<p>{currentImageId + 1}/{project.images.length}</p>
+
+							<button
+								onclick={() => {
+									emblaApi?.scrollNext();
+								}}
+								class="p-2 px-4 centered cursor-pointer hover:bg-mblack/50"
+							>
+								<ChevronsRight class="aspect-square w-4" />
+							</button>
 						</div>
 					</div>
 
@@ -124,12 +164,12 @@
 								<ul class="gap-1 flex flex-col">
 									{#each project.collaborators as collaborator}
 										{@const avatarUrl =
-											collaborator.photoUrl ??
+											collaborator.image ??
 											(collaborator.url?.includes('github') &&
 												`https://github.com/${collaborator.url.split('/').at(-1)}.png`)}
 
 										<li class="flex gap-2 items-center">
-											<div class="flex h-6">
+											<div class="flex h-6 shrink-0">
 												{#if avatarUrl}
 													<img
 														src={avatarUrl}
@@ -146,10 +186,12 @@
 											</div>
 
 											<p class="flex flex-row-reverse justify-between w-full">
-												<span class="text-pewter uppercase text-[10px]">{collaborator.role}</span>
+												<span class="text-pewter text-right font-medium text-[10px]"
+													>{collaborator.role}</span
+												>
 												<a
 													href={collaborator.url}
-													class="{project.client.url &&
+													class="{collaborator.url &&
 														'hover:text-carafe hover:underline cursor-pointer'} text-pewter text-sm"
 												>
 													{collaborator.name}

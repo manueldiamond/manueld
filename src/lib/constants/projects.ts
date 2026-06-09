@@ -2,7 +2,23 @@ export type Collaborator = {
 	name: string;
 	url?: string;
 	role?: string;
-	photoUrl?: string;
+	image?: string;
+};
+
+const manuelDiamond: Collaborator = {
+	name: 'Manuel Diamond',
+	url: 'https://manuel.tesites.online',
+	image: '/diamond.png'
+};
+const christopherOdor: Collaborator = {
+	name: 'Christopher Odor',
+	url: 'https://curvelabz.com',
+	image: '/curve-blue.png'
+};
+const isaacAheto: Collaborator = {
+	name: 'Isaac Aheto',
+	url: 'https://curvelabz.com',
+	image: '/curve-red.png'
 };
 
 export type Client = {
@@ -49,7 +65,7 @@ export const projects: Project[] = [
 		],
 		techstack: ['React Native', 'Expo', 'TypeScript', 'Node.js', 'Express'],
 		collaborators: [
-			{ name: 'Manuel Diamond', url: 'https://manuel.tesites.online', image: '/diamond.png', role: 'Fullstack' },
+			{ ...manuelDiamond, role: 'Fullstack' },
 			{ name: 'Likem Dzokoto', url: 'https://github.com/LikemDzokoto', role: 'Backend' },
 			{ name: 'Abdul Shakur', url: 'https://drpawgh.com', role: 'UI/UX' },
 			{ name: 'Lateef Yusuf', url: 'https://github.com/yusuflateef', role: 'Manager' }
@@ -70,7 +86,7 @@ export const projects: Project[] = [
 			'/bridge/download card.png'
 		],
 		techstack: ['Next.js', 'TypeScript'],
-		collaborators: [{ name: 'Manuel Diamond' }]
+		collaborators: [manuelDiamond]
 	},
 	{
 		name: 'BridgeX Admin Dashboard',
@@ -89,10 +105,10 @@ export const projects: Project[] = [
 		],
 		techstack: ['React', 'TypeScript', 'Node.js'],
 		collaborators: [
-			{ name: 'Manuel Diamond', role: 'Fullstack' },
+			{ ...manuelDiamond, role: 'Fullstack' },
 			{ name: 'Likem Dzokoto', url: 'https://github.com/LikemDzokoto', role: 'Backend' },
 			{ name: 'Abdul Shakur', url: 'https://drpawgh.com', role: 'UI/UX' },
-			{ name: 'Lateef Yusuf', url: 'https://github.com/yusuflateef', role: 'Backend' }
+			{ name: 'Lateef Yusuf', url: 'https://github.com/yusuflateef', role: 'Manager' }
 		]
 	},
 	{
@@ -116,8 +132,8 @@ export const projects: Project[] = [
 			'Cloudinary'
 		],
 		collaborators: [
-			{ name: 'Manuel Diamond', role: 'Fullstack' },
-			{ name: 'Christopher Odor', url: 'https://curvelabz.com', role: 'Product Design' }
+			{ ...manuelDiamond, role: 'Fullstack' },
+			{ ...christopherOdor, role: 'Product Design' }
 		]
 	},
 	{
@@ -139,15 +155,15 @@ export const projects: Project[] = [
 		url: 'https://curvebookings.vercel.app',
 		techstack: ['React', 'Next.js', 'TypeScript', 'Paystack', 'Motion'],
 		collaborators: [
-			{ name: 'Manuel Diamond', role: 'Web Frontend' },
+			{ ...manuelDiamond, role: 'Web Frontend' },
 			{ name: 'Ali Seidu', url: 'https://github.com/aliseidu8855', role: 'Backend' },
 			{
 				name: 'Joseph Mawuli',
 				url: 'https://github.com/orgs/curvebookings/people/MawuliMyth',
 				role: 'Mobile'
 			},
-			{ name: 'Isaac Aheto', url: 'https://curvelabz.com' },
-			{ name: 'Christopher Odor', url: 'https://curvelabz.com' }
+			isaacAheto,
+			christopherOdor
 		]
 	},
 	{
@@ -164,11 +180,7 @@ export const projects: Project[] = [
 			'/vehiville/rs-vehiville7.png'
 		],
 		techstack: ['WordPress', 'PHP', 'Paystack'],
-		collaborators: [
-			{ name: 'Manuel Diamond' },
-			{ name: 'Isaac Aheto', url: 'https://curvelabz.com' },
-			{ name: 'Christopher Odor', url: 'https://curvelabz.com' }
-		]
+		collaborators: [manuelDiamond, isaacAheto, christopherOdor]
 	},
 	{
 		name: 'Enterprise Resource Planning System',
@@ -180,14 +192,13 @@ export const projects: Project[] = [
 		images: ['/rserp.png'],
 		techstack: ['Frappe', 'Docker', 'Nginx', 'ERPNext'],
 		collaborators: [
-			{ name: 'Manuel Diamond' },
-			{ name: 'Oscar Denfu' },
-			{ name: 'Programming Sai' },
-			{ name: 'Raymond Jnr' },
-			{ name: 'Michael Gyamfi' },
-			{ name: 'Christopher Odor' },
-			{ name: 'Isaac Aheto' },
-			{ name: 'Dominic Kobina Aidoo', url: 'https://github.com/Gen3ratorX' }
+			manuelDiamond,
+			christopherOdor,
+			isaacAheto,
+			{ name: 'Michael Gyamfi', url: 'https://github.com/mikegyamfi' },
+			{ name: 'Dominic Kobina Aidoo', url: 'https://github.com/Gen3ratorX' },
+			{ name: 'Erasmus Charwey', url: 'https://github.com/ErasmusBill' },
+			{ name: 'Raymond Jnr' }
 		]
 	},
 	{
@@ -199,11 +210,7 @@ export const projects: Project[] = [
 		tags: ['Wordpress', 'Frontend Development', 'Responsive Design'],
 		images: ['/rs-lantern.png'],
 		techstack: ['WordPress', 'PHP'],
-		collaborators: [
-			{ name: 'Manuel Diamond' },
-			{ name: 'Isaac Aheto', url: 'https://curvelabz.com' },
-			{ name: 'Christopher Odor', url: 'https://curvelabz.com' }
-		]
+		collaborators: [manuelDiamond, isaacAheto, christopherOdor]
 	},
 	{
 		name: 'AI powered Website Chatbot',
@@ -215,11 +222,7 @@ export const projects: Project[] = [
 		images: ['/rs-chatbot.png'],
 		url: 'https://rsgroupgh.com/',
 		techstack: ['PHP', 'WordPress', 'AI'],
-		collaborators: [
-			{ name: 'Manuel Diamond' },
-			{ name: 'Isaac Aheto', url: 'https://curvelabz.com' },
-			{ name: 'Christopher Odor', url: 'https://curvelabz.com' }
-		]
+		collaborators: [manuelDiamond, isaacAheto, christopherOdor]
 	},
 	{
 		name: 'RS Notify',
@@ -235,11 +238,7 @@ export const projects: Project[] = [
 			'/RS/notify-select.png'
 		],
 		techstack: ['React', 'Supabase', 'TanStack Query', 'Recharts'],
-		collaborators: [
-			{ name: 'Manuel Diamond' },
-			{ name: 'Isaac Aheto', url: 'https://curvelabz.com' },
-			{ name: 'Christopher Odor', url: 'https://curvelabz.com' }
-		]
+		collaborators: [manuelDiamond, isaacAheto, christopherOdor]
 	},
 	{
 		name: 'Vehiville Web (v2)',
@@ -257,13 +256,15 @@ export const projects: Project[] = [
 		url: 'https://vehiville.com/',
 		techstack: ['React', 'Supabase', 'TanStack Query', 'TanStack Table', 'Hook Form'],
 		collaborators: [
-			{ name: 'Manuel Diamond' },
+			manuelDiamond,
+			christopherOdor,
+			isaacAheto,
 			{ name: 'Oscar Denfu', url: 'https://github.com/ofoetey', role: 'Main' },
 			{ name: 'Programming Sai', url: 'https://github.com/Programming-Sai' },
-			{ name: 'Raymond Jnr' },
 			{ name: 'Michael Gyamfi', url: 'https://github.com/mikegyamfi' },
 			{ name: 'Erasmus Charwey', url: 'https://github.com/ErasmusBill' },
-			{ name: 'Michael Perry Nii Dromo Tettey', url: 'https://github.com/theniitettey' }
+			{ name: 'Michael Perry Nii Dromo Tettey', url: 'https://github.com/theniitettey' },
+			{ name: 'Raymond Jnr' }
 		]
 	},
 	{
@@ -295,14 +296,15 @@ export const projects: Project[] = [
 		],
 		techstack: ['React', 'Tanstack Start', 'TanStack Table'],
 		collaborators: [
-			{ name: 'Manuel Diamond' },
+			{ ...manuelDiamond, role: 'Main' },
 			{ name: 'Oscar Denfu', url: 'https://github.com/ofoetey' },
-			{ name: 'Christopher Odor', url: 'https://curvelabz.com' },
-			{ name: 'Programming Sai' },
+			christopherOdor,
+			isaacAheto,
+			{ name: 'Programming Sai', url: 'https://github.com/Programming-Sai' },
 			{ name: 'Michael Gyamfi', url: 'https://github.com/mikegyamfi' },
-			{ name: 'Raymond Jnr' },
 			{ name: 'Erasmus Charwey', url: 'https://github.com/ErasmusBill' },
-			{ name: 'Michael Perry Nii Dromo Tettey', url: 'https://github.com/theniitettey' }
+			{ name: 'Michael Perry Nii Dromo Tettey', url: 'https://github.com/theniitettey' },
+			{ name: 'Raymond Jnr' }
 		]
 	},
 	{
@@ -324,8 +326,8 @@ export const projects: Project[] = [
 		],
 		techstack: ['React', 'PHP', 'Laravel', 'React Query', 'Framer Motion'],
 		collaborators: [
-			{ name: 'Manuel Diamond', role: 'Fullstack' },
-			{ name: 'Christopher Odor', url: 'https://curvelabz.com', role: 'System Design' }
+			{ ...manuelDiamond, role: 'Fullstack' },
+			{ ...christopherOdor, role: 'System Design' }
 		]
 	},
 	{
@@ -346,10 +348,7 @@ export const projects: Project[] = [
 			'/Labadi/login.png'
 		],
 		techstack: ['Laravel', 'Vue', 'Krayin'],
-		collaborators: [
-			{ name: 'Manuel Diamond' },
-			{ name: 'Christopher Odor', url: 'https://curvelabz.com' }
-		],
+		collaborators: [manuelDiamond, christopherOdor],
 		additionalLinks: [
 			{
 				label: 'Krayin Repo(Not customized)',
@@ -375,7 +374,7 @@ export const projects: Project[] = [
 		],
 		url: 'https://demo.tesites.online',
 		techstack: ['Next.js', 'TypeScript'],
-		collaborators: [{ name: 'Manuel Diamond' }]
+		collaborators: [manuelDiamond]
 	},
 	{
 		name: 'TE Sites Appointment Booking System',
@@ -392,7 +391,7 @@ export const projects: Project[] = [
 			'/TE Sites/te-appointments1780879234.png'
 		],
 		techstack: ['Next.js', 'TypeScript', 'SMS API'],
-		collaborators: [{ name: 'Manuel Diamond' }]
+		collaborators: [manuelDiamond]
 	},
 	{
 		name: 'Church Management System',
@@ -411,10 +410,7 @@ export const projects: Project[] = [
 			'/ChMS/dash.png'
 		],
 		techstack: ['React', 'Express', 'MongoDB', 'Chart.js'],
-		collaborators: [
-			{ name: 'Manuel Diamond' },
-			{ name: 'Amuzu Daniel', url: 'https://github.com/Ludaprince' }
-		]
+		collaborators: [manuelDiamond, { name: 'Amuzu Daniel', url: 'https://github.com/Ludaprince' }]
 	},
 	{
 		name: 'FirstBank Online Money Transfer',
@@ -437,7 +433,7 @@ export const projects: Project[] = [
 		].reverse(),
 		techstack: ['Next.js', 'Framer Motion'],
 		collaborators: [
-			{ name: 'Manuel Diamond' },
+			manuelDiamond,
 			{ name: 'Ezra Erewharighe', url: 'https://github.com/TheShagwell' }
 		]
 	},
@@ -455,10 +451,7 @@ export const projects: Project[] = [
 			'/LogisticsSystem/1780886528.png'
 		],
 		techstack: ['React', 'React Hook Form', 'Framer Motion', 'Fuse.js'],
-		collaborators: [
-			{ name: 'Manuel Diamond' },
-			{ name: 'Ali Seidu', url: 'https://github.com/aliseidu8855' }
-		]
+		collaborators: [manuelDiamond, { name: 'Ali Seidu', url: 'https://github.com/aliseidu8855' }]
 	},
 	{
 		name: 'Gift-Beneficiariy System',
@@ -478,10 +471,7 @@ export const projects: Project[] = [
 			'/Gifts-System/login.png'
 		],
 		techstack: ['Next.js', 'Framer Motion', 'React Hook Form', 'Barcode Scanner'],
-		collaborators: [
-			{ name: 'Manuel Diamond', url: 'https://manuel.tesites.online' },
-			{ name: 'Danny Starz', url: 'https://github.com/Dannystarrz' }
-		]
+		collaborators: [manuelDiamond, { name: 'Danny Starz', url: 'https://github.com/Dannystarrz' }]
 	},
 	{
 		name: 'Tasty Chef',
@@ -498,6 +488,6 @@ export const projects: Project[] = [
 		],
 		url: 'https://tastychef.vercel.app/',
 		techstack: ['Next.js', 'Paystack'],
-		collaborators: [{ name: 'Manuel Diamond', role: 'Main' }, { name: 'Tabi Malik' }]
+		collaborators: [{ ...manuelDiamond, role: 'Main' }, { name: 'Tabi Malik' }]
 	}
 ];

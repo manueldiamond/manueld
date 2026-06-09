@@ -3,7 +3,8 @@
 	import { Expand, Link, Lock } from 'lucide-svelte';
 	import { blur, fade } from 'svelte/transition';
 
-	const { project, onViewAll }: { project: Project; onViewAll: () => void } = $props();
+	const { project, onViewDetails }: { project: Project; onViewDetails: (imgIdx?: number) => void } =
+		$props();
 
 	let currentImageId = $state(0);
 
@@ -42,7 +43,7 @@
 				>
 					{#key currentImageSrc}
 						<img
-							onclick={onViewAll}
+							onclick={() => onViewDetails(currentImageId)}
 							src={currentImageSrc}
 							alt="{project.name} featured image"
 							class="object-cover drop-shadow-xl drop-shadow-black drop-shadow-2xl object-top absolute w-full h-full"
@@ -86,7 +87,7 @@
 		<button
 			onclick={(e) => {
 				e.stopPropagation();
-				onViewAll();
+				onViewDetails(currentImageId);
 			}}
 			class="button flex gap-2 centered"
 		>
