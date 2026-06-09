@@ -130,6 +130,11 @@
 							<p class=" text-sm text-pewter leading-[150%]">
 								{project.description}
 							</p>
+							{#if project.technical_description}
+								<p class=" text-sm text-pewter leading-[150%]">
+									{project.technical_description}
+								</p>
+							{/if}
 
 							<div class=" flex gap-1 flex-row flex-wrap my-1">
 								{#each project.techstack as tag}
@@ -140,6 +145,20 @@
 									</div>
 								{/each}
 							</div>
+							{#if project.additionalLinks}
+								<div class=" flex gap-1 flex-row flex-wrap my-1">
+									<p class="uppercase text-carafe/80 font-bold text-xs">Additional Links</p>
+									{#each project.additionalLinks as { label, url }}
+										<a
+											href={url}
+											class="over text-pewter text-sm font-semibold py-1 flex gap-0.5 flex-1 min-w-max"
+										>
+											<Link class="inline-block w-4 h-4 ml-1" />
+											{label}
+										</a>
+									{/each}
+								</div>
+							{/if}
 						</div>
 
 						<div

@@ -105,9 +105,9 @@
 						<a
 							href={url}
 							class:col-span-full={id === 0}
-							class="block button max-sm:text-xs overfl-hi text-sm overflow-hidden"
+							class="block button max-sm:text-xs min-w-max text-sm overflow-hidden"
 						>
-							<div class="flex flex-col gap-2" class:md:centered={id !== 0}>
+							<div class="flex flex-col gap-2 xl:items-start" class:md:centered={id !== 0}>
 								<Icon />
 								<span class:md:hidden={id !== 0} class=" sm:block xl:block">{label}</span>
 							</div>
