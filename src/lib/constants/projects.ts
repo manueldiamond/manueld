@@ -263,7 +263,7 @@ export const projects: Project[] = [
 			{ name: 'Programming Sai', url: 'https://github.com/Programming-Sai' },
 			{ name: 'Michael Gyamfi', url: 'https://github.com/mikegyamfi' },
 			{ name: 'Erasmus Charwey', url: 'https://github.com/ErasmusBill' },
-			{ name: 'Michael Perry Nii Dromo Tettey', url: 'https://github.com/theniitettey' },
+			{ name: 'Michael Perry', url: 'https://github.com/theniitettey' },
 			{ name: 'Raymond Jnr' }
 		]
 	},

@@ -3,6 +3,8 @@
 	import Autoplay from 'embla-carousel-autoplay';
 	import { projects } from '$lib/constants/projects';
 	import {
+		ChevronLeft,
+		ChevronRight,
 		ChevronsLeft,
 		ChevronsRight,
 		ExternalLink,
@@ -89,7 +91,7 @@
 
 				<div class="flex flex-col overflow-y-scroll flex-1">
 					<div
-						class="overflow-hidden flex min-h-max container relative group"
+						class="overflow-hidden flex shrink-0 min-h-fit container relative group sticky top-0"
 						use:emblaCarouselSvelte={{ options, plugins }}
 						onemblaInit={initEmbla}
 					>
@@ -103,32 +105,32 @@
 							{/each}
 						</div>
 						<div
-							class="bg-mblack/60 gap-6 backdrop-blur-md centered mx-auto absolute bottom-0 left-1/2 -translate-x-1/2 text-cream font-medium hidde group-hover:flex group-hover:opacity-100 transition-opacity opacity-0"
+							class="bg-mblack/60 gap-6 backdrop-blur-md centered mx-auto absolute bottom-0 max-sm:right-0 sm:left-1/2 sm:-translate-x-1/2 text-cream font-medium hidde group-hover:flex group-hover:opacity-100 transition-opacity opacity-0"
 						>
 							<button
 								onclick={() => {
 									emblaApi?.scrollPrev();
 								}}
-								class=" p-2 px-4 centered cursor-pointer hover:bg-mblack/50"
+								class=" p-2 max-sm:hidden px-4 centered cursor-pointer hover:bg-mblack/50"
 							>
-								<ChevronsLeft class="aspect-square w-4" />
+								<ChevronLeft class="aspect-square w-4" />
 							</button>
 
-							<p>{currentImageId + 1}/{project.images.length}</p>
+							<p class="px-2 py-1 max-sm:text-xs">{currentImageId + 1}/{project.images.length}</p>
 
 							<button
 								onclick={() => {
 									emblaApi?.scrollNext();
 								}}
-								class="p-2 px-4 centered cursor-pointer hover:bg-mblack/50"
+								class="p-2 max-md:hidden px-4 centered cursor-pointer hover:bg-mblack/50"
 							>
-								<ChevronsRight class="aspect-square w-4" />
+								<ChevronRight class="aspect-square w-4" />
 							</button>
 						</div>
 					</div>
 
 					<div
-						class="flex flex-col md:flex-row gap-3 pb-5 container flex-1 pt-4 shadow-black/80 relative z-10 shadow-[0_-4px_24px]"
+						class="bg-mblack z-50 relative flex flex-col md:flex-row gap-3 pb-5 container flex-1 pt-4 shadow-black/80 relative z-10 shadow-[0_-4px_24px]"
 					>
 						<div class="flex flex-col gap-3">
 							<div class=" flex gap-1 flex-row flex-wrap my-1">
