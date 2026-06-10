@@ -4,7 +4,7 @@
 
 <section class="px-4 md:px-8">
 	<div
-		class=" container mx-auto border-carafe/30 border-[4px] sm:border-[24px] md:border-[32px] bg-black/40 backdrop-blur-md md:py-12 py-6 px-0! relative -mt-[160px] shadow-2xl shadow-black/50
+		class=" container mx-auto border-carafe/30 border-[4px] bg-black/40 backdrop-blur-md md:py-12 py-6 px-0! relative -mt-[160px] shadow-2xl shadow-black/50
 
 			relative
 			"

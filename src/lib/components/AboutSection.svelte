@@ -6,7 +6,7 @@
 <!--ABOUT SECTION TOTALLY VIBE CODED(no human)-->
 <section
 	id="about"
-	class=" py-20 pb-20 mx-auto overflow-hidden bg-linear-to-b from-transparent to-black/70"
+	class=" pt-20 mt-[25vh] pb-20 mx-auto overflow-hidden bg-linear-to-b from-transparent to-black/70"
 >
 	<div class="container flex flex-col mx-auto">
 		<h3 class="mb-10 text-cream text-3xl text-right flex items-center justify-end gap-5">
