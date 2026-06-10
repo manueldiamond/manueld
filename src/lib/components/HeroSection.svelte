@@ -18,7 +18,12 @@
 				class="uppercase absolute right-5 top-5 font-bold text-black/40 text-base max-md:text-sm flex flex-col items-end"
 			>
 				{#each titles as thing}
-					<a href={thing.url} target="_blank" rel="noopener" class="cursor-pointer hover:text-cream/10">
+					<a
+						href={thing.url}
+						target="_blank"
+						rel="noopener"
+						class="cursor-pointer hover:text-cream/10"
+					>
 						{thing.label} • {thing.title}
 					</a>
 				{/each}
@@ -36,8 +41,9 @@
 	<div class="container mx-auto flex justify-between h-full items-center">
 		<div class=" max-sm:mt-20 relative z-10">
 			<h1 class="text-5xl text-cream font-medium">Manuel Diamond</h1>
-			<p class=" text-base font-medium text-pewter mt-4 mb-10">
-				I build websites, apps and automation systems that SCALE businesses and accelerate growth.
+			<p class=" text-base font-medium text-pewter mt-4 mb-10 lg:max-w-[500px]">
+				I build websites, I build apps, I build systems.<br />
+				Got something? Hit me up. Let's build
 			</p>
 
 			<div class="flex gap-2 flex-col sm:flex-row">

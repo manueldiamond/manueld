@@ -11,7 +11,6 @@
 <main class="scroll-smooth">
 	<Navbar />
 	<HeroSection />
-	<Buzzbanner />
 	<ProjectsSection />
 	<AboutSection />
 	<TechstackCard />

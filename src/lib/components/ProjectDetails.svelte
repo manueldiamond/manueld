@@ -71,10 +71,10 @@
 					class="container flex justify-between items-center py-1 mx-auto text-lg font-medium text-cream bg-black/40 border-b border-pewter"
 				>
 					<div class="flex gap-2 centered flex-row">
-						<div class="diamond-bullet scale-75"></div>
+						<div class="diamond-bullet scale-60"></div>
 						<p>{project.name}</p>
 					</div>
-					<div class="centered flex gap-4">
+					<div class="centered flex gap-2">
 						{#if project.url}
 							<a
 								href={project.url}

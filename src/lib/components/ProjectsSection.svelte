@@ -10,7 +10,7 @@
 	};
 </script>
 
-<section id="projects" class=" relative scroll-m-20 container mx-auto">
+<section id="projects" class=" relative scroll-m-25 mt-20 container mx-auto">
 	<h3 class="mb-10 text-cream text-3xl text-right flex items-center justify-end gap-5">
 		Project Showcase
 		<div class="diamond-bullet"></div>
