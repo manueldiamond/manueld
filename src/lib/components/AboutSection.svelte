@@ -55,7 +55,7 @@
 				<div class="text-cream/80 text-base md:text-lg leading-[200%]">
 					{#each aboutSections as about}
 						<p class="opacity-50 font-medium text-base mb-4 uppercase">{about.title}</p>
-						<p class="text-justify mb-12">
+						<p class="text-left mb-12">
 							{@html about.content.join('<br />')}
 						</p>
 					{/each}
