@@ -226,8 +226,7 @@
 							'/me/journey/tools/voice-3.webp',
 							'/me/journey/tools/voice-1.webp',
 							'/me/journey/tools/voice-2.webp'
-						]),
-						tool('T3 Code', 'Several Claude and Codex accounts side by side', ['/ai/t3code.webp'])
+						])
 					]
 				]
 			}
