@@ -78,14 +78,7 @@
 					'I taught myself to program by making video games in Java with libGDX, built for Android phones. Arcade games, physics toys and small puzzle rooms, most of them never named.'
 				],
 				tags: ['Java', 'libGDX', 'Android'],
-				rows: [
-					[
-						game('spree', 1, 'Spree', 'Arcade stacking game'),
-						game('physics', 3, 'Physics game', 'Physics toy with levels'),
-						game('reflect', 3, 'Reflect', 'Arcade shooter with two modes'),
-						game('room', 3, 'Room', 'Puzzle prototype')
-					]
-				]
+				rows: [[game('spree', 1), game('physics', 3), game('reflect', 3), game('room', 3)]]
 			},
 			{
 				id: 'godot',
@@ -98,12 +91,12 @@
 				tags: ['Godot', 'GDScript', 'Python', 'Blender'],
 				rows: [
 					[
-						game('brs', 5, 'BRS', 'Robot duelling game, five versions'),
-						game('brs3d', 2, 'BRS 3D', 'The duel rebuilt in 3D'),
-						game('epic', 8, 'Epic Platformer', 'High-speed 3D platformer with multiplayer'),
-						game('shields', 5, 'Room', 'Remade in Godot with shields'),
-						game('lasers', 6, 'Space combat', 'Lasers and turrets'),
-						game('studies', 3, '3D studies', 'Light and materials')
+						game('brs', 5),
+						game('brs3d', 2),
+						game('epic', 8),
+						game('shields', 5),
+						game('lasers', 6),
+						game('studies', 3)
 					]
 				]
 			},
@@ -118,14 +111,14 @@
 				tags: ['Godot', 'Game jams', 'YouTube devlogs'],
 				rows: [
 					[
-						game('deepmine', 5, 'Deep Mine', 'Ludum Dare 48, made in 72 hours'),
-						game('sug', 6, 'Super Unstable Game', 'Ludum Dare 49, ragdoll physics'),
-						game('buttonhell', 7, 'Button Hell', 'Brackeys Game Jam, built in one week'),
-						game('trash', 2, 'Trash Notifications', 'Stop Waiting For Godot jam'),
-						game('aigame', 5, 'AI Game', 'WOWIE 4.0, train a robot to fight'),
-						game('horror', 5, 'Horror game', 'Built in two weeks'),
+						game('deepmine', 5),
+						game('sug', 6),
+						game('buttonhell', 7),
+						game('trash', 2),
+						game('aigame', 5),
+						game('horror', 5),
 						game('elden', 5),
-						game('project2', 8, 'Project 2', 'A one-hour jam game grown into a shooter'),
+						game('project2', 8),
 						game('rig', 1)
 					]
 				]
@@ -141,8 +134,8 @@
 				rows: [
 					[
 						project('FirstBank Online Money Transfer', 'Internship, ITANDT Solutions'),
-						game('brsjs', 1, 'BRS.js', 'The duel game rebuilt in React'),
-						game('polygons', 1, 'Pointless Polygons', 'An idle game in React and Redux'),
+						game('brsjs', 1),
+						game('polygons', 1),
 						{
 							...game('linkedout', 1, 'Linked-out', 'A LinkedIn clone with a live feed'),
 							tags: ['React', 'Redux Toolkit', 'Firebase']
