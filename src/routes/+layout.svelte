@@ -1,11 +1,24 @@
 <script lang="ts">
-	import '@fontsource-variable/montserrat';
-	import '@fontsource-variable/nunito';
+	import '@fontsource-variable/montserrat/index.css';
+	import '@fontsource-variable/nunito/index.css';
 	import favicon from '$lib/assets/favicon.ico';
 	import '../app.css';
 	import { metadata as meta } from '$lib/constants/misc';
+	import { prefersReducedMotion } from '$lib/utils/inView';
+	import Lenis from 'lenis';
+	import 'lenis/dist/lenis.css';
+	import { onMount } from 'svelte';
 
 	let { children } = $props();
+
+	// Smooth wheel scrolling across the site. Touch keeps the native feel.
+	onMount(() => {
+		if (prefersReducedMotion()) return;
+
+		const lenis = new Lenis({ autoRaf: true, lerp: 0.12, anchors: true });
+
+		return () => lenis.destroy();
+	});
 </script>
 
 <svelte:head>

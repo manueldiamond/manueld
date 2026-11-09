@@ -244,6 +244,7 @@
 						'/me/journey/tools/snipcanvas-2.webp'
 					]),
 					tool('Voice Call Agents', 'Phone calls with my coding agents, macOS and iOS', [
+						'/me/journey/tools/voice-3.webp',
 						'/me/journey/tools/voice-1.webp',
 						'/me/journey/tools/voice-2.webp'
 					]),
@@ -295,32 +296,43 @@
 			travel = rails.map((row) => row.map((rail) => Math.max(0, rail.scrollWidth - innerWidth)));
 		};
 
-		const update = () => {
-			frame = 0;
+		// Scroll sets a goal; the rails ease toward it every frame, so wheel steps and
+		// trackpad flicks both glide instead of jumping.
+		let goal = progress.slice();
 
-			progress = sections.map((section, i) => {
+		let last = 0;
+
+		const read = () => {
+			goal = sections.map((section, i) => {
 				const box = section.getBoundingClientRect();
 
 				return Math.min(1, Math.max(0, -box.top / Math.max(1, span(i))));
 			});
+		};
 
-			// Cards glitch and blur out as they reach either edge of the screen.
-			for (const card of document.querySelectorAll<HTMLElement>('[data-card]')) {
-				const box = card.getBoundingClientRect();
-				const centre = box.left + box.width / 2;
-				const distance = Math.abs(centre - innerWidth / 2) - innerWidth * 0.34;
-				const edge = Math.min(1, Math.max(0, distance / (innerWidth * 0.2)));
-				const side = centre < innerWidth / 2 ? -1 : 1;
-				const split = (edge * 10).toFixed(1);
+		const update = (now: number) => {
+			const dt = last ? Math.min(64, now - last) : 16.7;
+			const ease = 1 - Math.pow(0.78, dt / 16.7);
+			let settled = true;
 
-				card.style.transform = edge
-					? `translateX(${side * edge * 18}px) skewX(${side * edge * -6}deg)`
-					: '';
-				card.style.opacity = String(1 - edge * 0.6);
-				card.style.filter = edge
-					? `blur(${(edge * 3).toFixed(2)}px) drop-shadow(${split}px 0 0 rgb(255 40 90 / 0.45)) drop-shadow(-${split}px 0 0 rgb(0 220 255 / 0.45))`
-					: '';
-			}
+			last = now;
+			read();
+
+			progress = progress.map((p, i) => {
+				const next = p + (goal[i] - p) * ease;
+
+				if (Math.abs(goal[i] - next) * Math.max(1, span(i)) > 0.3) {
+					settled = false;
+
+					return next;
+				}
+
+				return goal[i];
+			});
+
+			frame = settled ? 0 : requestAnimationFrame(update);
+
+			if (settled) last = 0;
 		};
 
 		const onScroll = () => {
@@ -333,7 +345,8 @@
 		};
 
 		measure();
-		update();
+		read();
+		progress = goal;
 		addEventListener('scroll', onScroll, { passive: true });
 		addEventListener('resize', onResize);
 
@@ -523,7 +536,7 @@
 							style:transform={still ? undefined : `translate3d(${railX(i, r)}px, 0, 0)`}
 						>
 							{#each row.filter((c) => c.gallery.length) as card, ci (`${card.gallery[0]}-${ci}`)}
-								<li data-card class="w-[85vw] shrink-0 sm:w-[475px] lg:w-[550px]">
+								<li class="w-[85vw] shrink-0 sm:w-[475px] lg:w-[550px]">
 									<button
 										type="button"
 										class="glass block w-full p-2.5 text-left"
@@ -668,6 +681,7 @@
 	<div
 		class="fixed inset-0 z-[100] flex flex-col bg-black"
 		role="dialog"
+		data-lenis-prevent
 		aria-modal="true"
 		aria-label={viewer.title ?? 'Image viewer'}
 	>
@@ -761,9 +775,14 @@
 	}
 
 	.glass {
-		background: hsl(33.3 39.3% 95.1% / 0.04);
+		/* A sheen instead of backdrop blur: blur on dozens of moving cards drops frames. */
+		background: linear-gradient(
+			150deg,
+			hsl(33.3 39.3% 95.1% / 0.09),
+			hsl(33.3 39.3% 95.1% / 0.03) 45%,
+			hsl(33.3 39.3% 95.1% / 0.05)
+		);
 		border: 1px solid hsl(33.3 39.3% 95.1% / 0.14);
-		backdrop-filter: blur(14px);
 		box-shadow: 0 20px 50px -20px rgb(0 0 0 / 0.7);
 	}
 

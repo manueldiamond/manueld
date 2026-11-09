@@ -55,6 +55,15 @@
 		}
 	});
 
+	// Degrees per 60 Hz tick.
+	const MAX_SPEED = 7;
+
+	const MAX_ACCEL = 1.2;
+
+	const MAX_BRAKE = 3;
+
+	const clamp = (n: number, max: number) => Math.max(-max, Math.min(max, n));
+
 	const SNAP = 15;
 
 	// Soft detents every 15 degrees: the target is pulled toward the nearest notch, more
@@ -95,7 +104,18 @@
 						: 0
 					: history[(tickCount - behind + 256) % 256];
 
-			velocity[i] = (velocity[i] + (goal - spin[i]) * stiffness[i]) * damping[i];
+			// The spring asks for a new velocity; the frame only gets there within its
+			// acceleration, which fades as it nears terminal speed. Braking is quicker, so
+			// nothing overshoots its goal.
+			const wanted = (velocity[i] + (goal - spin[i]) * stiffness[i]) * damping[i];
+			const change = wanted - velocity[i];
+			const speeding = change * velocity[i] > 0;
+			const room = 1 - Math.min(1, (Math.abs(velocity[i]) / MAX_SPEED) ** 2);
+
+			velocity[i] = clamp(
+				velocity[i] + clamp(change, speeding ? MAX_ACCEL * room + 0.02 : MAX_BRAKE),
+				MAX_SPEED
+			);
 			spin[i] += velocity[i];
 
 			if (Math.abs(spin[i]) > 0.05 || Math.abs(velocity[i]) > 0.05) moving = true;
