@@ -3,7 +3,7 @@
 	import { ArrowUp, Send, Check, LoaderCircle } from 'lucide-svelte';
 	import Boxx from './Boxx.svelte';
 	import Footer from './Footer.svelte';
-	import emailjs from '@emailjs/browser';
+	import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 
 	import {
 		PUBLIC_EMAILJS_PUBLIC_KEY,
@@ -23,12 +23,17 @@
 
 	let error = $state('');
 
+	// Hidden field only bots fill in
+	let website = $state('');
+
 	async function handleSend() {
 		if (!name.trim() || !email.trim() || !message.trim()) {
 			error = 'Please fill in all fields.';
 
 			return;
 		}
+
+		if (website) return;
 
 		sending = true;
 		sent = false;
@@ -47,7 +52,12 @@
 				PUBLIC_EMAILJS_SERVICE_ID,
 				PUBLIC_EMAILJS_TEMPLATE_ID,
 				templateParams,
-				PUBLIC_EMAILJS_PUBLIC_KEY
+				{
+					publicKey: PUBLIC_EMAILJS_PUBLIC_KEY,
+					blockHeadless: true,
+					// One message per minute per browser
+					limitRate: { id: 'contact-form', throttle: 60_000 }
+				}
 			);
 
 			sent = true;
@@ -55,7 +65,10 @@
 			email = '';
 			message = '';
 		} catch (e) {
-			error = 'Failed to send. Please try again.';
+			error =
+				e instanceof EmailJSResponseStatus && e.status === 429
+					? 'You just sent a message. Try again in a minute.'
+					: 'Failed to send. Please try again.';
 			console.error('EmailJS error:', e);
 		} finally {
 			sending = false;
@@ -90,6 +103,15 @@
 					class="w-full input text-base"
 					bind:value={email}
 				/>
+				<input
+					type="text"
+					name="website"
+					tabindex="-1"
+					autocomplete="off"
+					aria-hidden="true"
+					class="hidden"
+					bind:value={website}
+				/>
 				<textarea
 					placeholder="Message"
 					class=" col-span-full w-full min-h-32 max-sm:min-h-24 input text-base"
@@ -120,17 +142,18 @@
 			>
 				<p class="text-base sm:text-lg pb-5 max-sm:pb-2.5">Contact Details</p>
 				<div class="grid grid-cols-2 lg:grid-cols-3 gap-3 max-sm:gap-2">
-					{#each contactDetails as { url, icon: Icon, label }, id}
+					{#each contactDetails as { url, icon: Icon, label, wide }}
 						<a
 							href={url}
-							class:col-span-full={id === 0}
+							class:col-span-full={wide}
 							target="_blank"
 							rel="noopener"
-							class="block button max-sm:text-xs min-w-max text-sm overflow-hidden"
+							class="block button max-sm:text-xs text-sm overflow-hidden"
+							class:min-w-max={!wide}
 						>
-							<div class="flex flex-col gap-2 xl:items-start" class:md:centered={id !== 0}>
+							<div class="flex flex-col gap-2 xl:items-start" class:md:centered={!wide}>
 								<Icon />
-								<span class:md:hidden={id !== 0} class=" sm:block xl:block">{label}</span>
+								<span class:md:hidden={!wide} class="sm:block xl:block break-all">{label}</span>
 							</div>
 						</a>
 					{/each}

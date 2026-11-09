@@ -50,13 +50,13 @@ export const metadata = {
 	'og:title': 'Manuel Diamond',
 	'og:description':
 		'Full-stack software engineer and founder building products across web and mobile',
-	'og:image': 'https://manuel.tesites.online/diamond.png',
-	'og:url': 'https://manuel.tesites.online',
+	'og:image': 'https://manueldiamond.com/diamond.png',
+	'og:url': 'https://manueldiamond.com',
 	'twitter:card': 'summary_large_image',
 	'twitter:title': 'Manuel Diamond',
 	'twitter:description':
 		'Full-stack software engineer and founder building products across web and mobile',
-	'twitter:image': 'https://manuel.tesites.online/diamond.png',
-	'twitter:url': 'https://manuel.tesites.online',
+	'twitter:image': 'https://manueldiamond.com/diamond.png',
+	'twitter:url': 'https://manueldiamond.com',
 	description: 'Full-stack software engineer and founder building products across web and mobile'
 };

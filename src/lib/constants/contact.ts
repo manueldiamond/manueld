@@ -2,12 +2,18 @@ import { SiGithub, SiInstagram, SiWhatsapp, SiX, SiYoutube } from '@icons-pack/s
 import { Mail, Phone } from 'lucide-svelte';
 
 export const contact = {
-	email: 'manuel@tesites.online',
+	email: 'info@manueldiamond.com',
 	phoneno: '+233539512886'
 };
 
 export const contactDetails = [
-	{ url: 'mailto:manuel@tesites.online', icon: Mail, label: 'manuel@tesites.online' },
+	{ url: 'mailto:info@manueldiamond.com', icon: Mail, label: 'info@manueldiamond.com', wide: true },
+	{
+		url: 'mailto:manueldiamondlistowell@gmail.com',
+		icon: Mail,
+		label: 'manueldiamondlistowell@gmail.com',
+		wide: true
+	},
 	{ url: 'tel:+233539512886', icon: Phone, label: '(+233) 53 951 2886' },
 	{ url: 'https://wa.me/+233539512886', icon: SiWhatsapp, label: 'Whatsapp' },
 	{ url: 'https://x.com/manuel_diamond', icon: SiX, label: '@manuel_diamond' },

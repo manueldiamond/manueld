@@ -8,6 +8,10 @@
 	import Navbar from '$lib/components/Navbar.svelte';
 </script>
 
+<svelte:head>
+	<title>Manuel Diamond · Software engineer</title>
+</svelte:head>
+
 <main class="scroll-smooth">
 	<Navbar />
 	<HeroSection />
