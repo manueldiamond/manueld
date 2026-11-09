@@ -242,6 +242,15 @@
 				],
 				rows: [
 					[
+						{
+							...game(
+								'pm',
+								9,
+								'Project Management App',
+								'Go-live tracker, Kanban board, sprints, dependencies and charts'
+							),
+							tags: ['React', 'NestJS', 'Cloudflare Workers', 'D1']
+						},
 						project('Odadea 96 Network'),
 						project('The Builders Circle'),
 						project('BridgeX Mobile App'),
