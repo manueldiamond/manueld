@@ -75,6 +75,21 @@ body {
 	animation: marquee-right 40s linear infinite;
 }
 
+/* Own compositor layer per strip: the browser slides a cached bitmap instead of repainting it. */
+.marquee-1,
+.marquee-2 {
+	will-change: transform;
+	backface-visibility: hidden;
+}
+
+/* Set by the `pauseOffscreen` action while the strip is out of view. */
+.offscreen .marquee-1,
+.offscreen .marquee-2,
+.offscreen.marquee-1,
+.offscreen.marquee-2 {
+	animation-play-state: paused;
+}
+
 .marquee-wrapper {
 	overflow: hidden;
 	mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
@@ -142,8 +157,11 @@ debug * {
 	outline: 1px solid red;
 }
 
+/* Same fractal noise, drawn once as an image tile and cached, instead of a live SVG
+   filter that re-ran feTurbulence on every repaint of the card behind the marquees. */
 .grain {
-	filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' /%3E%3C/filter%3E%3C/svg%3E#n");
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+	background-size: 256px 256px;
 }
 
 @utility input {

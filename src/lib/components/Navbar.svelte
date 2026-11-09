@@ -1,5 +1,6 @@
 <script>
 	import { nav } from '$lib/constants/misc';
+	import { page } from '$app/state';
 </script>
 
 <!-- HEADER -->
@@ -24,7 +25,8 @@
 				<li class="flex text-pewter group">
 					<a
 						href={item.url}
-						class="max-sm:py-2 max-sm:mt-1 border-cream block px-0.5 hover:text-cream hover-font-semibold text-pewter"
+						aria-current={item.url === page.url.pathname ? 'page' : undefined}
+						class="aria-[current=page]:text-cream max-sm:py-2 max-sm:mt-1 border-cream block px-0.5 hover:text-cream hover-font-semibold text-pewter"
 					>
 						<span class="group-hover:opacity-100 transition-opacity duration-700 opacity-0">[</span>
 						<span>{item.label}</span>

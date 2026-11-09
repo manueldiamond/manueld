@@ -1,31 +1,50 @@
 <script lang="ts">
 	import type { Project } from '$lib/constants/projects';
 	import { Expand } from 'lucide-svelte';
-	import { blur, fade } from 'svelte/transition';
+	import { blur } from 'svelte/transition';
+	import { pauseOffscreen } from '$lib/utils/inView';
+	import ConfidentialArt from './pc/ConfidentialArt.svelte';
 
 	const { project, onViewDetails }: { project: Project; onViewDetails: (imgIdx?: number) => void } =
 		$props();
 
 	let currentImageId = $state(0);
 
+	let visible = $state(false);
+
+	let pageVisible = $state(true);
+
+	// Rotate screenshots only while the card is on screen and the tab is visible.
+	// The next image is decoded before the swap so the blur transition never starts on a blank frame.
 	$effect(() => {
-		if (!project.images?.length) return;
-		let timeoutId: NodeJS.Timeout;
-		const randomTimeout = () => {
+		if (project.images.length < 2 || !visible || !pageVisible) return;
+		let timeoutId: ReturnType<typeof setTimeout>;
+		let cancelled = false;
+
+		const schedule = () => {
 			const randInterval = 5000 + Math.floor(Math.random() * 5000);
-			timeoutId = setTimeout(() => {
-				currentImageId = (currentImageId + 1) % project.images.length;
-				randomTimeout();
+			timeoutId = setTimeout(async () => {
+				const next = (currentImageId + 1) % project.images.length;
+				const img = new Image();
+				img.src = project.images[next];
+				await img.decode().catch(() => {});
+
+				if (cancelled) return;
+				currentImageId = next;
+				schedule();
 			}, randInterval);
 		};
 
-		randomTimeout();
+		schedule();
+
 		return () => {
+			cancelled = true;
 			clearTimeout(timeoutId);
 		};
 	});
 
 	const displayedTags = project.tags.slice(0, 4);
+
 	if (project.tags.length > 4) {
 		displayedTags[3] = `+${project.tags.length - 3}`;
 	}
@@ -33,8 +52,19 @@
 	const currentImageSrc = $derived(project?.images[currentImageId]);
 </script>
 
-<div class="bg-black/10 hover:bg-black/20 flex flex-col group">
-	{#if currentImageSrc}
+<svelte:document
+	onvisibilitychange={() => (pageVisible = document.visibilityState === 'visible')}
+/>
+
+<div
+	class="bg-black/10 hover:bg-black/20 flex flex-col group"
+	use:pauseOffscreen={(v) => (visible = v)}
+>
+	{#if project.confidential}
+		<div class="relative aspect-[3/2.2] w-full overflow-hidden p-4">
+			<ConfidentialArt class="h-full w-full" />
+		</div>
+	{:else if currentImageSrc}
 		<div class=" overflow-hidden relative aspect-[3/2.2] w-full">
 			<div class="flex-1 flex items-end w-full h-full flex p-4 relative">
 				<div
@@ -46,7 +76,9 @@
 							onclick={() => onViewDetails(currentImageId)}
 							src={currentImageSrc}
 							alt="{project.name} featured image"
-							class="object-cover drop-shadow-xl drop-shadow-black drop-shadow-2xl object-top absolute w-full h-full"
+							loading="lazy"
+							decoding="async"
+							class="object-cover shadow-[0_20px_13px_rgb(0_0_0/0.6),0_25px_25px_rgb(0_0_0/0.5)] object-top absolute w-full h-full"
 							transition:blur={{ duration: 1000 }}
 						/>
 					{/key}
@@ -67,16 +99,17 @@
 		<div class=" flex gap-1 flex-row flex-wrap mb-1">
 			{#each displayedTags as tag}
 				<div
-					class="over bg-carafe-light/20 text-carafe-light text-sm font-semibold px-2 py-1 flex gap-0.5 flex-1 min-w-max max-w-[120px] text-center centered"
+					class="over bg-carafe-light/20 text-carafe-light text-sm font-semibold px-2 py-1 flex gap-0.5 flex-auto min-w-0 max-w-full text-center centered"
+					title={tag}
 				>
-					{tag}
+					<span class="truncate">{tag}</span>
 				</div>
 			{/each}
 		</div>
 
 		<p class=" text-sm text-pewter leading-[150%]">
-			{project.description.slice(0, 100)}
-			{#if project.description.length > 100}
+			{project.confidential ? project.description : project.description.slice(0, 100)}
+			{#if !project.confidential && project.description.length > 100}
 				<span>...</span>
 			{/if}
 		</p>

@@ -13,16 +13,20 @@
 		Link,
 		Lock,
 		MinimizeIcon,
-		Play
+		Play,
+		X
 	} from 'lucide-svelte';
+	import ConfidentialArt from './pc/ConfidentialArt.svelte';
+	import { tick } from 'svelte';
 	import { fade, fly, slide } from 'svelte/transition';
 	import type { EmblaCarouselType, EmblaEventType, EmblaOptionsType } from 'embla-carousel';
 
-	const { id, close, startImageIdx } = $props();
+	const { id, close, startImageIdx }: { id: number; close: () => void; startImageIdx: number } =
+		$props();
 
 	const project = $derived(id >= 0 ? projects[id] : null);
 
-	let currentImageId = $state();
+	let currentImageId = $state(0);
 
 	$effect(() => {
 		currentImageId = startImageIdx ?? 0;
@@ -42,6 +46,7 @@
 	});
 
 	let emblaApi: EmblaCarouselType | undefined = $state();
+
 	const initEmbla = (e: CustomEvent<EmblaCarouselType>) => {
 		emblaApi = e.detail;
 		emblaApi.on('select', (e) => {
@@ -49,30 +54,54 @@
 		});
 	};
 
+	// Focus moves into the window when it opens and back to what opened it when it closes.
+	let closeBtn: HTMLButtonElement | undefined = $state();
+
+	let opener: HTMLElement | null = null;
+
+	$effect(() => {
+		if (!project) return;
+		const active = document.activeElement;
+
+		opener = active instanceof HTMLElement ? active : null;
+		tick().then(() => closeBtn?.focus({ preventScroll: true }));
+
+		return () => opener?.focus({ preventScroll: true });
+	});
+
 	const plugins = [Autoplay({ delay: 4000 })];
+
 	const options: EmblaOptionsType = $derived({ startIndex: startImageIdx });
 </script>
 
+<svelte:window onkeydown={(e) => project && e.key === 'Escape' && close()} />
+
 {#if project}
+	<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 	<div
-		class="fixed z-50 inset-0 bg-black/50 content-end"
+		class="absolute z-30 inset-0 bg-black/60"
 		onclick={(e) => {
 			e.stopPropagation();
 			close();
 		}}
 	>
-		<div class="sm:container mx-auto relative w-full h-[90%] mt-auto">
+		<div class="relative w-full h-full">
+			<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 			<div
+				role="dialog"
+				aria-modal="true"
+				aria-label={project.name}
+				tabindex="-1"
 				onclick={(e) => e.stopPropagation()}
-				class=" m-auto absolute min-h-[400px] sm:inset-6 inset-1 border-pewter border bg-mblack to-transparent shadow-black shadow-xl overflow-hidden flex flex-col"
-				in:fly={{ duration: 200, y: 50 }}
+				class="absolute sm:inset-3 inset-1 border-pewter border bg-mblack shadow-black shadow-xl overflow-hidden flex flex-col"
+				in:fly={{ duration: 200, y: 30 }}
 			>
 				<div
-					class="container flex justify-between items-center py-1 mx-auto text-lg font-medium text-cream bg-black/40 border-b border-pewter"
+					class="flex justify-between items-center gap-2 min-h-9 py-0.5 px-3 text-sm sm:text-base font-semibold text-cream bg-linear-to-r from-carafe to-carafe-light/60 border-b border-pewter shrink-0"
 				>
-					<div class="flex gap-2 centered flex-row">
-						<div class="diamond-bullet scale-60"></div>
-						<p>{project.name}</p>
+					<div class="flex gap-2 items-center flex-row min-w-0">
+						<div class="diamond-bullet scale-50 shrink-0"></div>
+						<p class="truncate">{project.name}</p>
 					</div>
 					<div class="centered flex gap-2">
 						{#if project.url}
@@ -80,60 +109,70 @@
 								href={project.url}
 								target="_blank"
 								rel="noopener"
-								class="cursor-pointer p-1 hover:bg-cream-hover:text-mblack text-cream font-medium text-base"
+								aria-label="Open {project.name} in a new tab"
+								class="win-btn"
 							>
 								<ExternalLinkIcon size={20} />
 							</a>
 						{/if}
 
-						<button
-							class="cursor-pointer p-1 hover:bg-cream-hover:text-mblack text-cream font-medium text-base"
-							onclick={close}
-						>
-							<MinimizeIcon size={20} />
+						<button bind:this={closeBtn} class="win-btn" onclick={close} aria-label="Close">
+							<X size={18} />
 						</button>
 					</div>
 				</div>
 
 				<div class="flex flex-col overflow-y-scroll flex-1">
-					<div
-						class="overflow-hidden flex shrink-0 min-h-fit container relative group sticky top-0"
-						use:emblaCarouselSvelte={{ options, plugins }}
-						onemblaInit={initEmbla}
-					>
-						<div class="flex gap-3 h-max w-full">
-							{#each project.images as imgSrc, id}
-								<img
-									class="drop-shadow-xl object-contain w-full min-w-full object-center max-h-[min(400px,60vh)]"
-									src={imgSrc}
-									alt="{project.name} image {id + 1}"
-								/>
-							{/each}
+					{#if project.confidential}
+						<div class="shrink-0 bg-black/40 border-b border-pewter/30">
+							<ConfidentialArt class="mx-auto block h-[min(320px,40vh)] w-full" />
 						</div>
+					{:else}
 						<div
-							class="bg-mblack/60 gap-6 backdrop-blur-md centered mx-auto absolute bottom-0 max-sm:right-0 sm:left-1/2 sm:-translate-x-1/2 text-cream font-medium hidde group-hover:flex group-hover:opacity-100 transition-opacity opacity-0"
+							class="overflow-hidden flex shrink-0 min-h-fit container relative group sticky top-0"
+							use:emblaCarouselSvelte={{ options, plugins }}
+							onemblaInit={initEmbla}
 						>
-							<button
-								onclick={() => {
-									emblaApi?.scrollPrev();
-								}}
-								class=" p-2 max-sm:hidden px-4 centered cursor-pointer hover:bg-mblack/50"
+							<div class="flex gap-3 h-max w-full">
+								{#each project.images as imgSrc, id}
+									<img
+										class="drop-shadow-xl object-contain w-full min-w-full object-center max-h-[min(400px,60vh)]"
+										src={imgSrc}
+										alt="{project.name} image {id + 1}"
+										loading={id === startImageIdx ? 'eager' : 'lazy'}
+										decoding="async"
+									/>
+								{/each}
+							</div>
+							<div
+								class="bg-mblack/60 gap-6 backdrop-blur-md centered mx-auto absolute bottom-0 max-sm:right-0 sm:left-1/2 sm:-translate-x-1/2 text-cream font-medium hidde group-hover:flex group-hover:opacity-100 transition-opacity opacity-0"
 							>
-								<ChevronLeft class="aspect-square w-4" />
-							</button>
+								<button
+									onclick={() => {
+										emblaApi?.scrollPrev();
+									}}
+									aria-label="Previous image"
+									class=" p-2 max-sm:hidden px-4 centered cursor-pointer hover:bg-mblack/50"
+								>
+									<ChevronLeft class="aspect-square w-4" />
+								</button>
 
-							<p class="px-2 py-1 max-sm:text-xs">{currentImageId + 1}/{project.images.length}</p>
+								<p class="px-2 py-1 max-sm:text-xs">
+									{(currentImageId ?? 0) + 1}/{project.images.length}
+								</p>
 
-							<button
-								onclick={() => {
-									emblaApi?.scrollNext();
-								}}
-								class="p-2 max-md:hidden px-4 centered cursor-pointer hover:bg-mblack/50"
-							>
-								<ChevronRight class="aspect-square w-4" />
-							</button>
+								<button
+									onclick={() => {
+										emblaApi?.scrollNext();
+									}}
+									aria-label="Next image"
+									class="p-2 max-md:hidden px-4 centered cursor-pointer hover:bg-mblack/50"
+								>
+									<ChevronRight class="aspect-square w-4" />
+								</button>
+							</div>
 						</div>
-					</div>
+					{/if}
 
 					<div
 						class="bg-mblack z-50 relative flex flex-col md:flex-row gap-3 pb-5 container flex-1 pt-4 shadow-black/80 relative z-10 shadow-[0_-4px_24px]"
@@ -142,9 +181,10 @@
 							<div class=" flex gap-1 flex-row flex-wrap my-1">
 								{#each project.tags as tag}
 									<div
-										class="over bg-carafe-light/20 text-carafe-light text-sm font-semibold px-2 py-1 flex gap-0.5 flex-1 min-w-max max-w-[120px] text-center centered"
+										class="over bg-carafe-light/20 text-carafe-light text-sm font-semibold px-2 py-1 flex gap-0.5 flex-auto min-w-0 max-w-full text-center centered"
+										title={tag}
 									>
-										{tag}
+										<span class="truncate">{tag}</span>
 									</div>
 								{/each}
 							</div>
@@ -269,7 +309,7 @@
 										class="min-w-max pri-button cursor-not-allowed centered opacity-30 flex gap-2"
 									>
 										<Lock class="aspect-square w-4" />
-										<span>Private Project</span>
+										<span>{project.confidential ? 'Details withheld' : 'Private Project'}</span>
 									</div>
 								{/if}
 							</div>
@@ -280,3 +320,30 @@
 		</div>
 	</div>
 {/if}
+
+<style>
+	.win-btn {
+		display: inline-grid;
+		place-items: center;
+		width: 2rem;
+		height: 1.75rem;
+		border: 1px solid hsl(33.3 39.3% 95.1% / 0.35);
+		background: hsl(220 3.7% 14.3% / 0.5);
+		color: var(--color-cream);
+		cursor: pointer;
+	}
+	@media (pointer: coarse) {
+		.win-btn {
+			width: 2.75rem;
+			height: 2.75rem;
+		}
+	}
+	.win-btn:hover {
+		background: var(--color-cream);
+		color: var(--color-mblack);
+	}
+	.win-btn:focus-visible {
+		outline: 2px solid var(--color-cream);
+		outline-offset: 1px;
+	}
+</style>

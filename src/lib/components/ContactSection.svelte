@@ -12,17 +12,24 @@
 	} from '$env/static/public';
 
 	let name = $state('');
+
 	let email = $state('');
+
 	let message = $state('');
+
 	let sending = $state(false);
+
 	let sent = $state(false);
+
 	let error = $state('');
 
 	async function handleSend() {
 		if (!name.trim() || !email.trim() || !message.trim()) {
 			error = 'Please fill in all fields.';
+
 			return;
 		}
+
 		sending = true;
 		sent = false;
 		error = '';
@@ -130,8 +137,10 @@
 				</div>
 
 				<img
-					src="/me/coooollll_shiizz-removebg-preview.png"
+					src="/me/coooollll_shiizz-removebg-preview.webp"
 					alt="Manual in the corner"
+					loading="lazy"
+					decoding="async"
 					class="pointer-events-none bottom-[-90px] right-[-45px] grayscale-50 brightness-200 w-auto absolute h-[200px] object-contain drop-shadow-xl drop-shadow-black"
 				/>
 			</div>

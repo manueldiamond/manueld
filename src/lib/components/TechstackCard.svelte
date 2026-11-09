@@ -1,5 +1,6 @@
 <script>
 	import { languages, tools } from '$lib/constants/tech';
+	import { pauseOffscreen } from '$lib/utils/inView';
 </script>
 
 <section class="px-4 md:px-8">
@@ -21,7 +22,7 @@
 				</h3>
 				<p class="max-sm:text-sm text-base text-pewter">Tools and libraries i'm familiar with</p>
 			</div>
-			<div class="w-full marquee-wrapper flex flex-col gap-4">
+			<div class="w-full marquee-wrapper flex flex-col gap-4" use:pauseOffscreen>
 				{#each [tools, languages] as techstack, id}
 					<div class=" {(id + 1) % 2 === 1 ? 'marquee-1' : 'marquee-2'} gap-8! max-md:gap-4! flex">
 						{#each [...techstack, ...techstack] as tech}
@@ -29,7 +30,10 @@
 								<img
 									src={tech.image}
 									alt={tech.name}
-									class=" w-8 sm:w-12 md:w-18
+									width="72"
+									height="72"
+									decoding="async"
+									class=" w-8 sm:w-12 md:w-18 h-auto
 										object-contain aspect-square grayscale-50 drop-shadow-lg drop-shadow-black/50"
 								/>
 								<span class="font-medium md:text-sm text-white/80 sm:tex-xs text-[10px] min-w-max"

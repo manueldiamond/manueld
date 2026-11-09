@@ -8,17 +8,19 @@ export type Collaborator = {
 const manuelDiamond: Collaborator = {
 	name: 'Manuel Diamond',
 	url: 'https://manuel.tesites.online',
-	image: '/diamond.png'
+	image: '/diamond.webp'
 };
+
 const christopherOdor: Collaborator = {
 	name: 'Christopher Odor',
 	url: 'https://curvelabz.com',
-	image: '/curve-blue.png'
+	image: '/curve-blue.webp'
 };
+
 const isaacAheto: Collaborator = {
 	name: 'Isaac Aheto',
 	url: 'https://curvelabz.com',
-	image: '/curve-red.png'
+	image: '/curve-red.webp'
 };
 
 export type Client = {
@@ -35,31 +37,83 @@ export type Project = {
 	url?: string;
 	images: string[];
 	techstack?: string[];
-	technical_description?: [];
+	technical_description?: string;
 	additionalLinks?: { url: string; label: string }[];
 	collaborators?: Collaborator[];
+	/** Work under NDA: no images, no links, rendered with the confidential placeholder. */
+	confidential?: boolean;
 };
 
 export const projects: Project[] = [
 	{
+		name: 'Odadea 96 Network',
+		description:
+			"A private network for the PRESEC class of 1996. Members find each other, post updates, list businesses and opportunities, run events and ventures, and browse the year group's heritage archive and scanned year book.",
+		technical_description:
+			'React single-page app and a Hono API, both on Cloudflare Workers with D1 and R2. Zod contracts shared between web and API, Playwright end to end tests, and an admin workspace for membership requests, reports and moderation.',
+		tags: ['Alumni Network', 'Messaging', 'Events', 'Venture Lab', 'Admin Dashboard'],
+		client: { name: 'Odadea 96', url: 'https://odadea96.org' },
+		clientLabel: 'Built for',
+		images: [
+			'/odadea96/home.webp',
+			'/odadea96/member-home.webp',
+			'/odadea96/network.webp',
+			'/odadea96/venture-lab.webp',
+			'/odadea96/venture-calculator.webp',
+			'/odadea96/member-profile.webp',
+			'/odadea96/discover.webp',
+			'/odadea96/heritage.webp',
+			'/odadea96/admin-dashboard.webp'
+		],
+		techstack: ['React', 'Vite', 'Hono', 'Cloudflare Workers', 'D1', 'R2', 'Zod', 'Playwright'],
+		collaborators: [manuelDiamond]
+	},
+	{
+		name: 'The Builders Circle',
+		description:
+			'An invite-only community app for builders who learn, belong and lift each other. New members take a builder assessment, get an archetype and capability profile, then work through a 90 day journey of lessons, quizzes and challenges reviewed by the founders.',
+		technical_description:
+			'React web and admin apps plus an Expo mobile app in one Turborepo, on Supabase for magic-link auth, data and realtime messages and notifications. Invite-only sign up is enforced by a database trigger, not in the browser.',
+		tags: ['Community Platform', 'Assessments', 'Learning Hub', 'Realtime Chat', 'Admin Dashboard'],
+		client: { name: 'The Builders Circle' },
+		clientLabel: 'Built for',
+		images: [
+			'/builders-circle/archetype-result.webp',
+			'/builders-circle/home-journey.webp',
+			'/builders-circle/grow-lesson.webp',
+			'/builders-circle/quiz-passed.webp',
+			'/builders-circle/stage-complete.webp',
+			'/builders-circle/admin-dashboard.webp',
+			'/builders-circle/admin-archetypes.webp',
+			'/builders-circle/admin-challenges.webp'
+		],
+		techstack: ['React', 'Vite', 'Expo', 'React Native', 'Supabase', 'Turborepo', 'Tailwind CSS'],
+		collaborators: [manuelDiamond]
+	},
+	{
+		name: 'National Scale Project',
+		description:
+			'Worked on a national-level project involving an ecosystem of 20+ unified communication systems. Project details are hidden due to confidentiality.',
+		tags: ['National Scale', 'Unified Communications', 'Confidential'],
+		client: { name: 'Confidential' },
+		clientLabel: 'Client',
+		images: [],
+		techstack: ['Java', 'Spring Boot', 'Python', 'Django', 'React', 'TypeScript'],
+		confidential: true
+	},
+	{
 		name: 'BridgeX Mobile App',
 		description:
 			'A services marketplace that allows users to request services, find work and connect with local artisans nearby. Features realtime notifications and location tracking. ',
-		tags: [
-			'Android',
-			'iOS',
-			'Location Based',
-			'Realtime Systems',
-			'Chat Systems'
-		],
+		tags: ['Android', 'iOS', 'Location Based', 'Realtime Systems', 'Chat Systems'],
 		client: { name: 'Bridge and Ladder Synergy', url: 'https://bridgexng.com' },
 		clientLabel: 'Built for',
 		url: 'https://bridgexng.com',
 		images: [
-			'/bridge/bridgex-home.png',
-			'/bridge/create req.jpeg',
-			'/bridge/chatpage.png',
-			'/bridge/sidebar.jpeg'
+			'/bridge/bridgex-home.webp',
+			'/bridge/create req.webp',
+			'/bridge/chatpage.webp',
+			'/bridge/sidebar.webp'
 		],
 		techstack: ['React Native', 'Expo', 'TypeScript', 'Node.js', 'Express'],
 		collaborators: [
@@ -77,10 +131,10 @@ export const projects: Project[] = [
 		clientLabel: 'Built for',
 		url: 'https://bridgexng.com',
 		images: [
-			'/bridge/download page.png',
-			'/bridge/brig web home.png',
-			'/bridge/get-help.png',
-			'/bridge/download card.png'
+			'/bridge/download page.webp',
+			'/bridge/brig web home.webp',
+			'/bridge/get-help.webp',
+			'/bridge/download card.webp'
 		],
 		techstack: ['Next.js', 'TypeScript'],
 		collaborators: [manuelDiamond]
@@ -92,12 +146,12 @@ export const projects: Project[] = [
 		client: { name: 'Bridge and Ladder Synergy', url: 'https://bridgexng.com' },
 		clientLabel: 'Built for',
 		images: [
-			'/bridge/bx-admin-home.png',
-			'/bridge/1780698699.png',
-			'/bridge/1780698679.png',
-			'/bridge/1780698668.png',
-			'/bridge/1780698660.png',
-			'/bridge/bxadmin-pies.png'
+			'/bridge/bx-admin-home.webp',
+			'/bridge/1780698699.webp',
+			'/bridge/1780698679.webp',
+			'/bridge/1780698668.webp',
+			'/bridge/1780698660.webp',
+			'/bridge/bxadmin-pies.webp'
 		],
 		techstack: ['React', 'TypeScript', 'Node.js'],
 		collaborators: [
@@ -141,13 +195,13 @@ export const projects: Project[] = [
 		client: { name: 'Curve Labz', url: 'https://curvelabz.com' },
 		clientLabel: 'Built under',
 		images: [
-			'/Curve/curvebookings-1780887823.png',
-			'/Curve/curvebookings-1780887719.png',
-			'/Curve/curvebookings-1780887641.png',
-			'/Curve/curvebookings-1780887595.png',
-			'/Curve/curvebookings-1780887584.png',
-			'/Curve/curvebookings-1780887530.png',
-			'/Curve/curvebookings-1780887505.png'
+			'/Curve/curvebookings-1780887823.webp',
+			'/Curve/curvebookings-1780887719.webp',
+			'/Curve/curvebookings-1780887641.webp',
+			'/Curve/curvebookings-1780887595.webp',
+			'/Curve/curvebookings-1780887584.webp',
+			'/Curve/curvebookings-1780887530.webp',
+			'/Curve/curvebookings-1780887505.webp'
 		].reverse(),
 		url: 'https://curvebookings.vercel.app',
 		techstack: ['React', 'Next.js', 'TypeScript', 'Paystack', 'Motion'],
@@ -172,9 +226,9 @@ export const projects: Project[] = [
 		clientLabel: 'Built under',
 		url: 'https://rsvehiville.rsgroupgh.com/',
 		images: [
-			'/vehiville/rs-vehiville6.png',
-			'/vehiville/rs-vehiville4.png',
-			'/vehiville/rs-vehiville7.png'
+			'/vehiville/rs-vehiville6.webp',
+			'/vehiville/rs-vehiville4.webp',
+			'/vehiville/rs-vehiville7.webp'
 		],
 		techstack: ['WordPress', 'PHP', 'Paystack'],
 		collaborators: [manuelDiamond, isaacAheto, christopherOdor]
@@ -186,7 +240,7 @@ export const projects: Project[] = [
 		tags: ['Cloud System Deployment', 'Server Configuration', 'ERP Deployment'],
 		client: { name: 'RS Group of Companies', url: 'https://rsgroupgh.com' },
 		clientLabel: 'Deployed under',
-		images: ['/rserp.png'],
+		images: ['/rserp.webp'],
 		techstack: ['Frappe', 'Docker', 'Nginx', 'ERPNext'],
 		collaborators: [
 			manuelDiamond,
@@ -205,7 +259,7 @@ export const projects: Project[] = [
 		clientLabel: 'Built under',
 		url: 'https://rslantern.rsgroupgh.com/',
 		tags: ['Wordpress', 'Frontend Development'],
-		images: ['/rs-lantern.png'],
+		images: ['/rs-lantern.webp'],
 		techstack: ['WordPress', 'PHP'],
 		collaborators: [manuelDiamond, isaacAheto, christopherOdor]
 	},
@@ -216,7 +270,7 @@ export const projects: Project[] = [
 		client: { name: 'RS Group of Companies', url: 'https://rsgroupgh.com' },
 		clientLabel: 'Built under',
 		tags: ['AI Chatbot', 'Wordpress', 'Lead Capture', 'CRM', 'PHP'],
-		images: ['/rs-chatbot.png'],
+		images: ['/rs-chatbot.webp'],
 		url: 'https://rsgroupgh.com/',
 		techstack: ['PHP', 'WordPress', 'AI'],
 		collaborators: [manuelDiamond, isaacAheto, christopherOdor]
@@ -229,10 +283,10 @@ export const projects: Project[] = [
 		client: { name: 'RS Group of Companies', url: 'https://rsgroupgh.com' },
 		clientLabel: 'Built under',
 		images: [
-			'/RS/notify-dash.png',
-			'/RS/notify-contacts.png',
-			'/RS/notify message.png',
-			'/RS/notify-select.png'
+			'/RS/notify-dash.webp',
+			'/RS/notify-contacts.webp',
+			'/RS/notify message.webp',
+			'/RS/notify-select.webp'
 		],
 		techstack: ['React', 'Supabase', 'TanStack Query', 'Recharts'],
 		collaborators: [manuelDiamond]
@@ -245,10 +299,10 @@ export const projects: Project[] = [
 		clientLabel: 'Built under',
 		tags: ['Database Design', 'Secure Payment', 'KYC integration'],
 		images: [
-			'/vehiville/vehiville-v2-car-sale.png',
-			'/vehiville/vehivilleV2-main.png',
-			'/vehiville/vehivilleV2-1780710011.png',
-			'/vehiville/vehivilleV2-1780709992.png'
+			'/vehiville/vehiville-v2-car-sale.webp',
+			'/vehiville/vehivilleV2-main.webp',
+			'/vehiville/vehivilleV2-1780710011.webp',
+			'/vehiville/vehivilleV2-1780709992.webp'
 		],
 		url: 'https://vehiville.com/',
 		techstack: ['React', 'Supabase', 'TanStack Query', 'TanStack Table', 'Hook Form'],
@@ -270,25 +324,20 @@ export const projects: Project[] = [
 			'Under the new development of Vehiville, a dedicated administrative platform designed to manage users, compliance, vehicles, rentals, sales, business algorithm constraints,  and maintenance of vehicles.',
 		client: { name: 'RS Group of Companies', url: 'https://rsgroupgh.com' },
 		clientLabel: 'Built under',
-		tags: [
-			'Dashboard Analytics',
-			'CMS',
-			'Multimedia compression',
-			'Secure Role Based Access'
-		],
+		tags: ['Dashboard Analytics', 'CMS', 'Multimedia compression', 'Secure Role Based Access'],
 		images: [
-			'/vehiville/mainlogin.png',
-			'/vehiville/home dash.png',
-			'/vehiville/multi apps.png',
-			'/vehiville/1780698976.png',
-			'/vehiville/1780698909.png',
-			'/vehiville/1780698890.png',
-			'/vehiville/1780698879.png',
-			'/vehiville/1780698858.png',
-			'/vehiville/1780698835.png',
-			'/vehiville/1780698931.png',
-			'/vehiville/1780698940.png',
-			'/vehiville/1780698962.png'
+			'/vehiville/mainlogin.webp',
+			'/vehiville/home dash.webp',
+			'/vehiville/multi apps.webp',
+			'/vehiville/1780698976.webp',
+			'/vehiville/1780698909.webp',
+			'/vehiville/1780698890.webp',
+			'/vehiville/1780698879.webp',
+			'/vehiville/1780698858.webp',
+			'/vehiville/1780698835.webp',
+			'/vehiville/1780698931.webp',
+			'/vehiville/1780698940.webp',
+			'/vehiville/1780698962.webp'
 		],
 		techstack: ['React', 'Tanstack Start', 'TanStack Table'],
 		collaborators: [
@@ -311,14 +360,14 @@ export const projects: Project[] = [
 		client: { name: 'Curve Labz', url: 'https://curvelabz.com' },
 		clientLabel: 'Built under',
 		images: [
-			'/AREF/checkin-typing.png',
-			'/AREF/pincode.png',
-			'/AREF/card-back.png',
-			'/AREF/card-front.png',
-			'/AREF/adminpaga.png',
-			'/AREF/loginadmin.png',
-			'/AREF/checkin home.png',
-			'/AREF/set-code.png'
+			'/AREF/checkin-typing.webp',
+			'/AREF/pincode.webp',
+			'/AREF/card-back.webp',
+			'/AREF/card-front.webp',
+			'/AREF/adminpaga.webp',
+			'/AREF/loginadmin.webp',
+			'/AREF/checkin home.webp',
+			'/AREF/set-code.webp'
 		],
 		techstack: ['React', 'PHP', 'Laravel', 'React Query', 'Framer Motion'],
 		collaborators: [
@@ -334,14 +383,14 @@ export const projects: Project[] = [
 		clientLabel: 'Built under',
 		tags: ['CRM', 'System Customization', 'Meta Ads Integration'],
 		images: [
-			'/Labadi/dash.png',
-			'/Labadi/leads.png',
-			'/Labadi/lead view page.png',
-			'/Labadi/create mail.png',
-			'/Labadi/mails.png',
-			'/Labadi/email-signature.png',
-			'/Labadi/notifications.png',
-			'/Labadi/login.png'
+			'/Labadi/dash.webp',
+			'/Labadi/leads.webp',
+			'/Labadi/lead view page.webp',
+			'/Labadi/create mail.webp',
+			'/Labadi/mails.webp',
+			'/Labadi/email-signature.webp',
+			'/Labadi/notifications.webp',
+			'/Labadi/login.webp'
 		],
 		techstack: ['Laravel', 'Vue', 'Krayin'],
 		collaborators: [manuelDiamond, christopherOdor],
@@ -360,13 +409,13 @@ export const projects: Project[] = [
 		clientLabel: 'Built under',
 		tags: ['Website', 'SMS Integration'],
 		images: [
-			'/TE Sites/homepage.png',
-			'/TE Sites/1780866349.png',
-			'/TE Sites/get in touch.png',
-			'/TE Sites/1780866376.png',
-			'/TE Sites/1780866354.png',
-			'/TE Sites/1780866397.png',
-			'/TE Sites/footer.png'
+			'/TE Sites/homepage.webp',
+			'/TE Sites/1780866349.webp',
+			'/TE Sites/get in touch.webp',
+			'/TE Sites/1780866376.webp',
+			'/TE Sites/1780866354.webp',
+			'/TE Sites/1780866397.webp',
+			'/TE Sites/footer.webp'
 		],
 		url: 'https://demo.tesites.online',
 		techstack: ['Next.js', 'TypeScript'],
@@ -380,11 +429,11 @@ export const projects: Project[] = [
 		clientLabel: 'Built under',
 		tags: ['SMS Integration', 'CRM Tools', 'CMS Tools'],
 		images: [
-			'/TE Sites/te-appointmentsdash.png',
-			'/TE Sites/te-appointments1780879297.png',
-			'/TE Sites/te-appointments1780879291.png',
-			'/TE Sites/te-appointments1780879271.png',
-			'/TE Sites/te-appointments1780879234.png'
+			'/TE Sites/te-appointmentsdash.webp',
+			'/TE Sites/te-appointments1780879297.webp',
+			'/TE Sites/te-appointments1780879291.webp',
+			'/TE Sites/te-appointments1780879271.webp',
+			'/TE Sites/te-appointments1780879234.webp'
 		],
 		techstack: ['Next.js', 'TypeScript', 'SMS API'],
 		collaborators: [manuelDiamond]
@@ -397,13 +446,13 @@ export const projects: Project[] = [
 		clientLabel: 'Built for',
 		tags: ['Administrative Dashboard', 'Records keeping System'],
 		images: [
-			'/ChMS/1780881442.png',
-			'/ChMS/1780881426.png',
-			'/ChMS/1780881414.png',
-			'/ChMS/1780881356.png',
-			'/ChMS/1780881351.png',
-			'/ChMS/chms-login.png',
-			'/ChMS/dash.png'
+			'/ChMS/1780881442.webp',
+			'/ChMS/1780881426.webp',
+			'/ChMS/1780881414.webp',
+			'/ChMS/1780881356.webp',
+			'/ChMS/1780881351.webp',
+			'/ChMS/chms-login.webp',
+			'/ChMS/dash.webp'
 		],
 		techstack: ['React', 'Express', 'MongoDB', 'Chart.js'],
 		collaborators: [manuelDiamond, { name: 'Amuzu Daniel', url: 'https://github.com/Ludaprince' }]
@@ -416,16 +465,16 @@ export const projects: Project[] = [
 		clientLabel: 'Built under',
 		tags: ['Website', 'Admin Dashboard'],
 		images: [
-			'/FirstOnline/1780880656.png',
-			'/FirstOnline/1780880645.png',
-			'/FirstOnline/1780880527.png',
-			'/FirstOnline/1780880466.png',
-			'/FirstOnline/1780880446.png',
-			'/FirstOnline/dashboard2.png',
-			'/FirstOnline/dashboard1.png',
-			'/FirstOnline/frontpage-2.png',
-			'/FirstOnline/converterwidget.png',
-			'/FirstOnline/hero.png'
+			'/FirstOnline/1780880656.webp',
+			'/FirstOnline/1780880645.webp',
+			'/FirstOnline/1780880527.webp',
+			'/FirstOnline/1780880466.webp',
+			'/FirstOnline/1780880446.webp',
+			'/FirstOnline/dashboard2.webp',
+			'/FirstOnline/dashboard1.webp',
+			'/FirstOnline/frontpage-2.webp',
+			'/FirstOnline/converterwidget.webp',
+			'/FirstOnline/hero.webp'
 		].reverse(),
 		techstack: ['Next.js', 'Framer Motion'],
 		collaborators: [
@@ -441,10 +490,10 @@ export const projects: Project[] = [
 		clientLabel: 'Built for',
 		tags: ['Logistics Management System', 'Dashboard', 'Tracking System'],
 		images: [
-			'/LogisticsSystem/dash.png',
-			'/LogisticsSystem/login.png',
-			'/LogisticsSystem/1780886561.png',
-			'/LogisticsSystem/1780886528.png'
+			'/LogisticsSystem/dash.webp',
+			'/LogisticsSystem/login.webp',
+			'/LogisticsSystem/1780886561.webp',
+			'/LogisticsSystem/1780886528.webp'
 		],
 		techstack: ['React', 'React Hook Form', 'Framer Motion', 'Fuse.js'],
 		collaborators: [
@@ -460,14 +509,14 @@ export const projects: Project[] = [
 		clientLabel: 'Built under',
 		tags: ['Distribution Management', 'Barcode Scanner'],
 		images: [
-			'/Gifts-System/dona.png',
-			'/Gifts-System/idcard.png',
-			'/Gifts-System/create beneficiary.png',
-			'/Gifts-System/main.png',
-			'/Gifts-System/1780878962.png',
-			'/Gifts-System/1780878949.png',
-			'/Gifts-System/1780878887.png',
-			'/Gifts-System/login.png'
+			'/Gifts-System/dona.webp',
+			'/Gifts-System/idcard.webp',
+			'/Gifts-System/create beneficiary.webp',
+			'/Gifts-System/main.webp',
+			'/Gifts-System/1780878962.webp',
+			'/Gifts-System/1780878949.webp',
+			'/Gifts-System/1780878887.webp',
+			'/Gifts-System/login.webp'
 		],
 		techstack: ['Next.js', 'Framer Motion', 'React Hook Form', 'Barcode Scanner'],
 		collaborators: [manuelDiamond, { name: 'Danny Starz', url: 'https://github.com/Dannystarrz' }]
@@ -480,10 +529,10 @@ export const projects: Project[] = [
 		clientLabel: 'Built as',
 		tags: ['Food Ordering App', 'Paystack Payment', 'Mobile First Design', 'Next.js'],
 		images: [
-			'/TastyChef/tasty.jpeg',
-			'/TastyChef/favourites.jpg',
-			'/TastyChef/detail.jpg',
-			'/TastyChef/auth.jpg'
+			'/TastyChef/tasty.webp',
+			'/TastyChef/favourites.webp',
+			'/TastyChef/detail.webp',
+			'/TastyChef/auth.webp'
 		],
 		url: 'https://tastychef.vercel.app/',
 		techstack: ['Next.js', 'Paystack'],

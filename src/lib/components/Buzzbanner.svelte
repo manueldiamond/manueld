@@ -1,8 +1,9 @@
 <script>
 	import { buzzwordStrips } from '$lib/constants/misc';
+	import { pauseOffscreen } from '$lib/utils/inView';
 </script>
 
-<section class=" mt-20 marquee-wrapper container mx-auto overflow-hidden pb-10">
+<section class=" mt-20 marquee-wrapper container mx-auto overflow-hidden pb-10" use:pauseOffscreen>
 	<div class="marquee-1" style="animation-duration: 180s;">
 		{#each [...buzzwordStrips.top, ...buzzwordStrips.top] as thing}
 			<div

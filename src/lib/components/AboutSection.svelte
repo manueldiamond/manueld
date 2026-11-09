@@ -1,13 +1,24 @@
 <script>
 	import { aboutSections } from '$lib/constants/about';
 	import { FileIcon } from 'lucide-svelte';
+	import { reveal } from '$lib/utils/inView';
 </script>
 
 <!--ABOUT SECTION TOTALLY VIBE CODED(no human)-->
 <section
 	id="about"
-	class=" pt-20 mt-[25vh] pb-20 mx-auto overflow-hidden bg-linear-to-b from-transparent to-black/70"
+	class="relative isolate pt-20 mt-[25vh] pb-20 mx-auto overflow-hidden bg-linear-to-b from-transparent to-black/70"
 >
+	<!-- Washed-out name behind the copy. It drifts slower than the page, so the text slides over it. -->
+	<div
+		aria-hidden="true"
+		class="about-name-track pointer-events-none absolute inset-x-0 top-[8%] -z-10 select-none"
+	>
+		<div class="about-name">
+			<p>Manuel</p>
+			<p class="pl-[12vw]">Diamond</p>
+		</div>
+	</div>
 	<div class="container flex flex-col mx-auto">
 		<h3 class="mb-10 text-cream text-3xl text-right flex items-center justify-end gap-5">
 			About Me
@@ -15,28 +26,28 @@
 		</h3>
 
 		<div class="flex">
-			<div class="sm:flex-2 relative flex items-center -z-10">
+			<div class="about-shapes sm:flex-2 relative flex items-center -z-10" use:reveal={0.2}>
 				<div
-					class=" absolute neumorphic aspect-square h-[60%] rotate- -left-0 skew-[20deg] translate-y-[60%] flex bg-linear-to-b! from-white/2! via-white/5 to-white/0 backdrop-blur-sm from-30%"
+					class="about-shape absolute neumorphic aspect-square h-[60%] rotate- -left-0 skew-[20deg] translate-y-[60%] flex bg-linear-to-b! from-white/2! via-white/5 to-white/0 from-30%"
 				>
 					<div
-						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 backdrop-blur-sm"
+						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
 					></div>
 				</div>
 
 				<div
-					class=" absolute neumorphic aspect-square h-[50%] rotate- -left-0 skew-[-20deg] translate-x-[160%] translate-y-[60%] bg-linear-60! from-white/2! via-white/10 to-white/0 backdrop-blur-sm from-30%"
+					class="about-shape absolute neumorphic aspect-square h-[50%] rotate- -left-0 skew-[-20deg] translate-x-[160%] translate-y-[60%] bg-linear-60! from-white/2! via-white/10 to-white/0 from-30%"
 				>
 					<div
-						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 backdrop-blur-sm"
+						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
 					></div>
 				</div>
 
 				<div
-					class=" absolute neumorphic aspect-square h-[80%] rotate- -left-0 skew-[-20deg] -translate- flex bg-white/0! from-white/0 via-white/2 to-white/0 backdrop-blur-sm from-30%"
+					class="about-shape absolute neumorphic aspect-square h-[80%] rotate- -left-0 skew-[-20deg] -translate- flex bg-white/0! from-white/0 via-white/2 to-white/0 from-30%"
 				>
 					<div
-						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 backdrop-blur-sm"
+						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
 					></div>
 				</div>
 			</div>
@@ -70,3 +81,77 @@
 		</div>
 	</div>
 </section>
+
+<style>
+	.about-name {
+		font-family: 'Montserrat Variable';
+		font-weight: 900;
+		text-transform: uppercase;
+		font-size: clamp(4.5rem, 17vw, 16rem);
+		line-height: 0.82;
+		letter-spacing: -0.04em;
+		color: transparent;
+		-webkit-text-stroke: 1px hsl(33.3 39.3% 95.1% / 0.07);
+		background: linear-gradient(
+			180deg,
+			hsl(33.3 39.3% 95.1% / 0.06),
+			hsl(33.3 39.3% 95.1% / 0.015)
+		);
+		-webkit-background-clip: text;
+		background-clip: text;
+		white-space: nowrap;
+	}
+	@supports (animation-timeline: view()) {
+		@media (prefers-reduced-motion: no-preference) {
+			/* The drift runs on its own compositor layer: the gradient-clipped text is
+			   painted once and then only moved. */
+			.about-name-track {
+				will-change: transform;
+				animation: name-drift linear both;
+				animation-timeline: view();
+			}
+		}
+	}
+	@keyframes name-drift {
+		from {
+			transform: translate3d(-4vw, 22vh, 0);
+		}
+		to {
+			transform: translate3d(4vw, -18vh, 0);
+		}
+	}
+
+	/* The three plates swing in one after another as About arrives, and fold away when it leaves. */
+	.about-shape {
+		opacity: 0;
+		scale: 0.55;
+		rotate: -28deg;
+		transition:
+			opacity 0.5s ease,
+			scale 0.6s cubic-bezier(0.5, 0, 0.75, 0),
+			rotate 0.6s cubic-bezier(0.5, 0, 0.75, 0);
+	}
+	:global(.about-shapes.is-in) .about-shape {
+		opacity: 1;
+		scale: 1;
+		rotate: 0deg;
+		transition:
+			opacity 0.8s ease,
+			scale 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+			rotate 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+	:global(.about-shapes.is-in) .about-shape:nth-child(2) {
+		transition-delay: 0.15s;
+	}
+	:global(.about-shapes.is-in) .about-shape:nth-child(3) {
+		transition-delay: 0.3s;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.about-shape {
+			opacity: 1;
+			scale: 1;
+			rotate: 0deg;
+			transition: none;
+		}
+	}
+</style>

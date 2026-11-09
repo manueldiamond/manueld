@@ -55,7 +55,7 @@ export const tools = [
 	{
 		name: 'AWS',
 		image:
-			'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg'
+			'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original.svg'
 	}
 ];
 

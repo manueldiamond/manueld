@@ -66,7 +66,7 @@
 max-sm:absolute right-0 top-12
 				-mb-30 relative flex bg-mblack/40 backdrop-blur-sm border-cream max-w-[380px] w-[38vw] aspect-square shadow-lg shadow-black/50 rotate-45 min-w-[200px] select-none"
 		>
-			<Boxx count={24} />
+			<Boxx count={24} tilt />
 		</div>
 	</div>
 </section>
