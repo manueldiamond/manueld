@@ -1,8 +1,19 @@
 <script lang="ts">
-	import { onMount, type Component } from 'svelte';
+	import { onMount, tick, type Component } from 'svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import { ArrowLeft, ArrowRight, HandCoins, Mail, X, ZoomIn, ZoomOut } from 'lucide-svelte';
+	import {
+		ArrowLeft,
+		ArrowRight,
+		Briefcase,
+		FileIcon,
+		HandCoins,
+		Mail,
+		X,
+		ZoomIn,
+		ZoomOut
+	} from 'lucide-svelte';
+	import Boxx from '$lib/components/Boxx.svelte';
 	import {
 		SiAndroid,
 		SiBlender,
@@ -41,7 +52,6 @@
 		title: string;
 		text: string[];
 		tags: string[];
-		tint: string;
 		logos: Logo[];
 		rows: Card[][];
 		link?: { href: string; label: string };
@@ -74,185 +84,192 @@
 		};
 	};
 
+	// Every era gets two rails: half the sideways travel, so less time pinned.
+	const dual = (rows: Card[][]) => {
+		if (rows.length > 1) return rows;
+
+		const cards = rows[0];
+		const half = Math.ceil(cards.length / 2);
+
+		return [cards.slice(0, half), cards.slice(half)];
+	};
+
 	// Sources: the old APKs in Drive, the devlogs on YouTube, itch.io, GitHub history and the home page.
-	const eras: Era[] = [
-		{
-			id: 'libgdx',
-			years: '2016 to 2020',
-			title: 'Java and libGDX',
-			text: [
-				'I taught myself to program by making video games in Java with libGDX, built for Android phones. Arcade games, physics toys and small puzzle rooms, most of them never named.'
-			],
-			tags: ['Java', 'libGDX', 'Android'],
-			tint: 'hsl(28 26% 17%)',
-			logos: [
-				{ word: 'Java', x: 80, y: 22, size: 150 },
-				{ icon: SiOpenjdk, x: 62, y: 72, size: 150 },
-				{ icon: SiAndroid, x: 92, y: 66, size: 130 },
-				{ word: 'libGDX', x: 46, y: 18, size: 64 }
-			],
-			rows: [
-				[
-					game('spree', 1, 'Spree', 'Arcade stacking game'),
-					game('physics', 3, 'Physics game', 'Physics toy with levels'),
-					game('reflect', 3, 'Reflect', 'Arcade shooter with two modes'),
-					game('room', 3, 'Room', 'Puzzle prototype')
-				]
-			]
-		},
-		{
-			id: 'godot',
-			years: '2020 to 2022',
-			title: 'Early Godot',
-			text: [
-				'I moved to Godot and started building bigger games. BRS, a robot duelling game, went through several versions in 2D and then 3D.',
-				'I also wrote small Python servers while learning how multiplayer games work.'
-			],
-			tags: ['Godot', 'GDScript', 'Python', 'Blender'],
-			tint: 'hsl(212 30% 16%)',
-			logos: [
-				{ icon: SiGodotengine, x: 82, y: 22, size: 180 },
-				{ icon: SiPython, x: 62, y: 74, size: 120 },
-				{ icon: SiBlender, x: 93, y: 68, size: 110 }
-			],
-			rows: [
-				[
-					game('brs', 5, 'BRS', 'Robot duelling game, five versions'),
-					game('brs3d', 2, 'BRS 3D', 'The duel rebuilt in 3D'),
-					game('epic', 8, 'Epic Platformer', 'High-speed 3D platformer with multiplayer'),
-					game('shields', 5, 'Room', 'Remade in Godot with shields'),
-					game('lasers', 6, 'Space combat', 'Lasers and turrets'),
-					game('studies', 3, '3D studies', 'Light and materials')
-				]
-			]
-		},
-		{
-			id: 'jams',
-			years: '2021 to 2024',
-			title: 'Game jams and devlogs',
-			text: [
-				'Game jams gave me deadlines: Ludum Dare 48 and 49, the Brackeys Game Jam, WOWIE 4.0 and Stop Waiting For Godot.',
-				'I recorded a devlog for each one on YouTube, where the channel grew to 568 subscribers. The last series turned a one-hour jam game into a full shooter over three months.'
-			],
-			tags: ['Godot', 'Game jams', 'YouTube devlogs'],
-			tint: 'hsl(355 26% 16%)',
-			logos: [
-				{ icon: SiYoutube, x: 80, y: 24, size: 190 },
-				{ icon: SiGodotengine, x: 93, y: 70, size: 120 },
-				{ icon: SiBlender, x: 64, y: 76, size: 100 }
-			],
-			rows: [
-				[
-					game('deepmine', 5, 'Deep Mine', 'Ludum Dare 48, made in 72 hours'),
-					game('sug', 6, 'Super Unstable Game', 'Ludum Dare 49, ragdoll physics'),
-					game('buttonhell', 7, 'Button Hell', 'Brackeys Game Jam, built in one week'),
-					game('trash', 2, 'Trash Notifications', 'Stop Waiting For Godot jam'),
-					game('aigame', 5, 'AI Game', 'WOWIE 4.0, train a robot to fight'),
-					game('horror', 5, 'Horror game', 'Built in two weeks'),
-					game('elden', 5),
-					game('project2', 8, 'Project 2', 'A one-hour jam game grown into a shooter'),
-					game('rig', 1)
-				]
-			]
-		},
-		{
-			id: 'web',
-			years: '2023',
-			title: 'Into web development',
-			text: [
-				'I learned React and moved into web development. My first professional build was an internship project for FirstBank under ITANDT Solutions. I rebuilt BRS in React to learn it.'
-			],
-			tags: ['React', 'JavaScript', 'HTML', 'CSS'],
-			tint: 'hsl(190 30% 14%)',
-			logos: [
-				{ icon: SiReact, x: 80, y: 24, size: 180 },
-				{ icon: SiJavascript, x: 62, y: 74, size: 110 },
-				{ icon: SiHtml5, x: 93, y: 66, size: 110 },
-				{ icon: SiCss, x: 48, y: 22, size: 90 }
-			],
-			rows: [
-				[
-					project('FirstBank Online Money Transfer', 'Internship, ITANDT Solutions'),
-					game('brsjs', 1, 'BRS.js', 'The duel game rebuilt in React'),
-					game('polygons', 1, 'Pointless Polygons', 'An idle game in React and Redux')
-				]
-			]
-		},
-		{
-			id: 'freelance',
-			years: '2024 to 2025',
-			title: 'Freelance',
-			text: [
-				'Freelance work for businesses: booking systems, management tools, websites and dashboards, built directly with the people who use them.'
-			],
-			tags: ['Next.js', 'TypeScript', 'React Native', 'Flutter', 'Django'],
-			tint: 'hsl(42 18% 15%)',
-			logos: [
-				{ icon: SiNextdotjs, x: 80, y: 24, size: 170 },
-				{ icon: SiTypescript, x: 62, y: 74, size: 110 },
-				{ icon: SiReact, x: 93, y: 68, size: 110 },
-				{ icon: SiFlutter, x: 48, y: 20, size: 90 },
-				{ icon: SiDjango, x: 92, y: 30, size: 80 }
-			],
-			rows: [
-				[
-					project('Tasty Chef'),
-					project('Curve Bookings'),
-					project('Church Management System'),
-					project('Logistics Management System'),
-					project('Gift-Beneficiary System'),
-					project('TE Sites Appointment Booking System'),
-					project('Dental Website'),
-					project('Vehiville Web (v1)')
-				]
-			]
-		},
-		{
-			id: 'contract',
-			years: '2025 to 2026',
-			title: 'AI-driven rapid development',
-			text: [
-				'After graduating with a First Class BSc in Computer Science from Central University, Ghana, I joined my first company, then moved to contract work across several products.',
-				'Projects no longer take forever. I run several coding agents in parallel and built my own tools around them: a screenshot app that hands annotated snips to agents, voice calls with my agents, and an MCP server that gives them email, identity and publishing tools.'
-			],
-			tags: ['TypeScript', 'Node.js', 'Expo', 'Laravel', 'Cloudflare', 'Swift', 'AI agents'],
-			tint: 'hsl(18 28% 15%)',
-			link: { href: '/ai', label: 'How I work with AI' },
-			logos: [
-				{ icon: SiClaude, x: 80, y: 22, size: 170 },
-				{ icon: SiCloudflare, x: 62, y: 76, size: 110 },
-				{ icon: SiExpo, x: 93, y: 66, size: 100 },
-				{ icon: SiNodedotjs, x: 48, y: 20, size: 90 },
-				{ icon: SiLaravel, x: 92, y: 30, size: 80 }
-			],
-			rows: [
-				[
-					project('Odadea 96 Network'),
-					project('The Builders Circle'),
-					project('BridgeX Mobile App'),
-					project('BridgeX Admin Dashboard'),
-					project('Curve Rentals App'),
-					project('RS Notify'),
-					project('AI powered Website Chatbot'),
-					project('Enterprise Resource Planning System'),
-					project('Vehiville Web (v2)'),
-					project('AREF 2026 Admission Portal')
+	const eras: Era[] = (
+		[
+			{
+				id: 'libgdx',
+				years: '2016 to 2020',
+				title: 'Java and libGDX',
+				text: [
+					'I taught myself to program by making video games in Java with libGDX, built for Android phones. Arcade games, physics toys and small puzzle rooms, most of them never named.'
 				],
-				[
-					tool('SnipCanvas', 'Native macOS snip and annotate, built for agents', [
-						'/me/journey/tools/snipcanvas-1.webp',
-						'/me/journey/tools/snipcanvas-2.webp'
-					]),
-					tool('Voice Call Agents', 'Phone calls with my coding agents, macOS and iOS', [
-						'/me/journey/tools/voice-3.webp',
-						'/me/journey/tools/voice-1.webp',
-						'/me/journey/tools/voice-2.webp'
-					]),
-					tool('T3 Code', 'Several Claude and Codex accounts side by side', ['/ai/t3code.webp'])
+				tags: ['Java', 'libGDX', 'Android'],
+				logos: [
+					{ word: 'Java', x: 80, y: 22, size: 150 },
+					{ icon: SiOpenjdk, x: 62, y: 72, size: 150 },
+					{ icon: SiAndroid, x: 92, y: 66, size: 130 },
+					{ word: 'libGDX', x: 46, y: 18, size: 64 }
+				],
+				rows: [
+					[
+						game('spree', 1, 'Spree', 'Arcade stacking game'),
+						game('physics', 3, 'Physics game', 'Physics toy with levels'),
+						game('reflect', 3, 'Reflect', 'Arcade shooter with two modes'),
+						game('room', 3, 'Room', 'Puzzle prototype')
+					]
 				]
-			]
-		}
-	];
+			},
+			{
+				id: 'godot',
+				years: '2020 to 2022',
+				title: 'Early Godot',
+				text: [
+					'I moved to Godot and started building bigger games. BRS, a robot duelling game, went through several versions in 2D and then 3D.',
+					'I also wrote small Python servers while learning how multiplayer games work.'
+				],
+				tags: ['Godot', 'GDScript', 'Python', 'Blender'],
+				logos: [
+					{ icon: SiGodotengine, x: 82, y: 22, size: 180 },
+					{ icon: SiPython, x: 62, y: 74, size: 120 },
+					{ icon: SiBlender, x: 93, y: 68, size: 110 }
+				],
+				rows: [
+					[
+						game('brs', 5, 'BRS', 'Robot duelling game, five versions'),
+						game('brs3d', 2, 'BRS 3D', 'The duel rebuilt in 3D'),
+						game('epic', 8, 'Epic Platformer', 'High-speed 3D platformer with multiplayer'),
+						game('shields', 5, 'Room', 'Remade in Godot with shields'),
+						game('lasers', 6, 'Space combat', 'Lasers and turrets'),
+						game('studies', 3, '3D studies', 'Light and materials')
+					]
+				]
+			},
+			{
+				id: 'jams',
+				years: '2021 to 2024',
+				title: 'Game jams and devlogs',
+				text: [
+					'Game jams gave me deadlines: Ludum Dare 48 and 49, the Brackeys Game Jam, WOWIE 4.0 and Stop Waiting For Godot.',
+					'I recorded a devlog for each one on YouTube, where the channel grew to 568 subscribers. The last series turned a one-hour jam game into a full shooter over three months.'
+				],
+				tags: ['Godot', 'Game jams', 'YouTube devlogs'],
+				logos: [
+					{ icon: SiYoutube, x: 80, y: 24, size: 190 },
+					{ icon: SiGodotengine, x: 93, y: 70, size: 120 },
+					{ icon: SiBlender, x: 64, y: 76, size: 100 }
+				],
+				rows: [
+					[
+						game('deepmine', 5, 'Deep Mine', 'Ludum Dare 48, made in 72 hours'),
+						game('sug', 6, 'Super Unstable Game', 'Ludum Dare 49, ragdoll physics'),
+						game('buttonhell', 7, 'Button Hell', 'Brackeys Game Jam, built in one week'),
+						game('trash', 2, 'Trash Notifications', 'Stop Waiting For Godot jam'),
+						game('aigame', 5, 'AI Game', 'WOWIE 4.0, train a robot to fight'),
+						game('horror', 5, 'Horror game', 'Built in two weeks'),
+						game('elden', 5),
+						game('project2', 8, 'Project 2', 'A one-hour jam game grown into a shooter'),
+						game('rig', 1)
+					]
+				]
+			},
+			{
+				id: 'web',
+				years: '2023',
+				title: 'Into web development',
+				text: [
+					'I learned React and moved into web development. My first professional build was an internship project for FirstBank under ITANDT Solutions. I rebuilt BRS in React to learn it.'
+				],
+				tags: ['React', 'JavaScript', 'HTML', 'CSS'],
+				logos: [
+					{ icon: SiReact, x: 80, y: 24, size: 180 },
+					{ icon: SiJavascript, x: 62, y: 74, size: 110 },
+					{ icon: SiHtml5, x: 93, y: 66, size: 110 },
+					{ icon: SiCss, x: 48, y: 22, size: 90 }
+				],
+				rows: [
+					[
+						project('FirstBank Online Money Transfer', 'Internship, ITANDT Solutions'),
+						game('brsjs', 1, 'BRS.js', 'The duel game rebuilt in React'),
+						game('polygons', 1, 'Pointless Polygons', 'An idle game in React and Redux')
+					]
+				]
+			},
+			{
+				id: 'freelance',
+				years: '2024 to 2025',
+				title: 'Freelance',
+				text: [
+					'Freelance work for businesses: booking systems, management tools, websites and dashboards, built directly with the people who use them.'
+				],
+				tags: ['Next.js', 'TypeScript', 'React Native', 'Flutter', 'Django'],
+				logos: [
+					{ icon: SiNextdotjs, x: 80, y: 24, size: 170 },
+					{ icon: SiTypescript, x: 62, y: 74, size: 110 },
+					{ icon: SiReact, x: 93, y: 68, size: 110 },
+					{ icon: SiFlutter, x: 48, y: 20, size: 90 },
+					{ icon: SiDjango, x: 92, y: 30, size: 80 }
+				],
+				rows: [
+					[
+						project('Tasty Chef'),
+						project('Curve Bookings'),
+						project('Church Management System'),
+						project('Logistics Management System'),
+						project('Gift-Beneficiary System'),
+						project('TE Sites Appointment Booking System'),
+						project('Dental Website'),
+						project('Vehiville Web (v1)')
+					]
+				]
+			},
+			{
+				id: 'contract',
+				years: '2025 to 2026',
+				title: 'AI-driven rapid development',
+				text: [
+					'After graduating with a First Class BSc in Computer Science from Central University, Ghana, I joined my first company, then moved to contract work across several products.',
+					'Projects no longer take forever. I run several coding agents in parallel and built my own tools around them: a screenshot app that hands annotated snips to agents, voice calls with my agents, and an MCP server that gives them email, identity and publishing tools.'
+				],
+				tags: ['TypeScript', 'Node.js', 'Expo', 'Laravel', 'Cloudflare', 'Swift', 'AI agents'],
+				link: { href: '/ai', label: 'How I work with AI' },
+				logos: [
+					{ icon: SiClaude, x: 80, y: 22, size: 170 },
+					{ icon: SiCloudflare, x: 62, y: 76, size: 110 },
+					{ icon: SiExpo, x: 93, y: 66, size: 100 },
+					{ icon: SiNodedotjs, x: 48, y: 20, size: 90 },
+					{ icon: SiLaravel, x: 92, y: 30, size: 80 }
+				],
+				rows: [
+					[
+						project('Odadea 96 Network'),
+						project('The Builders Circle'),
+						project('BridgeX Mobile App'),
+						project('BridgeX Admin Dashboard'),
+						project('Curve Rentals App'),
+						project('RS Notify'),
+						project('AI powered Website Chatbot'),
+						project('Enterprise Resource Planning System'),
+						project('Vehiville Web (v2)'),
+						project('AREF 2026 Admission Portal')
+					],
+					[
+						tool('SnipCanvas', 'Native macOS snip and annotate, built for agents', [
+							'/me/journey/tools/snipcanvas-1.webp',
+							'/me/journey/tools/snipcanvas-2.webp'
+						]),
+						tool('Voice Call Agents', 'Phone calls with my coding agents, macOS and iOS', [
+							'/me/journey/tools/voice-call.webp',
+							'/me/journey/tools/voice-3.webp',
+							'/me/journey/tools/voice-1.webp',
+							'/me/journey/tools/voice-2.webp'
+						]),
+						tool('T3 Code', 'Several Claude and Codex accounts side by side', ['/ai/t3code.webp'])
+					]
+				]
+			}
+		] satisfies Era[]
+	).map((era) => ({ ...era, rows: dual(era.rows) }));
 
 	const watching = [
 		{
@@ -283,6 +300,10 @@
 
 	const rails: HTMLElement[][] = eras.map(() => []);
 
+	const heads: HTMLElement[] = [];
+
+	let remeasure = () => {};
+
 	const span = (i: number) => Math.max(0, ...travel[i]);
 
 	onMount(() => {
@@ -293,7 +314,21 @@
 		let frame = 0;
 
 		const measure = () => {
-			travel = rails.map((row) => row.map((rail) => Math.max(0, rail.scrollWidth - innerWidth)));
+			// Size cards so both rails and the heading fit one screen.
+			sections.forEach((section, i) => {
+				const beside = innerWidth >= 1024;
+				const room = innerHeight - 112 - (beside ? 0 : heads[i].offsetHeight + 24) - 24;
+				const image = room / 2 - 120;
+				const width = Math.min(560, innerWidth * 0.85, Math.max(260, (image * 16) / 9 + 20));
+
+				section.style.setProperty('--card-w', `${Math.round(width)}px`);
+			});
+
+			travel = rails.map((row) =>
+				row.map((rail) =>
+					Math.max(0, rail.scrollWidth - (rail.parentElement?.clientWidth ?? innerWidth))
+				)
+			);
 		};
 
 		// Scroll sets a goal; the rails ease toward it every frame, so wheel steps and
@@ -344,6 +379,11 @@
 			onScroll();
 		};
 
+		remeasure = () => {
+			measure();
+			onScroll();
+		};
+
 		measure();
 		read();
 		progress = goal;
@@ -383,10 +423,21 @@
 
 	let drag = { x: 0, y: 0, px: 0, py: 0 };
 
-	const open = (card: Card) => {
-		viewer = { images: card.gallery, index: 0, title: card.title };
+	const openAt = (card: Card, index: number) => {
+		viewer = { images: card.gallery, index, title: card.title };
 		zoom = 1;
 		pan = { x: 0, y: 0 };
+	};
+
+	// A card with several images opens in place; a single image goes straight to the viewer.
+	let expanded = $state<string | null>(null);
+
+	const toggle = async (card: Card) => {
+		if (card.gallery.length < 2) return openAt(card, 0);
+
+		expanded = expanded === card.gallery[0] ? null : card.gallery[0];
+		await tick();
+		remeasure();
 	};
 
 	const close = () => (viewer = null);
@@ -456,14 +507,42 @@
 <main class="bg-mblack">
 	<Navbar />
 
-	<section class="container mx-auto flex min-h-[70svh] flex-col justify-center py-20">
-		<h1 class="max-w-3xl text-4xl leading-tight font-medium text-cream sm:text-6xl">
-			Self-taught programmer with roots in game development.
-		</h1>
-		<p class="mt-6 max-w-2xl leading-[180%] text-cream/70 sm:text-lg">
-			I started making games in 2016, moved into web development in 2023, and now build with
-			AI-driven development on contract.
-		</p>
+	<!-- Same layout as the home page hero: copy and actions on the left, the diamond stack on the right. -->
+	<section
+		class="relative z-10 flex h-[75vh] min-h-[600px] flex-col justify-center overflow-hidden bg-linear-to-tl from-black/0 to-black"
+	>
+		<div class="container mx-auto flex h-full items-center justify-between">
+			<div class="relative z-10 max-sm:mt-20">
+				<h1 class="text-5xl font-medium text-cream">About</h1>
+				<p class="mt-4 mb-10 text-base font-medium text-pewter lg:max-w-[520px]">
+					Self-taught programmer with roots in game development. I started making games in 2016,
+					moved into web development in 2023, and now build with AI-driven development on contract.
+				</p>
+				<div class="flex flex-col gap-2 sm:flex-row">
+					<a href="/#contact" class="pri-button">
+						<div class="centered gap-2">
+							Get in touch
+							<ArrowRight />
+						</div>
+					</a>
+					<a href="/#projects" class="button">
+						<div class="centered gap-2">
+							See my work
+							<Briefcase class="opacity-80" />
+						</div>
+					</a>
+				</div>
+			</div>
+			<div
+				class="relative top-12 right-0 -mb-30 flex aspect-square w-[38vw] max-w-[380px] min-w-[200px] rotate-45 bg-mblack/40 shadow-lg shadow-black/50 backdrop-blur-sm select-none max-sm:absolute"
+			>
+				<Boxx count={24} tilt />
+			</div>
+		</div>
+		<div
+			aria-hidden="true"
+			class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-mblack"
+		></div>
 	</section>
 
 	{#each eras as era, i (era.id)}
@@ -471,7 +550,6 @@
 			bind:this={sections[i]}
 			id={era.id}
 			class="relative"
-			style="--tint: {era.tint}"
 			style:height={still || !span(i) ? 'auto' : `calc(100svh + ${span(i)}px)`}
 		>
 			<div
@@ -480,11 +558,8 @@
 				class:top-0={!still}
 				class:min-h-svh={!still}
 			>
-				<!-- Backdrop: the home page's neumorphic diamonds with this era's tools, embossed. -->
+				<!-- Backdrop: this era's tools, pressed into the page like the home page's washed-out name. -->
 				<div aria-hidden="true" class="pointer-events-none absolute inset-0">
-					<div class="neumorphic diamond" style="left: 76%; top: 12%; width: 24vw;"></div>
-					<div class="neumorphic diamond" style="left: 90%; top: 62%; width: 14vw;"></div>
-					<div class="neumorphic diamond" style="left: 58%; top: 70%; width: 9vw;"></div>
 					{#each era.logos as logo, li (li)}
 						<div
 							class="logo absolute"
@@ -502,82 +577,146 @@
 					{/each}
 				</div>
 
-				<div class="relative container mx-auto">
-					<p class="years text-cream/90">{era.years}</p>
-					<h2 class="mt-2 max-w-3xl text-2xl text-cream sm:text-4xl">{era.title}</h2>
-					<div class="mt-4 max-w-2xl space-y-3">
-						{#each era.text as paragraph}
-							<p class="text-sm leading-[180%] text-cream/80 sm:text-base md:text-lg">
-								{paragraph}
-							</p>
-						{/each}
-					</div>
-					<div class="mt-4 flex flex-wrap items-center gap-2">
-						{#each era.tags as tag}
-							<span class="border border-cream/20 px-2 py-1 text-xs text-cream/70">{tag}</span>
-						{/each}
+				<div class="stage relative">
+					<div class="head relative container mx-auto" bind:this={heads[i]}>
+						<p class="years text-cream/90">{era.years}</p>
+						<h2 class="mt-3 flex items-center gap-5 text-2xl text-cream sm:text-3xl">
+							<span class="diamond-bullet shrink-0"></span>
+							{era.title}
+						</h2>
+						<div class="mt-4 max-w-2xl space-y-3">
+							{#each era.text as paragraph}
+								<p class="text-sm leading-[190%] text-cream/80 sm:text-base">
+									{paragraph}
+								</p>
+							{/each}
+						</div>
+						<div class="mt-4 flex flex-wrap items-center gap-1.5">
+							{#each era.tags as tag}
+								<span class="bg-carafe-light/20 px-2 py-1 text-sm font-semibold text-carafe-light"
+									>{tag}</span
+								>
+							{/each}
+						</div>
 						{#if era.link}
-							<a
-								href={era.link.href}
-								class="ml-2 inline-flex min-h-11 items-center gap-2 text-sm text-cream underline underline-offset-4"
-							>
-								{era.link.label}
-								<ArrowRight class="size-4" />
+							<a href={era.link.href} class="button mt-5 inline-flex">
+								<span class="centered gap-2">
+									{era.link.label}
+									<ArrowRight class="size-4" />
+								</span>
 							</a>
 						{/if}
 					</div>
-				</div>
 
-				{#each era.rows as row, r (r)}
-					<div class="relative mt-6" class:overflow-x-auto={still}>
-						<ul
-							bind:this={rails[i][r]}
-							class="rail flex w-max gap-5"
-							style:transform={still ? undefined : `translate3d(${railX(i, r)}px, 0, 0)`}
-						>
-							{#each row.filter((c) => c.gallery.length) as card, ci (`${card.gallery[0]}-${ci}`)}
-								<li class="w-[85vw] shrink-0 sm:w-[475px] lg:w-[550px]">
-									<button
-										type="button"
-										class="glass block w-full p-2.5 text-left"
-										onclick={() => open(card)}
-										aria-label={card.title ? `Open ${card.title}` : 'Open images'}
-									>
-										<div class="relative aspect-video overflow-hidden bg-black">
-											<img
-												src={card.gallery[0]}
-												alt={card.title ? `${card.title}${card.note ? `, ${card.note}` : ''}` : ''}
-												loading="lazy"
-												decoding="async"
-												class="size-full object-contain"
-											/>
-											{#if card.gallery.length > 1}
-												<span
-													class="absolute right-2 bottom-2 bg-black/70 px-2 py-0.5 text-xs text-cream"
-												>
-													{card.gallery.length} images
-												</span>
-											{/if}
-										</div>
-										{#if card.title || card.note || card.tags}
-											<div class="px-1 pt-3 pb-1">
-												{#if card.title}
-													<p class="text-cream">{card.title}</p>
+					<!-- The home page's About bars: thin carafe lines with opposing gradients. -->
+					<div
+						aria-hidden="true"
+						class="bars hidden gap-[6px] self-stretch drop-shadow-xl drop-shadow-black lg:flex"
+					>
+						{#each Array(7) as _, b (b)}
+							<div
+								class="h-full w-[3px] rounded-full {b % 2 === 0
+									? 'bg-linear-to-b'
+									: 'bg-linear-to-t'} from-carafe/80 via-carafe-light to-carafe/0"
+							></div>
+						{/each}
+					</div>
+
+					<div class="rails relative min-w-0">
+						{#each era.rows as row, r (r)}
+							<div class="relative mt-6 first:lg:mt-0" class:overflow-x-auto={still}>
+								<ul
+									bind:this={rails[i][r]}
+									class="rail flex w-max items-stretch gap-4"
+									style:transform={still ? undefined : `translate3d(${railX(i, r)}px, 0, 0)`}
+								>
+									{#each row.filter((c) => c.gallery.length) as card, ci (`${card.gallery[0]}-${ci}`)}
+										{@const isOpen = expanded === card.gallery[0]}
+										<li class="card flex shrink-0" class:open={isOpen}>
+											<div
+												class="frame flex w-full flex-col border border-pewter/40 bg-black/10 p-2.5 shadow-lg shadow-black/40 transition-colors hover:bg-black/20"
+											>
+												{#if isOpen}
+													<!-- The card opens in place: every image, two rows, same height. -->
+													<div class="shots grid grid-flow-col grid-rows-2 gap-1.5">
+														{#each card.gallery as src, gi (src)}
+															<button
+																type="button"
+																class="shot relative overflow-hidden bg-black"
+																style="animation-delay: {gi * 40}ms"
+																onclick={() => openAt(card, gi)}
+																aria-label="View image {gi + 1} of {card.gallery.length}"
+															>
+																<img
+																	{src}
+																	alt=""
+																	loading="lazy"
+																	decoding="async"
+																	class="size-full object-contain"
+																/>
+															</button>
+														{/each}
+													</div>
+												{:else}
+													<button
+														type="button"
+														class="relative block aspect-video overflow-hidden bg-black"
+														onclick={() => toggle(card)}
+														aria-label={card.gallery.length > 1
+															? `Show all ${card.gallery.length} images${card.title ? ` of ${card.title}` : ''}`
+															: `View ${card.title ?? 'image'}`}
+													>
+														<img
+															src={card.gallery[0]}
+															alt={card.title
+																? `${card.title}${card.note ? `, ${card.note}` : ''}`
+																: ''}
+															loading="lazy"
+															decoding="async"
+															class="size-full object-contain"
+														/>
+														{#if card.gallery.length > 1}
+															<span
+																class="absolute right-2 bottom-2 bg-black/70 px-2 py-0.5 text-xs text-cream"
+															>
+																{card.gallery.length} images
+															</span>
+														{/if}
+													</button>
 												{/if}
-												{#if card.note}
-													<p class="text-sm text-cream/60">{card.note}</p>
-												{/if}
-												{#if card.tags}
-													<p class="mt-1 text-xs text-cream/50">{card.tags.join(', ')}</p>
+												{#if card.title || card.note || card.tags || isOpen}
+													<div class="flex items-start gap-3 px-1 pt-3 pb-1">
+														<div class="min-w-0 flex-1">
+															{#if card.title}
+																<p class="font-medium text-cream/80">{card.title}</p>
+															{/if}
+															{#if card.note}
+																<p class="text-sm text-pewter">{card.note}</p>
+															{/if}
+															{#if card.tags}
+																<p class="mt-1 text-xs text-carafe-light">{card.tags.join(', ')}</p>
+															{/if}
+														</div>
+														{#if isOpen}
+															<button
+																type="button"
+																class="tool shrink-0"
+																onclick={() => toggle(card)}
+																aria-label="Close images"
+															>
+																<X size={18} />
+															</button>
+														{/if}
+													</div>
 												{/if}
 											</div>
-										{/if}
-									</button>
-								</li>
-							{/each}
-						</ul>
+										</li>
+									{/each}
+								</ul>
+							</div>
+						{/each}
 					</div>
-				{/each}
+				</div>
 			</div>
 		</section>
 	{/each}
@@ -593,7 +732,7 @@
 			<SiC size={200} />
 		</div>
 		<div class="relative container mx-auto">
-			<div class="glass mx-auto max-w-3xl p-8 sm:p-12">
+			<div class="panel mx-auto max-w-3xl p-8 sm:p-12">
 				<p class="text-sm text-cream/60">Now</p>
 				<h2 class="mt-2 text-3xl text-cream sm:text-4xl">Strengthening the fundamentals</h2>
 				<p class="mt-5 leading-[190%] text-cream/80 md:text-lg">
@@ -615,8 +754,7 @@
 	</section>
 
 	<!-- Business: the other half of the plan. -->
-	<section class="relative overflow-hidden py-24 sm:py-32" style="--tint: hsl(45 22% 14%)">
-		<div class="era absolute inset-0"></div>
+	<section class="era relative overflow-hidden py-24 sm:py-32">
 		<div aria-hidden="true" class="emboss pointer-events-none absolute top-6 -right-10">
 			<HandCoins size={440} strokeWidth={1} />
 		</div>
@@ -628,8 +766,8 @@
 				<h2 class="mt-2 text-3xl text-cream sm:text-4xl">Building things people pay for</h2>
 				<p class="mt-5 leading-[190%] text-cream/80 md:text-lg">
 					Moving from game development to web development was a financial decision. Now I want both
-					to pay: services for clients, games for players and products of my own. If people will
-					pay for something, it is useful to them.
+					to pay: services for clients, games for players and products of my own. If people will pay
+					for something, it is useful to them.
 				</p>
 				<p class="mt-4 leading-[190%] text-cream/80 md:text-lg">
 					So I am learning how businesses create value: offers, sales and the decisions behind them.
@@ -643,7 +781,7 @@
 							href={video.url}
 							target="_blank"
 							rel="noopener"
-							class="glass flex min-h-11 items-start gap-3 p-4 text-cream transition-colors hover:bg-cream hover:text-mblack"
+							class="button flex min-h-11 items-start gap-3 text-left"
 						>
 							<SiYoutube size={20} class="mt-0.5 shrink-0" />
 							<span>
@@ -693,7 +831,12 @@
 				{/if}
 			</p>
 			<div class="flex gap-2">
-				<button type="button" class="tool" aria-label="Zoom out" onclick={() => setZoom(zoom / 1.5)}>
+				<button
+					type="button"
+					class="tool"
+					aria-label="Zoom out"
+					onclick={() => setZoom(zoom / 1.5)}
+				>
 					<ZoomOut class="size-5" />
 				</button>
 				<button type="button" class="tool" aria-label="Zoom in" onclick={() => setZoom(zoom * 1.5)}>
@@ -748,47 +891,98 @@
 		font-variant-numeric: tabular-nums;
 	}
 
-	/* Each era gets its own tint, fading into the site's base colour. */
+	/* The home page About section's fade: base colour into near black. */
 	.era {
 		background:
-			radial-gradient(ellipse at 80% 15%, var(--tint), transparent 65%),
-			radial-gradient(ellipse at 10% 90%, var(--tint), transparent 55%), var(--color-mblack);
-	}
-
-	.diamond {
-		position: absolute;
-		aspect-ratio: 1;
-		transform: translate(-50%, -50%) rotate(45deg);
-		background: transparent;
-		opacity: 0.55;
+			linear-gradient(to bottom, var(--color-mblack), rgb(0 0 0 / 0.55)), var(--color-mblack);
 	}
 
 	/* Logos are pressed into the background rather than printed on it. */
 	.logo,
 	.emboss {
 		color: hsl(33.3 39.3% 95.1% / 0.035);
-		filter: drop-shadow(10px 10px 16px rgb(0 0 0 / 0.45)) drop-shadow(-6px -6px 12px rgb(255 255 255 / 0.03));
+		filter: drop-shadow(10px 10px 16px rgb(0 0 0 / 0.45))
+			drop-shadow(-6px -6px 12px rgb(255 255 255 / 0.03));
 	}
 
 	.logo {
 		transition: transform 80ms linear;
 	}
 
-	.glass {
-		/* A sheen instead of backdrop blur: blur on dozens of moving cards drops frames. */
-		background: linear-gradient(
-			150deg,
-			hsl(33.3 39.3% 95.1% / 0.09),
-			hsl(33.3 39.3% 95.1% / 0.03) 45%,
-			hsl(33.3 39.3% 95.1% / 0.05)
-		);
-		border: 1px solid hsl(33.3 39.3% 95.1% / 0.14);
-		box-shadow: 0 20px 50px -20px rgb(0 0 0 / 0.7);
+	.card {
+		width: var(--card-w, min(85vw, 550px));
+	}
+
+	.card.open {
+		width: auto;
+	}
+
+	/* Two rows of 16:9 frames filling the closed card's image height. */
+	.shots {
+		--h: calc((var(--card-w, 550px) - 22px) * 9 / 16);
+		height: var(--h);
+		grid-auto-columns: calc((var(--h) - 6px) / 2 * 16 / 9);
+	}
+
+	.shot {
+		animation: shot-in 360ms cubic-bezier(0.16, 1, 0.3, 1) both;
+	}
+
+	@keyframes shot-in {
+		from {
+			opacity: 0;
+			transform: scale(0.94);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.shot {
+			animation: none;
+		}
+	}
+
+	/* The home page's contact panel. */
+	.panel {
+		border: 1px solid var(--color-pewter);
+		background: hsl(47.6 21.3% 42.2% / 0.05);
+		box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.4);
+		backdrop-filter: blur(12px);
 	}
 
 	.rail {
 		padding-inline: max(1rem, calc((100vw - 1280px) / 2 + 1rem));
 		will-change: transform;
+	}
+
+	/* Desktop: heading on the left, both rails beside it, sliding out under a soft edge. */
+	@media (min-width: 1024px) {
+		.stage {
+			display: grid;
+			grid-template-columns: minmax(300px, 380px) auto 1fr;
+			align-items: center;
+			gap: 2.5rem;
+			padding-left: max(1rem, calc((100vw - 1280px) / 2 + 1rem));
+		}
+
+		.head .years {
+			font-size: clamp(2.2rem, 3.3vw, 3.2rem);
+			white-space: nowrap;
+		}
+
+		.head {
+			margin: 0;
+			padding: 0;
+			max-width: none;
+		}
+
+		.rails {
+			overflow: hidden;
+			mask-image: linear-gradient(to right, transparent, black 2rem);
+		}
+
+		.rail {
+			padding-inline: 2rem;
+		}
 	}
 
 	.tool {
