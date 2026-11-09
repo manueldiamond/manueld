@@ -46,3 +46,32 @@ export function reveal(node: HTMLElement, threshold = 0.15) {
 
 export const prefersReducedMotion = () =>
 	typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Sets --par on the node: how many screen heights it has scrolled past the top of the view.
+// Children read it to drift at their own depth.
+export function parallax(node: HTMLElement) {
+	if (prefersReducedMotion()) return;
+
+	let frame = 0;
+
+	const update = () => {
+		frame = 0;
+		node.style.setProperty('--par', (-node.getBoundingClientRect().top / innerHeight).toFixed(4));
+	};
+
+	const onScroll = () => {
+		if (!frame) frame = requestAnimationFrame(update);
+	};
+
+	update();
+	addEventListener('scroll', onScroll, { passive: true });
+	addEventListener('resize', onScroll);
+
+	return {
+		destroy() {
+			removeEventListener('scroll', onScroll);
+			removeEventListener('resize', onScroll);
+			cancelAnimationFrame(frame);
+		}
+	};
+}

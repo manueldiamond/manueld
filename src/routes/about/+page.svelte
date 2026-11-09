@@ -14,6 +14,7 @@
 		ZoomOut
 	} from 'lucide-svelte';
 	import Boxx from '$lib/components/Boxx.svelte';
+	import GlassPlate from '$lib/components/GlassPlate.svelte';
 	import {
 		SiAndroid,
 		SiBlender,
@@ -40,7 +41,7 @@
 	} from '@icons-pack/svelte-simple-icons';
 	import { contact } from '$lib/constants/contact';
 	import { projects } from '$lib/constants/projects';
-	import { prefersReducedMotion } from '$lib/utils/inView';
+	import { parallax, prefersReducedMotion, reveal } from '$lib/utils/inView';
 
 	type Card = { gallery: string[]; title?: string; note?: string; tags?: string[] };
 
@@ -328,6 +329,14 @@
 
 	const heads: HTMLElement[] = [];
 
+	// Glass plates behind each era, laid out for the text-on-the-left side and mirrored on the next.
+	const plates = [
+		{ x: 2, y: 8, w: 15, depth: 160 },
+		{ x: 20, y: 66, w: 9, depth: 260 },
+		{ x: 33, y: 4, w: 6, depth: 90 },
+		{ x: 86, y: 78, w: 8, depth: 200 }
+	];
+
 	let remeasure = () => {};
 
 	const span = (i: number) => Math.max(0, ...travel[i]);
@@ -343,8 +352,8 @@
 			// Size cards so both rails and the heading fit one screen.
 			sections.forEach((section, i) => {
 				const beside = innerWidth >= 1024;
-				const room = innerHeight - 112 - (beside ? 0 : heads[i].offsetHeight + 24) - 24;
-				const image = room / 2 - 120;
+				const room = innerHeight - 160 - (beside ? 0 : heads[i].offsetHeight + 32) - 32;
+				const image = room / 2 - 110;
 				const width = Math.min(560, innerWidth * 0.85, Math.max(260, (image * 16) / 9 + 20));
 
 				section.style.setProperty('--card-w', `${Math.round(width)}px`);
@@ -576,23 +585,37 @@
 			bind:this={sections[i]}
 			id={era.id}
 			class="relative"
+			class:flip={i % 2 === 1}
+			use:parallax
 			style:height={still || !span(i) ? 'auto' : `calc(100svh + ${span(i)}px)`}
 		>
 			<div
-				class="era flex flex-col justify-center overflow-hidden py-14"
+				class="era flex flex-col justify-center overflow-hidden py-20"
 				class:sticky={!still}
 				class:top-0={!still}
 				class:min-h-svh={!still}
 			>
-				<!-- Backdrop: this era's tools, pressed into the page like the home page's washed-out name. -->
-				<div aria-hidden="true" class="pointer-events-none absolute inset-0">
+				<!-- Backdrop: the home page's glass plates and this era's tools, washed out behind the text side.
+				     Both drift at their own depth as the page scrolls. -->
+				<div aria-hidden="true" class="pointer-events-none absolute inset-0" use:reveal={0.2}>
+					{#each plates as plate, pi (pi)}
+						<GlassPlate
+							left="{i % 2 ? 100 - plate.x - plate.w : plate.x}%"
+							top="{plate.y}%"
+							size="{plate.w}vw"
+							skew={(i + pi) % 2 ? -20 : 20}
+							depth={plate.depth}
+							delay={pi * 0.15}
+						/>
+					{/each}
 					{#each era.logos as logo, li (li)}
 						<div
 							class="logo absolute"
-							style="left: {logo.x}%; top: {logo.y}%; transform: translate(-50%, -50%) translateX({logoX(
-								i
-							) *
-								(1 + li * 0.3)}vw);"
+							style="left: {i % 2
+								? logo.x
+								: 100 -
+									logo.x}%; top: {logo.y}%; transform: translate(-50%, -50%) translate3d({logoX(i) *
+								(1 + li * 0.3)}vw, calc(var(--par, 0) * {-60 - li * 45}px), 0);"
 						>
 							{#if logo.icon}
 								<logo.icon size={logo.size} />
@@ -606,18 +629,18 @@
 				<div class="stage relative">
 					<div class="head relative container mx-auto" bind:this={heads[i]}>
 						<p class="years text-cream/90">{era.years}</p>
-						<h2 class="mt-3 flex items-center gap-5 text-2xl text-cream sm:text-3xl">
+						<h2 class="mt-5 flex items-center gap-5 text-2xl text-cream sm:text-3xl">
 							<span class="diamond-bullet shrink-0"></span>
 							{era.title}
 						</h2>
-						<div class="mt-4 max-w-2xl space-y-3">
+						<div class="mt-7 max-w-2xl space-y-4">
 							{#each era.text as paragraph}
 								<p class="text-sm leading-[190%] text-cream/80 sm:text-base">
 									{paragraph}
 								</p>
 							{/each}
 						</div>
-						<div class="mt-4 flex flex-wrap items-center gap-1.5">
+						<div class="mt-8 flex flex-wrap items-center gap-2">
 							{#each era.tags as tag}
 								<span class="bg-carafe-light/20 px-2 py-1 text-sm font-semibold text-carafe-light"
 									>{tag}</span
@@ -625,7 +648,7 @@
 							{/each}
 						</div>
 						{#if era.link}
-							<a href={era.link.href} class="button mt-5 inline-flex">
+							<a href={era.link.href} class="button mt-8 inline-flex">
 								<span class="centered gap-2">
 									{era.link.label}
 									<ArrowRight class="size-4" />
@@ -650,7 +673,7 @@
 
 					<div class="rails relative min-w-0">
 						{#each era.rows as row, r (r)}
-							<div class="relative mt-6 first:lg:mt-0" class:overflow-x-auto={still}>
+							<div class="relative mt-8 first:lg:mt-0" class:overflow-x-auto={still}>
 								<ul
 									bind:this={rails[i][r]}
 									class="rail flex w-max items-stretch gap-4"
@@ -981,13 +1004,33 @@
 	}
 
 	/* Desktop: heading on the left, both rails beside it, sliding out under a soft edge. */
+	/* Desktop: heading on one side, both rails on the other, sides swapping each era. */
 	@media (min-width: 1024px) {
 		.stage {
 			display: grid;
-			grid-template-columns: minmax(300px, 380px) auto 1fr;
+			grid-template-columns: minmax(320px, 400px) auto minmax(0, 1fr);
 			align-items: center;
-			gap: 2.5rem;
+			column-gap: 3.5rem;
 			padding-left: max(1rem, calc((100vw - 1280px) / 2 + 1rem));
+		}
+
+		.flip .stage {
+			grid-template-columns: minmax(0, 1fr) auto minmax(320px, 400px);
+			padding-left: 0;
+			padding-right: max(1rem, calc((100vw - 1280px) / 2 + 1rem));
+		}
+
+		.flip .head {
+			order: 3;
+		}
+
+		.flip .bars {
+			order: 2;
+		}
+
+		.flip .rails {
+			order: 1;
+			mask-image: linear-gradient(to left, transparent, black 2rem);
 		}
 
 		.head .years {
