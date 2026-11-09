@@ -2,7 +2,8 @@ export const aboutSections = [
 	{
 		title: 'Profile',
 		content: [
-			'Freelance software engineer and founder-in-progress. I have a passion for building useful solutions that meet actual business needs.'
+			'Freelance software engineer and founder-in-progress. I have a passion for building useful solutions that meet actual business needs.',
+			'Currently open to new work.'
 		]
 	},
 	{

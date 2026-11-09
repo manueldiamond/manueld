@@ -91,11 +91,12 @@
 		line-height: 0.82;
 		letter-spacing: -0.04em;
 		color: transparent;
-		-webkit-text-stroke: 1px hsl(33.3 39.3% 95.1% / 0.07);
+		/* Fill only, no outline: the outline traced the variable font's overlapping
+		   contours and added contrast behind the copy. Faint enough to read over. */
 		background: linear-gradient(
 			180deg,
-			hsl(33.3 39.3% 95.1% / 0.06),
-			hsl(33.3 39.3% 95.1% / 0.015)
+			hsl(33.3 39.3% 95.1% / 0.035),
+			hsl(33.3 39.3% 95.1% / 0.01)
 		);
 		-webkit-background-clip: text;
 		background-clip: text;
