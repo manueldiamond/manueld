@@ -32,23 +32,55 @@
 		);
 	};
 
+	// Released: each frame springs home from rest, so it picks up speed instead of
+	// slowing from the start, and frames further from the grabbed one let go a beat later.
+	const velocity = new Float32Array(64);
+
+	const home = new Float32Array(64);
+
+	const delay = new Uint8Array(64);
+
+	let released = -1;
+
 	function step() {
 		loop = 0;
 		let moving = false;
 
 		for (let i = 0; i < count; i++) {
-			// The grabbed frame chases the pointer; the rest chase the frame next to them,
-			// toward the grabbed one, which gives the procedural lag.
-			const goal = grabbed < 0 ? target : i === grabbed ? target : spin[i + (i < grabbed ? 1 : -1)];
-			const ease = i === grabbed ? 0.22 : 0.16;
-			const next = spin[i] + (goal - spin[i]) * ease;
+			if (grabbed >= 0) {
+				// The grabbed frame chases the pointer; the rest chase the frame next to them,
+				// toward the grabbed one, which gives the procedural lag.
+				const goal = i === grabbed ? target : spin[i + (i < grabbed ? 1 : -1)];
+				spin[i] += (goal - spin[i]) * (i === grabbed ? 0.22 : 0.16);
+				moving = true;
+			} else if (delay[i] > 0) {
+				delay[i]--;
+				moving = true;
+			} else {
+				velocity[i] = (velocity[i] + (home[i] - spin[i]) * 0.07) * 0.8;
+				spin[i] += velocity[i];
 
-			if (Math.abs(goal - next) > 0.05) moving = true;
-			spin[i] = Math.abs(goal - next) > 0.05 ? next : goal;
+				if (Math.abs(home[i] - spin[i]) < 0.05 && Math.abs(velocity[i]) < 0.05) {
+					spin[i] = 0;
+					velocity[i] = 0;
+				} else moving = true;
+			}
+
 			layers[i]?.style.setProperty('--spin', `${spin[i].toFixed(2)}deg`);
 		}
 
-		if (moving || grabbed >= 0) loop = requestAnimationFrame(step);
+		if (moving) loop = requestAnimationFrame(step);
+	}
+
+	function letGo() {
+		for (let i = 0; i < count; i++) {
+			// Drop whole turns first (they look identical), so the frame unwinds back the
+			// way it came, never more than half a turn.
+			spin[i] = ((((spin[i] + 180) % 360) + 360) % 360) - 180;
+			home[i] = 0;
+			velocity[i] = 0;
+			delay[i] = Math.min(12, Math.abs(i - released));
+		}
 	}
 
 	const run = () => {
@@ -82,8 +114,9 @@
 		if (grabbed < 0) return;
 
 		if (wrapper.hasPointerCapture(e.pointerId)) wrapper.releasePointerCapture(e.pointerId);
-		// Let go: the whole stack settles on the angle the grabbed frame was heading to.
+		released = grabbed;
 		grabbed = -1;
+		letGo();
 		run();
 	}
 
