@@ -166,7 +166,12 @@
 					<ul class="grid grid-cols-[repeat(auto-fill,minmax(112px,1fr))] gap-1">
 						{#each shown as { project, id } (id)}
 							<li>
-								<button type="button" class="icon-item" onclick={() => openProject(id)}>
+								<button
+									type="button"
+									class="icon-item"
+									title="{project.name} · {project.client.name}"
+									onclick={() => openProject(id)}
+								>
 									<FolderIcon
 										class="w-20"
 										thumb={project.images[0]}
@@ -189,7 +194,11 @@
 						</thead>
 						<tbody>
 							{#each shown as { project, id } (id)}
-								<tr class="list-row border-b border-pewter/15" onclick={() => openProject(id)}>
+								<tr
+									class="list-row border-b border-pewter/15"
+									title="{project.name} · {project.client.name}"
+									onclick={() => openProject(id)}
+								>
 									<td class="py-1.5 pl-2">
 										<button
 											type="button"
@@ -289,5 +298,18 @@
 	:is(.tool-btn, .tree-item, .icon-item, .list-row button):focus-visible {
 		outline: 2px solid var(--color-cream);
 		outline-offset: -2px;
+	}
+	/* Keyboard selection: the focused folder or row lights up like a selected file. */
+	.icon-item:focus-visible {
+		background: hsl(33.3 39.3% 95.1% / 0.16);
+		color: var(--color-cream);
+	}
+	.list-row:has(button:focus-visible) {
+		background: hsl(33.3 39.3% 95.1% / 0.14);
+		outline: 2px solid var(--color-cream);
+		outline-offset: -2px;
+	}
+	.list-row button:focus-visible {
+		outline: none;
 	}
 </style>

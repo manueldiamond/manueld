@@ -187,8 +187,9 @@
 		transform-origin: 50% 40%;
 	}
 	/* Moulded neumorphic case with a thin bezel: one dark drop shadow, no light-side halo. */
+	/* Square corners, like every other surface on the site. */
 	.pc-case {
-		border-radius: 22px;
+		border-radius: 0;
 		padding: 7px;
 		background: linear-gradient(150deg, #2a2b2e, #1f2022 70%);
 		box-shadow:
@@ -203,7 +204,7 @@
 	}
 	/* Recessed lip around the glass. */
 	.pc-bezel {
-		border-radius: 16px;
+		border-radius: 0;
 		padding: 3px;
 		background: #1d1e20;
 		box-shadow:
@@ -213,7 +214,7 @@
 	.pc-screen {
 		position: relative;
 		height: clamp(340px, calc(100svh - 170px), 860px);
-		border-radius: 13px;
+		border-radius: 0;
 		overflow: hidden;
 		background: #17181a;
 		isolation: isolate;

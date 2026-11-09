@@ -69,12 +69,26 @@
 		return () => opener?.focus({ preventScroll: true });
 	});
 
+	// Escape closes the window; Left and Right step through the screenshots.
+	function onKey(e: KeyboardEvent) {
+		if (!project) return;
+
+		if (e.key === 'Escape') close();
+		else if (e.key === 'ArrowLeft' && emblaApi) {
+			e.preventDefault();
+			emblaApi.scrollPrev();
+		} else if (e.key === 'ArrowRight' && emblaApi) {
+			e.preventDefault();
+			emblaApi.scrollNext();
+		}
+	}
+
 	const plugins = [Autoplay({ delay: 4000 })];
 
 	const options: EmblaOptionsType = $derived({ startIndex: startImageIdx });
 </script>
 
-<svelte:window onkeydown={(e) => project && e.key === 'Escape' && close()} />
+<svelte:window onkeydown={onKey} />
 
 {#if project}
 	<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
@@ -93,7 +107,7 @@
 				aria-label={project.name}
 				tabindex="-1"
 				onclick={(e) => e.stopPropagation()}
-				class="absolute sm:inset-3 inset-1 border-pewter border bg-mblack shadow-black shadow-xl overflow-hidden flex flex-col"
+				class="absolute sm:inset-3 inset-1 outline-none border-pewter border bg-mblack shadow-black shadow-xl overflow-hidden flex flex-col"
 				in:fly={{ duration: 200, y: 30 }}
 			>
 				<div
