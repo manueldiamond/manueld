@@ -191,7 +191,11 @@
 					[
 						project('FirstBank Online Money Transfer', 'Internship, ITANDT Solutions'),
 						game('brsjs', 1, 'BRS.js', 'The duel game rebuilt in React'),
-						game('polygons', 1, 'Pointless Polygons', 'An idle game in React and Redux')
+						game('polygons', 1, 'Pointless Polygons', 'An idle game in React and Redux'),
+						{
+							...game('linkedout', 1, 'Linked-out', 'A LinkedIn clone with a live feed'),
+							tags: ['React', 'Redux Toolkit', 'Firebase']
+						}
 					]
 				]
 			},
@@ -219,7 +223,20 @@
 						project('Gift-Beneficiary System'),
 						project('TE Sites Appointment Booking System'),
 						project('Dental Website'),
-						project('Vehiville Web (v1)')
+						project('Vehiville Web (v1)'),
+						{
+							...game(
+								'chrysans',
+								5,
+								'Chrysans Decor',
+								'Interior design and finishing company website'
+							),
+							tags: ['Next.js', 'Framer Motion']
+						},
+						{
+							...game('carehms', 2, 'CareHMS', 'Hospital patient registration'),
+							tags: ['Next.js', 'React Hook Form', 'Zod']
+						}
 					]
 				]
 			},
