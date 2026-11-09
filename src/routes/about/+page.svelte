@@ -1,0 +1,261 @@
+<script lang="ts">
+	import Navbar from '$lib/components/Navbar.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+	import { ArrowRight, Mail } from 'lucide-svelte';
+	import { contact } from '$lib/constants/contact';
+
+	type Shot = { src: string; alt: string; text: string };
+
+	type Chapter = { id: string; when: string; title: string; body: string; shots: Shot[] };
+
+	const img = (name: string) => `/me/journey/${name}.webp`;
+
+	// Facts come from the old APKs in Drive, the itch.io pages and the 2023 screen recordings.
+	const chapters: Chapter[] = [
+		{
+			id: 'early',
+			when: '2020 to 2022',
+			title: 'Android builds',
+			body: 'Java with libGDX came first, then C# in Unity, then Godot. My Drive still has a dozen APKs from those years. I ran them on real phones again to get these screens.',
+			shots: [
+				{
+					src: img('brs-v7-fight'),
+					alt: 'Two robots in a sword duel with health bars, a round counter and a speed setting',
+					text: 'BRS, the game I kept rebuilding. Two robots, swords, rounds and a speed dial. This is version 7.1 from 2022.'
+				},
+				{
+					src: img('brs-3d-duel'),
+					alt: 'The robot duel rebuilt in 3D',
+					text: 'The same duel, rebuilt in 3D.'
+				},
+				{
+					src: img('corridor-cyan'),
+					alt: 'A 3D corridor of glossy cyan and black panels',
+					text: 'Experimenting with light and materials in 3D.'
+				}
+			]
+		},
+		{
+			id: 'godot',
+			when: '2023',
+			title: 'Drawing my own characters',
+			body: 'I moved to Godot for good, writing GDScript and C#. I drew characters myself, cut them into parts and animated them in the engine. I recorded the sessions for a YouTube devlog that never launched, because web work started paying first.',
+			shots: [
+				{
+					src: img('robot-drawing'),
+					alt: 'A line drawing of a robot character in a vector editor',
+					text: 'The robot started as a vector drawing.'
+				},
+				{
+					src: img('robot-rig'),
+					alt: 'The robot cut into parts and posed in the Godot editor',
+					text: 'Then it was split into parts and posed in Godot.'
+				}
+			]
+		},
+		{
+			id: 'shipped',
+			when: 'Most recent',
+			title: 'Games people could play',
+			body: 'Game jams made me finish things. Ludum Dare 48, the Brackeys jam and Stop Waiting For Godot all came with a deadline. I published the results on itch.io.',
+			shots: [
+				{
+					src: img('itch-car'),
+					alt: 'A glowing vehicle racing through a neon level',
+					text: 'A neon racing platformer, built to look fast.'
+				},
+				{
+					src: img('itch-shooter'),
+					alt: 'A first-person shooter with enemies and a weapon bar',
+					text: 'A first-person shooter where each kill unlocks a stronger gun. Six weapons so far.'
+				},
+				{
+					src: img('itch-button-hell'),
+					alt: 'A first-person view of a robot in a red room under a glowing green light',
+					text: 'Button Hell, for the Brackeys jam. One week to make it, and I still came in an hour late.'
+				},
+				{
+					src: img('itch-elden'),
+					alt: 'A dark 3D scene with a sword fighter on a red path',
+					text: 'Elden Ring Budget Edition. A fan remake made for fun.'
+				}
+			]
+		}
+	];
+
+	let active = $state<Record<string, number>>({});
+
+	// A step becomes current when its middle crosses the middle of the screen.
+	function step(node: HTMLElement, key: { chapter: string; index: number }) {
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) active[key.chapter] = key.index;
+			},
+			{ rootMargin: '-50% 0px -50% 0px' }
+		);
+
+		observer.observe(node);
+
+		return { destroy: () => observer.disconnect() };
+	}
+</script>
+
+<svelte:head>
+	<title>About · Manuel Diamond</title>
+	<meta
+		name="description"
+		content="Manuel Diamond learned to program by making games in libGDX, Unity and Godot. Now he builds software for a living and uses AI to go faster."
+	/>
+</svelte:head>
+
+<main class="bg-mblack">
+	<Navbar />
+
+	<section class="container mx-auto flex min-h-[60svh] flex-col justify-center py-20">
+		<h1 class="max-w-3xl text-4xl font-medium text-cream sm:text-6xl">
+			I learned to program because I wanted to make games.
+		</h1>
+		<p class="mt-6 max-w-xl text-base leading-[180%] text-cream/70 sm:text-lg">
+			Games taught me the fundamentals. The fundamentals became my job.
+		</p>
+	</section>
+
+	{#each chapters as chapter, ci (chapter.id)}
+		<section id={chapter.id} class="chapter relative" style="z-index: {ci + 1}">
+			<div
+				class="container mx-auto lg:grid lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-12"
+			>
+				<!-- Desktop: the image stage stays pinned while the text beside it scrolls. -->
+				<div class="sticky top-0 hidden h-svh items-center lg:flex">
+					<div class="stage relative aspect-video w-full overflow-hidden border border-pewter/40">
+						{#each chapter.shots as shot, si (shot.src)}
+							<img
+								src={shot.src}
+								alt={shot.alt}
+								loading={ci === 0 && si === 0 ? 'eager' : 'lazy'}
+								decoding="async"
+								class="shot absolute inset-0 size-full object-contain"
+								class:on={(active[chapter.id] ?? 0) === si}
+							/>
+						{/each}
+					</div>
+				</div>
+
+				<div>
+					<div class="flex flex-col justify-center pt-24 pb-10 lg:min-h-[60svh] lg:pt-0 lg:pb-0">
+						<p class="mb-3 text-sm font-semibold uppercase text-cream/60">{chapter.when}</p>
+						<h2 class="mb-5 text-3xl text-cream sm:text-4xl">{chapter.title}</h2>
+						<p class="text-base leading-[190%] text-cream/80 md:text-lg">{chapter.body}</p>
+					</div>
+					{#each chapter.shots as shot, si (shot.src)}
+						<div
+							class="flex flex-col justify-center pb-12 lg:min-h-[80svh] lg:pb-0"
+							use:step={{ chapter: chapter.id, index: si }}
+						>
+							<img
+								src={shot.src}
+								alt={shot.alt}
+								loading="lazy"
+								decoding="async"
+								class="mb-4 aspect-video w-full border border-pewter/40 bg-black object-contain lg:hidden"
+							/>
+							<p
+								class="border-l-2 border-carafe-light pl-4 text-base leading-[180%] text-cream/80 lg:text-lg"
+							>
+								{shot.text}
+							</p>
+						</div>
+					{/each}
+				</div>
+			</div>
+		</section>
+	{/each}
+
+	<section class="chapter relative z-10 py-24 sm:py-32">
+		<div class="container mx-auto grid gap-16 lg:grid-cols-3 lg:gap-12">
+			<div>
+				<p class="mb-3 text-sm font-semibold uppercase text-cream/60">What it turned into</p>
+				<h2 class="mb-5 text-3xl text-cream">A programmer, not a stack</h2>
+				<p class="leading-[190%] text-cream/80">
+					I'm not a front-end or back-end developer. I'm a programmer. React took me about a month.
+					I never formally studied CSS or FastAPI and I still use both, because the fundamentals
+					carry over. Give me a day with a new language and I can start making useful changes.
+				</p>
+			</div>
+			<div>
+				<p class="mb-3 text-sm font-semibold uppercase text-cream/60">How I use AI</p>
+				<h2 class="mb-5 text-3xl text-cream">Know the thing, then go faster</h2>
+				<p class="leading-[190%] text-cream/80">
+					AI can make you feel capable and incompetent at the same time. The fix is to know how to
+					do the work yourself, then let AI speed it up. I build my own tools around it, and I help
+					people who pay for AI subscriptions get real work out of them.
+				</p>
+				<a
+					href="/ai"
+					class="mt-5 inline-flex min-h-11 items-center gap-2 text-cream underline underline-offset-4"
+				>
+					How I work with AI <ArrowRight class="size-4" />
+				</a>
+			</div>
+			<div>
+				<p class="mb-3 text-sm font-semibold uppercase text-cream/60">Now</p>
+				<h2 class="mb-5 text-3xl text-cream">Back to the low level</h2>
+				<p class="leading-[190%] text-cream/80">
+					These days I'm learning Raylib, C, Rust and graphics programming. I don't know what the
+					world will pay for in five years. I'm learning it anyway, because I enjoy it.
+				</p>
+			</div>
+		</div>
+
+		<div
+			class="container mx-auto mt-24 flex flex-col items-start gap-5 border-t border-pewter/30 pt-12"
+		>
+			<h2 class="text-2xl text-cream sm:text-3xl">Want something built?</h2>
+			<p class="max-w-xl leading-[180%] text-cream/70">
+				Web and mobile apps, or AI automations for your own work.
+			</p>
+			<div class="flex flex-col gap-2 sm:flex-row">
+				<a href="/#contact" class="pri-button">
+					<span class="centered gap-2">Send a message <ArrowRight class="size-5" /></span>
+				</a>
+				<a href="mailto:{contact.email}" class="button">
+					<span class="centered gap-2"><Mail class="size-5" /> {contact.email}</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<Footer />
+</main>
+
+<style>
+	.chapter {
+		background-color: var(--color-mblack);
+		box-shadow: 0 -40px 60px -20px rgb(0 0 0 / 0.8);
+	}
+
+	.stage {
+		background-color: #000;
+		box-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.7);
+	}
+
+	.shot {
+		opacity: 0;
+		transform: scale(1.03);
+		transition:
+			opacity 600ms ease,
+			transform 1200ms ease;
+	}
+
+	.shot.on {
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.shot {
+			transition: none;
+			transform: none;
+		}
+	}
+</style>
