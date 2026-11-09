@@ -2,16 +2,7 @@
 	import { onMount, type Component } from 'svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import {
-		ArrowLeft,
-		ArrowRight,
-		HandCoins,
-		Mail,
-		Quote,
-		X,
-		ZoomIn,
-		ZoomOut
-	} from 'lucide-svelte';
+	import { ArrowLeft, ArrowRight, HandCoins, Mail, X, ZoomIn, ZoomOut } from 'lucide-svelte';
 	import {
 		SiAndroid,
 		SiBlender,
@@ -33,17 +24,14 @@
 		SiRaylib,
 		SiReact,
 		SiRust,
-		SiSvelte,
-		SiTailwindcss,
 		SiTypescript,
-		SiWordpress,
 		SiYoutube
 	} from '@icons-pack/svelte-simple-icons';
 	import { contact } from '$lib/constants/contact';
 	import { projects } from '$lib/constants/projects';
 	import { prefersReducedMotion } from '$lib/utils/inView';
 
-	type Card = { src: string; title?: string; note?: string; tags?: string[]; gallery?: string[] };
+	type Card = { gallery: string[]; title?: string; note?: string; tags?: string[] };
 
 	type Logo = { icon?: Component; word?: string; x: number; y: number; size: number };
 
@@ -53,12 +41,21 @@
 		title: string;
 		text: string[];
 		tags: string[];
+		tint: string;
 		logos: Logo[];
-		cards: Card[];
+		rows: Card[][];
+		link?: { href: string; label: string };
 	};
 
-	const shot = (name: string, title?: string, note?: string): Card => ({
-		src: `/me/journey/${name}.webp`,
+	// One card per game; the gallery holds every frame for it.
+	const game = (key: string, count: number, title?: string, note?: string): Card => ({
+		gallery: Array.from({ length: count }, (_, i) => `/me/journey/g/${key}-${i + 1}.webp`),
+		title,
+		note
+	});
+
+	const tool = (title: string, note: string, images: string[]): Card => ({
+		gallery: images,
 		title,
 		note
 	});
@@ -67,14 +64,13 @@
 	const project = (name: string, note?: string): Card => {
 		const found = projects.find((p) => p.name === name);
 
-		if (!found || !found.images.length) return { src: '', title: name };
+		if (!found) return { gallery: [], title: name };
 
 		return {
-			src: found.images[0],
+			gallery: found.images,
 			title: found.name,
 			note: note ?? found.client.name,
-			tags: found.tags.slice(0, 3),
-			gallery: found.images
+			tags: found.tags.slice(0, 3)
 		};
 	};
 
@@ -88,19 +84,20 @@
 				'I taught myself to program by making video games in Java with libGDX, built for Android phones. Arcade games, physics toys and small puzzle rooms, most of them never named.'
 			],
 			tags: ['Java', 'libGDX', 'Android'],
+			tint: 'hsl(28 26% 17%)',
 			logos: [
-				{ icon: SiOpenjdk, x: 82, y: 18, size: 88 },
-				{ word: 'libGDX', x: 70, y: 70, size: 30 },
-				{ icon: SiAndroid, x: 90, y: 52, size: 64 }
+				{ word: 'Java', x: 80, y: 22, size: 150 },
+				{ icon: SiOpenjdk, x: 62, y: 72, size: 150 },
+				{ icon: SiAndroid, x: 92, y: 66, size: 130 },
+				{ word: 'libGDX', x: 46, y: 18, size: 64 }
 			],
-			cards: [
-				shot('spree', 'Spree', 'Arcade stacking game'),
-				shot('physics-title', 'Physics game', 'Title screen'),
-				shot('physics-1', 'Physics game', 'Gameplay'),
-				shot('reflect-menu', 'Reflect', 'Mode select'),
-				shot('reflect-play', 'Reflect', 'Gameplay'),
-				shot('room-simple-1', 'Room', 'Puzzle prototype'),
-				shot('room-simple-2', 'Room', 'Level two')
+			rows: [
+				[
+					game('spree', 1, 'Spree', 'Arcade stacking game'),
+					game('physics', 3, 'Physics game', 'Physics toy with levels'),
+					game('reflect', 3, 'Reflect', 'Arcade shooter with two modes'),
+					game('room', 3, 'Room', 'Puzzle prototype')
+				]
 			]
 		},
 		{
@@ -112,23 +109,21 @@
 				'I also wrote small Python servers while learning how multiplayer games work.'
 			],
 			tags: ['Godot', 'GDScript', 'Python', 'Blender'],
+			tint: 'hsl(212 30% 16%)',
 			logos: [
-				{ icon: SiGodotengine, x: 84, y: 16, size: 92 },
-				{ icon: SiPython, x: 72, y: 74, size: 60 },
-				{ icon: SiBlender, x: 92, y: 60, size: 52 }
+				{ icon: SiGodotengine, x: 82, y: 22, size: 180 },
+				{ icon: SiPython, x: 62, y: 74, size: 120 },
+				{ icon: SiBlender, x: 93, y: 68, size: 110 }
 			],
-			cards: [
-				shot('brs-menu', 'BRS', 'Main menu'),
-				shot('brs-2d-1', 'BRS', 'The 2D duel'),
-				shot('brs-v7-shoot', 'BRS 7.1', 'Rounds, health and game speed'),
-				shot('brs-3d-1', 'BRS 3D', 'Rebuilt in 3D'),
-				shot('brs-3d-2', 'BRS 3D', 'Shatter effects'),
-				shot('yt-epic-1', 'Epic Platformer', 'High-speed 3D platformer'),
-				shot('yt-epic-mp-2', 'Epic Platformer', 'Multiplayer build'),
-				shot('yt-remake-1', 'Room', 'Remade in Godot'),
-				shot('tiles-2', 'Room', 'A busier remake with shields'),
-				shot('yt-lasers-1', 'Space combat', 'Lasers and turrets'),
-				shot('corridor-2', '3D study', 'Light and materials')
+			rows: [
+				[
+					game('brs', 5, 'BRS', 'Robot duelling game, five versions'),
+					game('brs3d', 2, 'BRS 3D', 'The duel rebuilt in 3D'),
+					game('epic', 8, 'Epic Platformer', 'High-speed 3D platformer with multiplayer'),
+					game('shields', 5, 'Room', 'Remade in Godot with shields'),
+					game('lasers', 6, 'Space combat', 'Lasers and turrets'),
+					game('studies', 3, '3D studies', 'Light and materials')
+				]
 			]
 		},
 		{
@@ -140,22 +135,24 @@
 				'I recorded a devlog for each one on YouTube, where the channel grew to 568 subscribers. The last series turned a one-hour jam game into a full shooter over three months.'
 			],
 			tags: ['Godot', 'Game jams', 'YouTube devlogs'],
+			tint: 'hsl(355 26% 16%)',
 			logos: [
-				{ icon: SiYoutube, x: 82, y: 20, size: 96 },
-				{ icon: SiGodotengine, x: 92, y: 66, size: 58 },
-				{ icon: SiBlender, x: 70, y: 76, size: 48 }
+				{ icon: SiYoutube, x: 80, y: 24, size: 190 },
+				{ icon: SiGodotengine, x: 93, y: 70, size: 120 },
+				{ icon: SiBlender, x: 64, y: 76, size: 100 }
 			],
-			cards: [
-				shot('yt-ld48-1', 'Deep Mine', 'Ludum Dare 48, made in 72 hours'),
-				shot('yt-sug-2', 'Super Unstable Game', 'Ludum Dare 49, ragdoll physics'),
-				shot('itch-button-hell', 'Button Hell', 'Brackeys Game Jam, built in one week'),
-				shot('yt-trash', 'Trash Notifications', 'Stop Waiting For Godot jam'),
-				shot('itch-ai-game-1', 'AI Game', 'WOWIE 4.0, train a robot to fight'),
-				shot('yt-horror-1', 'Horror game', 'Built in two weeks'),
-				shot('yt-elden-1'),
-				shot('yt-shooter-2', 'Project 2', 'From a one-hour jam game'),
-				shot('yt-shooter-4', 'Project 2', 'Unlockable weapons'),
-				shot('robot-rig')
+			rows: [
+				[
+					game('deepmine', 5, 'Deep Mine', 'Ludum Dare 48, made in 72 hours'),
+					game('sug', 6, 'Super Unstable Game', 'Ludum Dare 49, ragdoll physics'),
+					game('buttonhell', 7, 'Button Hell', 'Brackeys Game Jam, built in one week'),
+					game('trash', 2, 'Trash Notifications', 'Stop Waiting For Godot jam'),
+					game('aigame', 5, 'AI Game', 'WOWIE 4.0, train a robot to fight'),
+					game('horror', 5, 'Horror game', 'Built in two weeks'),
+					game('elden', 5),
+					game('project2', 8, 'Project 2', 'A one-hour jam game grown into a shooter'),
+					game('rig', 1)
+				]
 			]
 		},
 		{
@@ -166,16 +163,19 @@
 				'I learned React and moved into web development. My first professional build was an internship project for FirstBank under ITANDT Solutions. I rebuilt BRS in React to learn it.'
 			],
 			tags: ['React', 'JavaScript', 'HTML', 'CSS'],
+			tint: 'hsl(190 30% 14%)',
 			logos: [
-				{ icon: SiReact, x: 84, y: 18, size: 92 },
-				{ icon: SiJavascript, x: 72, y: 72, size: 52 },
-				{ icon: SiHtml5, x: 92, y: 60, size: 50 },
-				{ icon: SiCss, x: 64, y: 28, size: 40 }
+				{ icon: SiReact, x: 80, y: 24, size: 180 },
+				{ icon: SiJavascript, x: 62, y: 74, size: 110 },
+				{ icon: SiHtml5, x: 93, y: 66, size: 110 },
+				{ icon: SiCss, x: 48, y: 22, size: 90 }
 			],
-			cards: [
-				project('FirstBank Online Money Transfer', 'Internship, ITANDT Solutions'),
-				shot('web-brsjs', 'BRS.js', 'The duel game rebuilt in React'),
-				shot('web-polygons', 'Pointless Polygons', 'An idle game in React and Redux')
+			rows: [
+				[
+					project('FirstBank Online Money Transfer', 'Internship, ITANDT Solutions'),
+					game('brsjs', 1, 'BRS.js', 'The duel game rebuilt in React'),
+					game('polygons', 1, 'Pointless Polygons', 'An idle game in React and Redux')
+				]
 			]
 		},
 		{
@@ -185,54 +185,70 @@
 			text: [
 				'Freelance work for businesses: booking systems, management tools, websites and dashboards, built directly with the people who use them.'
 			],
-			tags: ['Next.js', 'TypeScript', 'Django', 'Flutter', 'WordPress'],
+			tags: ['Next.js', 'TypeScript', 'React Native', 'Flutter', 'Django'],
+			tint: 'hsl(42 18% 15%)',
 			logos: [
-				{ icon: SiNextdotjs, x: 84, y: 18, size: 84 },
-				{ icon: SiTypescript, x: 72, y: 72, size: 52 },
-				{ icon: SiDjango, x: 92, y: 62, size: 50 },
-				{ icon: SiFlutter, x: 64, y: 30, size: 44 },
-				{ icon: SiWordpress, x: 90, y: 86, size: 40 }
+				{ icon: SiNextdotjs, x: 80, y: 24, size: 170 },
+				{ icon: SiTypescript, x: 62, y: 74, size: 110 },
+				{ icon: SiReact, x: 93, y: 68, size: 110 },
+				{ icon: SiFlutter, x: 48, y: 20, size: 90 },
+				{ icon: SiDjango, x: 92, y: 30, size: 80 }
 			],
-			cards: [
-				project('Tasty Chef'),
-				project('Curve Bookings'),
-				project('Church Management System'),
-				project('Logistics Management System'),
-				project('Gift-Beneficiary System'),
-				project('TE Sites Appointment Booking System'),
-				project('Dental Website'),
-				project('Vehiville Web (v1)')
+			rows: [
+				[
+					project('Tasty Chef'),
+					project('Curve Bookings'),
+					project('Church Management System'),
+					project('Logistics Management System'),
+					project('Gift-Beneficiary System'),
+					project('TE Sites Appointment Booking System'),
+					project('Dental Website'),
+					project('Vehiville Web (v1)')
+				]
 			]
 		},
 		{
 			id: 'contract',
 			years: '2025 to 2026',
-			title: 'Professional work and AI-driven development',
+			title: 'AI-driven rapid development',
 			text: [
-				'After graduating with a First Class BSc in Computer Science from Central University, Ghana, I joined my first company.',
-				'Since then I have taken on contract work across several products, with AI-driven development throughout. Agents write and research. I design, review and decide.'
+				'After graduating with a First Class BSc in Computer Science from Central University, Ghana, I joined my first company, then moved to contract work across several products.',
+				'Projects no longer take forever. I run several coding agents in parallel and built my own tools around them: a screenshot app that hands annotated snips to agents, voice calls with my agents, and an MCP server that gives them email, identity and publishing tools.'
 			],
-			tags: ['TypeScript', 'Node.js', 'Expo', 'Laravel', 'Cloudflare', 'AI agents'],
+			tags: ['TypeScript', 'Node.js', 'Expo', 'Laravel', 'Cloudflare', 'Swift', 'AI agents'],
+			tint: 'hsl(18 28% 15%)',
+			link: { href: '/ai', label: 'How I work with AI' },
 			logos: [
-				{ icon: SiClaude, x: 84, y: 18, size: 84 },
-				{ icon: SiCloudflare, x: 70, y: 74, size: 56 },
-				{ icon: SiExpo, x: 92, y: 60, size: 46 },
-				{ icon: SiNodedotjs, x: 64, y: 30, size: 44 },
-				{ icon: SiLaravel, x: 90, y: 86, size: 40 },
-				{ icon: SiSvelte, x: 58, y: 84, size: 36 },
-				{ icon: SiTailwindcss, x: 76, y: 46, size: 36 }
+				{ icon: SiClaude, x: 80, y: 22, size: 170 },
+				{ icon: SiCloudflare, x: 62, y: 76, size: 110 },
+				{ icon: SiExpo, x: 93, y: 66, size: 100 },
+				{ icon: SiNodedotjs, x: 48, y: 20, size: 90 },
+				{ icon: SiLaravel, x: 92, y: 30, size: 80 }
 			],
-			cards: [
-				project('Odadea 96 Network'),
-				project('The Builders Circle'),
-				project('BridgeX Mobile App'),
-				project('BridgeX Admin Dashboard'),
-				project('Curve Rentals App'),
-				project('RS Notify'),
-				project('AI powered Website Chatbot'),
-				project('Enterprise Resource Planning System'),
-				project('Vehiville Web (v2)'),
-				project('AREF 2026 Admission Portal')
+			rows: [
+				[
+					project('Odadea 96 Network'),
+					project('The Builders Circle'),
+					project('BridgeX Mobile App'),
+					project('BridgeX Admin Dashboard'),
+					project('Curve Rentals App'),
+					project('RS Notify'),
+					project('AI powered Website Chatbot'),
+					project('Enterprise Resource Planning System'),
+					project('Vehiville Web (v2)'),
+					project('AREF 2026 Admission Portal')
+				],
+				[
+					tool('SnipCanvas', 'Native macOS snip and annotate, built for agents', [
+						'/me/journey/tools/snipcanvas-1.webp',
+						'/me/journey/tools/snipcanvas-2.webp'
+					]),
+					tool('Voice Call Agents', 'Phone calls with my coding agents, macOS and iOS', [
+						'/me/journey/tools/voice-1.webp',
+						'/me/journey/tools/voice-2.webp'
+					]),
+					tool('T3 Code', 'Several Claude and Codex accounts side by side', ['/ai/t3code.webp'])
+				]
 			]
 		}
 	];
@@ -255,8 +271,8 @@
 		}
 	];
 
-	// Scroll-driven carousels: each era pins while vertical scroll moves its rail sideways.
-	let travel = $state<number[]>(eras.map(() => 0));
+	// Scroll-driven carousels: each era pins while vertical scroll moves its rails sideways.
+	let travel = $state<number[][]>(eras.map((e) => e.rows.map(() => 0)));
 
 	let progress = $state<number[]>(eras.map(() => 0));
 
@@ -264,7 +280,9 @@
 
 	const sections: HTMLElement[] = [];
 
-	const rails: HTMLElement[] = [];
+	const rails: HTMLElement[][] = eras.map(() => []);
+
+	const span = (i: number) => Math.max(0, ...travel[i]);
 
 	onMount(() => {
 		still = prefersReducedMotion();
@@ -274,7 +292,7 @@
 		let frame = 0;
 
 		const measure = () => {
-			travel = rails.map((rail) => Math.max(0, rail.scrollWidth - innerWidth));
+			travel = rails.map((row) => row.map((rail) => Math.max(0, rail.scrollWidth - innerWidth)));
 		};
 
 		const update = () => {
@@ -282,24 +300,26 @@
 
 			progress = sections.map((section, i) => {
 				const box = section.getBoundingClientRect();
-				const span = Math.max(1, travel[i]);
 
-				return Math.min(1, Math.max(0, -box.top / span));
+				return Math.min(1, Math.max(0, -box.top / Math.max(1, span(i))));
 			});
 
-			// Cards bend and soften as they reach either edge of the screen.
-			for (const rail of rails) {
-				for (const card of rail.querySelectorAll<HTMLElement>(':scope > li')) {
-					const box = card.getBoundingClientRect();
-					const centre = box.left + box.width / 2;
-					const distance = Math.abs(centre - innerWidth / 2) - innerWidth * 0.32;
-					const edge = Math.min(1, Math.max(0, distance / (innerWidth * 0.22)));
-					const side = centre < innerWidth / 2 ? 1 : -1;
+			// Cards glitch and blur out as they reach either edge of the screen.
+			for (const card of document.querySelectorAll<HTMLElement>('[data-card]')) {
+				const box = card.getBoundingClientRect();
+				const centre = box.left + box.width / 2;
+				const distance = Math.abs(centre - innerWidth / 2) - innerWidth * 0.34;
+				const edge = Math.min(1, Math.max(0, distance / (innerWidth * 0.2)));
+				const side = centre < innerWidth / 2 ? -1 : 1;
+				const split = (edge * 10).toFixed(1);
 
-					card.style.transform = `perspective(900px) rotateY(${side * edge * 38}deg) scaleX(${1 - edge * 0.18})`;
-					card.style.opacity = String(1 - edge * 0.55);
-					card.style.filter = edge > 0.02 ? `blur(${(edge * 2.5).toFixed(2)}px)` : '';
-				}
+				card.style.transform = edge
+					? `translateX(${side * edge * 18}px) skewX(${side * edge * -6}deg)`
+					: '';
+				card.style.opacity = String(1 - edge * 0.6);
+				card.style.filter = edge
+					? `blur(${(edge * 3).toFixed(2)}px) drop-shadow(${split}px 0 0 rgb(255 40 90 / 0.45)) drop-shadow(-${split}px 0 0 rgb(0 220 255 / 0.45))`
+					: '';
 			}
 		};
 
@@ -324,17 +344,19 @@
 		};
 	});
 
-	const railX = (i: number) => {
+	// Rails alternate direction, so neighbouring rows and eras slide past each other.
+	const railX = (i: number, r: number) => {
 		const p = progress[i];
+		const distance = travel[i][r];
 
-		return i % 2 ? -(1 - p) * travel[i] : -p * travel[i];
+		return (i + r) % 2 ? -(1 - p) * distance : -p * distance;
 	};
 
-	// Logos slide in from the side the rail moves away from, over the first third of the pin.
+	// Logos drift in from the side over the first third of the pin.
 	const logoX = (i: number) => {
 		const enter = Math.min(1, progress[i] * 3);
 
-		return (1 - enter) * (i % 2 ? -1 : 1) * 40;
+		return (1 - enter) * (i % 2 ? -1 : 1) * 30;
 	};
 
 	// Full screen viewer with zoom and pan.
@@ -348,10 +370,8 @@
 
 	let drag = { x: 0, y: 0, px: 0, py: 0 };
 
-	const open = (card: Card, era: Era) => {
-		const images = card.gallery ?? era.cards.filter((c) => c.src && !c.gallery).map((c) => c.src);
-
-		viewer = { images, index: Math.max(0, images.indexOf(card.src)), title: card.title };
+	const open = (card: Card) => {
+		viewer = { images: card.gallery, index: 0, title: card.title };
 		zoom = 1;
 		pan = { x: 0, y: 0 };
 	};
@@ -416,7 +436,7 @@
 	<title>About · Manuel Diamond</title>
 	<meta
 		name="description"
-		content="Self-taught programmer with roots in game development: Java and libGDX from 2016, Godot, game jams and devlogs, then web development, freelance work and AI-driven contract work."
+		content="Self-taught programmer with roots in game development: Java and libGDX from 2016, Godot, game jams and devlogs, then web development, freelance work and AI-driven development."
 	/>
 </svelte:head>
 
@@ -424,12 +444,12 @@
 	<Navbar />
 
 	<section class="container mx-auto flex min-h-[70svh] flex-col justify-center py-20">
-		<h1 class="max-w-3xl text-4xl font-medium leading-tight text-cream sm:text-6xl">
+		<h1 class="max-w-3xl text-4xl leading-tight font-medium text-cream sm:text-6xl">
 			Self-taught programmer with roots in game development.
 		</h1>
 		<p class="mt-6 max-w-2xl leading-[180%] text-cream/70 sm:text-lg">
-			I started making games in 2016, moved into web development in 2023, and now work on contract
-			with AI-driven development.
+			I started making games in 2016, moved into web development in 2023, and now build with
+			AI-driven development on contract.
 		</p>
 	</section>
 
@@ -437,27 +457,28 @@
 		<section
 			bind:this={sections[i]}
 			id={era.id}
-			class="relative border-t border-pewter/20"
-			style:height={still || !travel[i] ? 'auto' : `calc(100svh + ${travel[i]}px)`}
+			class="relative"
+			style="--tint: {era.tint}"
+			style:height={still || !span(i) ? 'auto' : `calc(100svh + ${span(i)}px)`}
 		>
 			<div
-				class="relative flex flex-col justify-center overflow-hidden py-16"
+				class="era flex flex-col justify-center overflow-hidden py-14"
 				class:sticky={!still}
 				class:top-0={!still}
-				class:h-svh={!still}
+				class:min-h-svh={!still}
 			>
-				<!-- Backdrop: the home page's neumorphic diamonds with this era's tools. -->
+				<!-- Backdrop: the home page's neumorphic diamonds with this era's tools, embossed. -->
 				<div aria-hidden="true" class="pointer-events-none absolute inset-0">
-					<div class="neumorphic diamond" style="left: 74%; top: 10%; width: 22vw;"></div>
-					<div class="neumorphic diamond" style="left: 88%; top: 60%; width: 12vw;"></div>
-					<div class="neumorphic diamond" style="left: 60%; top: 66%; width: 8vw;"></div>
+					<div class="neumorphic diamond" style="left: 76%; top: 12%; width: 24vw;"></div>
+					<div class="neumorphic diamond" style="left: 90%; top: 62%; width: 14vw;"></div>
+					<div class="neumorphic diamond" style="left: 58%; top: 70%; width: 9vw;"></div>
 					{#each era.logos as logo, li (li)}
 						<div
-							class="logo absolute text-cream/[0.09]"
+							class="logo absolute"
 							style="left: {logo.x}%; top: {logo.y}%; transform: translate(-50%, -50%) translateX({logoX(
 								i
 							) *
-								(1 + li * 0.35)}vw);"
+								(1 + li * 0.3)}vw);"
 						>
 							{#if logo.icon}
 								<logo.icon size={logo.size} />
@@ -478,68 +499,88 @@
 							</p>
 						{/each}
 					</div>
-					<ul class="mt-4 flex flex-wrap gap-2">
+					<div class="mt-4 flex flex-wrap items-center gap-2">
 						{#each era.tags as tag}
-							<li class="border border-pewter/40 px-2 py-1 text-xs text-cream/70">{tag}</li>
+							<span class="border border-cream/20 px-2 py-1 text-xs text-cream/70">{tag}</span>
 						{/each}
-					</ul>
+						{#if era.link}
+							<a
+								href={era.link.href}
+								class="ml-2 inline-flex min-h-11 items-center gap-2 text-sm text-cream underline underline-offset-4"
+							>
+								{era.link.label}
+								<ArrowRight class="size-4" />
+							</a>
+						{/if}
+					</div>
 				</div>
 
-				<div class="relative mt-8" class:overflow-x-auto={still}>
-					<ul
-						bind:this={rails[i]}
-						class="rail flex w-max gap-4"
-						style:transform={still ? undefined : `translate3d(${railX(i)}px, 0, 0)`}
-					>
-						{#each era.cards.filter((c) => c.src) as card, ci (`${card.src}-${ci}`)}
-							<li class="w-[72vw] shrink-0 sm:w-[380px] lg:w-[440px]">
-								<button
-									type="button"
-									class="block w-full text-left"
-									onclick={() => open(card, era)}
-									aria-label={card.title ? `Open ${card.title}` : 'Open image'}
-								>
-									<div
-										class="aspect-video overflow-hidden border border-pewter/40 bg-black shadow-xl shadow-black/50"
+				{#each era.rows as row, r (r)}
+					<div class="relative mt-6" class:overflow-x-auto={still}>
+						<ul
+							bind:this={rails[i][r]}
+							class="rail flex w-max gap-5"
+							style:transform={still ? undefined : `translate3d(${railX(i, r)}px, 0, 0)`}
+						>
+							{#each row.filter((c) => c.gallery.length) as card, ci (`${card.gallery[0]}-${ci}`)}
+								<li data-card class="w-[85vw] shrink-0 sm:w-[475px] lg:w-[550px]">
+									<button
+										type="button"
+										class="glass block w-full p-2.5 text-left"
+										onclick={() => open(card)}
+										aria-label={card.title ? `Open ${card.title}` : 'Open images'}
 									>
-										<img
-											src={card.src}
-											alt={card.title ? `${card.title}${card.note ? `, ${card.note}` : ''}` : ''}
-											loading="lazy"
-											decoding="async"
-											class="size-full object-contain"
-										/>
-									</div>
-								</button>
-								{#if card.title}
-									<p class="mt-3 text-cream">{card.title}</p>
-								{/if}
-								{#if card.note}
-									<p class="text-sm text-cream/60">{card.note}</p>
-								{/if}
-								{#if card.tags}
-									<p class="mt-1 text-xs text-cream/50">{card.tags.join(', ')}</p>
-								{/if}
-							</li>
-						{/each}
-					</ul>
-				</div>
+										<div class="relative aspect-video overflow-hidden bg-black">
+											<img
+												src={card.gallery[0]}
+												alt={card.title ? `${card.title}${card.note ? `, ${card.note}` : ''}` : ''}
+												loading="lazy"
+												decoding="async"
+												class="size-full object-contain"
+											/>
+											{#if card.gallery.length > 1}
+												<span
+													class="absolute right-2 bottom-2 bg-black/70 px-2 py-0.5 text-xs text-cream"
+												>
+													{card.gallery.length} images
+												</span>
+											{/if}
+										</div>
+										{#if card.title || card.note || card.tags}
+											<div class="px-1 pt-3 pb-1">
+												{#if card.title}
+													<p class="text-cream">{card.title}</p>
+												{/if}
+												{#if card.note}
+													<p class="text-sm text-cream/60">{card.note}</p>
+												{/if}
+												{#if card.tags}
+													<p class="mt-1 text-xs text-cream/50">{card.tags.join(', ')}</p>
+												{/if}
+											</div>
+										{/if}
+									</button>
+								</li>
+							{/each}
+						</ul>
+					</div>
+				{/each}
 			</div>
 		</section>
 	{/each}
 
 	<!-- Now: one centred card, not another era. -->
-	<section class="relative overflow-hidden border-t border-pewter/20 py-24 sm:py-32">
+	<section class="relative overflow-hidden py-24 sm:py-32">
 		<div
 			aria-hidden="true"
-			class="pointer-events-none absolute inset-0 flex items-center justify-center gap-[18vw] text-cream/[0.06]"
+			class="emboss pointer-events-none absolute inset-0 flex items-center justify-center gap-[14vw]"
 		>
-			<SiRaylib size={160} />
-			<SiRust size={140} />
-			<SiC size={120} />
+			<SiRaylib size={260} />
+			<SiRust size={220} />
+			<SiC size={200} />
 		</div>
 		<div class="relative container mx-auto">
-			<div class="neumorphic mx-auto max-w-3xl border border-pewter/30 p-8 sm:p-12">
+			<div class="glass mx-auto max-w-3xl p-8 sm:p-12">
 				<p class="text-sm text-cream/60">Now</p>
 				<h2 class="mt-2 text-3xl text-cream sm:text-4xl">Strengthening the fundamentals</h2>
 				<p class="mt-5 leading-[190%] text-cream/80 md:text-lg">
@@ -547,13 +588,10 @@
 					and architecture. Raylib brings me back to game development from a lower level. I hope to
 					release one or two games next year, and a product of my own.
 				</p>
-				<figure class="mt-8 border-l-2 border-carafe-light pl-5">
-					<Quote class="mb-2 size-5 text-cream/50" />
-					<blockquote class="text-lg leading-[170%] text-cream sm:text-xl">
-						I use AI to build faster. But it's more fun to be competent, so every now and then I dig
-						into the code and learn something I didn't know. Right now, that's Raylib.
-					</blockquote>
-				</figure>
+				<p class="mt-4 leading-[190%] text-cream/80 md:text-lg">
+					I use AI to build faster. It is still more fun to be competent, so I keep digging into the
+					code and learning what I don't know yet.
+				</p>
 				<div class="mt-8 flex items-center gap-5 text-cream/70">
 					<SiRaylib size={28} title="Raylib" />
 					<SiC size={28} title="C" />
@@ -564,9 +602,10 @@
 	</section>
 
 	<!-- Business: the other half of the plan. -->
-	<section class="relative overflow-hidden border-t border-pewter/20 py-24 sm:py-32">
-		<div aria-hidden="true" class="pointer-events-none absolute top-10 -right-10 text-cream/[0.05]">
-			<HandCoins size={360} strokeWidth={1} />
+	<section class="relative overflow-hidden py-24 sm:py-32" style="--tint: hsl(45 22% 14%)">
+		<div class="era absolute inset-0"></div>
+		<div aria-hidden="true" class="emboss pointer-events-none absolute top-6 -right-10">
+			<HandCoins size={440} strokeWidth={1} />
 		</div>
 		<div
 			class="relative container mx-auto grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]"
@@ -591,7 +630,7 @@
 							href={video.url}
 							target="_blank"
 							rel="noopener"
-							class="flex min-h-11 items-start gap-3 border border-pewter/30 bg-black/20 p-4 text-cream transition-colors hover:bg-cream hover:text-mblack"
+							class="glass flex min-h-11 items-start gap-3 p-4 text-cream transition-colors hover:bg-cream hover:text-mblack"
 						>
 							<SiYoutube size={20} class="mt-0.5 shrink-0" />
 							<span>
@@ -695,24 +734,42 @@
 		font-variant-numeric: tabular-nums;
 	}
 
+	/* Each era gets its own tint, fading into the site's base colour. */
+	.era {
+		background:
+			radial-gradient(ellipse at 80% 15%, var(--tint), transparent 65%),
+			radial-gradient(ellipse at 10% 90%, var(--tint), transparent 55%), var(--color-mblack);
+	}
+
 	.diamond {
 		position: absolute;
 		aspect-ratio: 1;
 		transform: translate(-50%, -50%) rotate(45deg);
-		opacity: 0.6;
+		background: transparent;
+		opacity: 0.55;
+	}
+
+	/* Logos are pressed into the background rather than printed on it. */
+	.logo,
+	.emboss {
+		color: hsl(33.3 39.3% 95.1% / 0.035);
+		filter: drop-shadow(10px 10px 16px rgb(0 0 0 / 0.45)) drop-shadow(-6px -6px 12px rgb(255 255 255 / 0.03));
+	}
+
+	.logo {
+		transition: transform 80ms linear;
+	}
+
+	.glass {
+		background: hsl(33.3 39.3% 95.1% / 0.04);
+		border: 1px solid hsl(33.3 39.3% 95.1% / 0.14);
+		backdrop-filter: blur(14px);
+		box-shadow: 0 20px 50px -20px rgb(0 0 0 / 0.7);
 	}
 
 	.rail {
 		padding-inline: max(1rem, calc((100vw - 1280px) / 2 + 1rem));
 		will-change: transform;
-	}
-
-	.rail > li {
-		transition: opacity 120ms linear;
-	}
-
-	.logo {
-		transition: transform 80ms linear;
 	}
 
 	.tool {
