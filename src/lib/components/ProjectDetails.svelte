@@ -17,7 +17,8 @@
 		X
 	} from 'lucide-svelte';
 	import ConfidentialArt from './pc/ConfidentialArt.svelte';
-	import { tick } from 'svelte';
+	import { getContext, tick } from 'svelte';
+	import type { RetroPCContext } from './pc/RetroPC.svelte';
 	import { fade, fly, slide } from 'svelte/transition';
 	import type { EmblaCarouselType, EmblaEventType, EmblaOptionsType } from 'embla-carousel';
 
@@ -32,18 +33,28 @@
 		currentImageId = startImageIdx ?? 0;
 	});
 
+	const pc = getContext<RetroPCContext | undefined>('retro-pc');
+
+	// The window lives inside the PC screen, so the PC is pinned fully in view before
+	// page scroll is locked; otherwise the window could open half off screen and stay there.
 	$effect(() => {
-		if (project) {
-			//disable global scrolling
-			document.body.style.overflow = 'hidden';
-		} else {
-			document.body.style.overflow = 'auto';
-		}
+		if (!project) return;
+		pc?.pin();
+		document.body.style.overflow = 'hidden';
 
 		return () => {
-			document.body.style.overflow = 'auto';
+			document.body.style.overflow = '';
 		};
 	});
+
+	// A click anywhere outside the window closes it, not only on the backdrop inside the screen.
+	let dialogEl: HTMLDivElement | undefined = $state();
+
+	function onPointerDown(e: PointerEvent) {
+		if (!project || !dialogEl) return;
+
+		if (e.target instanceof Node && !dialogEl.contains(e.target)) close();
+	}
 
 	let emblaApi: EmblaCarouselType | undefined = $state();
 
@@ -89,6 +100,7 @@
 </script>
 
 <svelte:window onkeydown={onKey} />
+<svelte:document onpointerdown={onPointerDown} />
 
 {#if project}
 	<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
@@ -102,6 +114,7 @@
 		<div class="relative w-full h-full">
 			<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 			<div
+				bind:this={dialogEl}
 				role="dialog"
 				aria-modal="true"
 				aria-label={project.name}
@@ -136,7 +149,7 @@
 					</div>
 				</div>
 
-				<div class="flex flex-col overflow-y-scroll flex-1">
+				<div class="flex flex-col overflow-y-auto overscroll-contain flex-1">
 					{#if project.confidential}
 						<div class="shrink-0 bg-black/40 border-b border-pewter/30">
 							<ConfidentialArt class="mx-auto block h-[min(320px,40vh)] w-full" />

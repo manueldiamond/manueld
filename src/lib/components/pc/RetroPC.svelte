@@ -4,6 +4,8 @@
 		setPane: (el: HTMLElement | null) => void;
 		/** Scroll the page to where the screen content starts (top of the list). */
 		toPaneStart: () => void;
+		/** Bring the page to where the whole PC is in view and pinned (before a window opens). */
+		pin: () => void;
 	};
 </script>
 
@@ -102,6 +104,12 @@
 			}
 
 			measure();
+		},
+		pin() {
+			const start = absTop() + introPx;
+			const want = clamp(scrollY, start, start + travel);
+
+			if (Math.abs(scrollY - want) > 1) scrollTo({ top: want, behavior: 'instant' });
 		},
 		toPaneStart() {
 			// Wait for the new view to lay out and the section to resize, then jump: a smooth
