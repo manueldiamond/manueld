@@ -6,7 +6,6 @@
 		ArrowLeft,
 		ArrowRight,
 		Briefcase,
-		FileIcon,
 		HandCoins,
 		Mail,
 		X,
@@ -14,38 +13,12 @@
 		ZoomOut
 	} from 'lucide-svelte';
 	import Boxx from '$lib/components/Boxx.svelte';
-	import GlassPlate from '$lib/components/GlassPlate.svelte';
-	import {
-		SiAndroid,
-		SiBlender,
-		SiC,
-		SiClaude,
-		SiCloudflare,
-		SiCss,
-		SiDjango,
-		SiExpo,
-		SiFlutter,
-		SiGodotengine,
-		SiHtml5,
-		SiJavascript,
-		SiLaravel,
-		SiNextdotjs,
-		SiNodedotjs,
-		SiOpenjdk,
-		SiPython,
-		SiRaylib,
-		SiReact,
-		SiRust,
-		SiTypescript,
-		SiYoutube
-	} from '@icons-pack/svelte-simple-icons';
+	import { SiC, SiRaylib, SiRust, SiYoutube } from '@icons-pack/svelte-simple-icons';
 	import { contact } from '$lib/constants/contact';
 	import { projects } from '$lib/constants/projects';
-	import { parallax, prefersReducedMotion, reveal } from '$lib/utils/inView';
+	import { prefersReducedMotion } from '$lib/utils/inView';
 
 	type Card = { gallery: string[]; title?: string; note?: string; tags?: string[] };
-
-	type Logo = { icon?: Component; word?: string; x: number; y: number; size: number };
 
 	type Era = {
 		id: string;
@@ -53,7 +26,6 @@
 		title: string;
 		text: string[];
 		tags: string[];
-		logos: Logo[];
 		rows: Card[][];
 		link?: { href: string; label: string };
 	};
@@ -106,12 +78,6 @@
 					'I taught myself to program by making video games in Java with libGDX, built for Android phones. Arcade games, physics toys and small puzzle rooms, most of them never named.'
 				],
 				tags: ['Java', 'libGDX', 'Android'],
-				logos: [
-					{ word: 'Java', x: 80, y: 22, size: 150 },
-					{ icon: SiOpenjdk, x: 62, y: 72, size: 150 },
-					{ icon: SiAndroid, x: 92, y: 66, size: 130 },
-					{ word: 'libGDX', x: 46, y: 18, size: 64 }
-				],
 				rows: [
 					[
 						game('spree', 1, 'Spree', 'Arcade stacking game'),
@@ -130,11 +96,6 @@
 					'I also wrote small Python servers while learning how multiplayer games work.'
 				],
 				tags: ['Godot', 'GDScript', 'Python', 'Blender'],
-				logos: [
-					{ icon: SiGodotengine, x: 82, y: 22, size: 180 },
-					{ icon: SiPython, x: 62, y: 74, size: 120 },
-					{ icon: SiBlender, x: 93, y: 68, size: 110 }
-				],
 				rows: [
 					[
 						game('brs', 5, 'BRS', 'Robot duelling game, five versions'),
@@ -155,11 +116,6 @@
 					'I recorded a devlog for each one on YouTube, where the channel grew to 568 subscribers. The last series turned a one-hour jam game into a full shooter over three months.'
 				],
 				tags: ['Godot', 'Game jams', 'YouTube devlogs'],
-				logos: [
-					{ icon: SiYoutube, x: 80, y: 24, size: 190 },
-					{ icon: SiGodotengine, x: 93, y: 70, size: 120 },
-					{ icon: SiBlender, x: 64, y: 76, size: 100 }
-				],
 				rows: [
 					[
 						game('deepmine', 5, 'Deep Mine', 'Ludum Dare 48, made in 72 hours'),
@@ -182,12 +138,6 @@
 					'I learned React and moved into web development. My first professional build was an internship project for FirstBank under ITANDT Solutions. I rebuilt BRS in React to learn it.'
 				],
 				tags: ['React', 'JavaScript', 'HTML', 'CSS'],
-				logos: [
-					{ icon: SiReact, x: 80, y: 24, size: 180 },
-					{ icon: SiJavascript, x: 62, y: 74, size: 110 },
-					{ icon: SiHtml5, x: 93, y: 66, size: 110 },
-					{ icon: SiCss, x: 48, y: 22, size: 90 }
-				],
 				rows: [
 					[
 						project('FirstBank Online Money Transfer', 'Internship, ITANDT Solutions'),
@@ -208,13 +158,6 @@
 					'Freelance work for businesses: booking systems, management tools, websites and dashboards, built directly with the people who use them.'
 				],
 				tags: ['Next.js', 'TypeScript', 'React Native', 'Flutter', 'Django'],
-				logos: [
-					{ icon: SiNextdotjs, x: 80, y: 24, size: 170 },
-					{ icon: SiTypescript, x: 62, y: 74, size: 110 },
-					{ icon: SiReact, x: 93, y: 68, size: 110 },
-					{ icon: SiFlutter, x: 48, y: 20, size: 90 },
-					{ icon: SiDjango, x: 92, y: 30, size: 80 }
-				],
 				rows: [
 					[
 						project('Tasty Chef'),
@@ -251,13 +194,6 @@
 				],
 				tags: ['TypeScript', 'Node.js', 'Expo', 'Laravel', 'Cloudflare', 'Swift', 'AI agents'],
 				link: { href: '/ai', label: 'How I work with AI' },
-				logos: [
-					{ icon: SiClaude, x: 80, y: 22, size: 170 },
-					{ icon: SiCloudflare, x: 62, y: 76, size: 110 },
-					{ icon: SiExpo, x: 93, y: 66, size: 100 },
-					{ icon: SiNodedotjs, x: 48, y: 20, size: 90 },
-					{ icon: SiLaravel, x: 92, y: 30, size: 80 }
-				],
 				rows: [
 					[
 						{
@@ -328,14 +264,6 @@
 	const rails: HTMLElement[][] = eras.map(() => []);
 
 	const heads: HTMLElement[] = [];
-
-	// Glass plates behind each era, laid out for the text-on-the-left side and mirrored on the next.
-	const plates = [
-		{ x: 2, y: 8, w: 15, depth: 160 },
-		{ x: 20, y: 66, w: 9, depth: 260 },
-		{ x: 33, y: 4, w: 6, depth: 90 },
-		{ x: 86, y: 78, w: 8, depth: 200 }
-	];
 
 	let remeasure = () => {};
 
@@ -432,19 +360,12 @@
 		};
 	});
 
-	// Rails alternate direction, so neighbouring rows and eras slide past each other.
+	// Both rails slide the same way as the page scrolls.
 	const railX = (i: number, r: number) => {
 		const p = progress[i];
 		const distance = travel[i][r];
 
-		return (i + r) % 2 ? -(1 - p) * distance : -p * distance;
-	};
-
-	// Logos drift in from the side over the first third of the pin.
-	const logoX = (i: number) => {
-		const enter = Math.min(1, progress[i] * 3);
-
-		return (1 - enter) * (i % 2 ? -1 : 1) * 30;
+		return -p * distance;
 	};
 
 	// Full screen viewer with zoom and pan.
@@ -585,8 +506,6 @@
 			bind:this={sections[i]}
 			id={era.id}
 			class="relative"
-			class:flip={i % 2 === 1}
-			use:parallax
 			style:height={still || !span(i) ? 'auto' : `calc(100svh + ${span(i)}px)`}
 		>
 			<div
@@ -595,52 +514,21 @@
 				class:top-0={!still}
 				class:min-h-svh={!still}
 			>
-				<!-- Backdrop: the home page's glass plates and this era's tools, washed out behind the text side.
-				     Both drift at their own depth as the page scrolls. -->
-				<div aria-hidden="true" class="pointer-events-none absolute inset-0" use:reveal={0.2}>
-					{#each plates as plate, pi (pi)}
-						<GlassPlate
-							left="{i % 2 ? 100 - plate.x - plate.w : plate.x}%"
-							top="{plate.y}%"
-							size="{plate.w}vw"
-							skew={(i + pi) % 2 ? -20 : 20}
-							depth={plate.depth}
-							delay={pi * 0.15}
-						/>
-					{/each}
-					{#each era.logos as logo, li (li)}
-						<div
-							class="logo absolute"
-							style="left: {i % 2
-								? logo.x
-								: 100 -
-									logo.x}%; top: {logo.y}%; transform: translate(-50%, -50%) translate3d({logoX(i) *
-								(1 + li * 0.3)}vw, calc(var(--par, 0) * {-60 - li * 45}px), 0);"
-						>
-							{#if logo.icon}
-								<logo.icon size={logo.size} />
-							{:else}
-								<span class="font-black" style="font-size: {logo.size}px">{logo.word}</span>
-							{/if}
-						</div>
-					{/each}
-				</div>
-
 				<div class="stage relative">
 					<div class="head relative container mx-auto" bind:this={heads[i]}>
 						<p class="years text-cream/90">{era.years}</p>
-						<h2 class="mt-5 flex items-center gap-5 text-2xl text-cream sm:text-3xl">
+						<h2 class="mt-8 flex items-center gap-5 text-2xl text-cream sm:text-3xl">
 							<span class="diamond-bullet shrink-0"></span>
 							{era.title}
 						</h2>
-						<div class="mt-7 max-w-2xl space-y-4">
+						<div class="mt-10 max-w-2xl space-y-5">
 							{#each era.text as paragraph}
 								<p class="text-sm leading-[190%] text-cream/80 sm:text-base">
 									{paragraph}
 								</p>
 							{/each}
 						</div>
-						<div class="mt-8 flex flex-wrap items-center gap-2">
+						<div class="mt-10 flex flex-wrap items-center gap-2">
 							{#each era.tags as tag}
 								<span class="bg-carafe-light/20 px-2 py-1 text-sm font-semibold text-carafe-light"
 									>{tag}</span
@@ -947,15 +835,10 @@
 	}
 
 	/* Logos are pressed into the background rather than printed on it. */
-	.logo,
 	.emboss {
 		color: hsl(33.3 39.3% 95.1% / 0.035);
 		filter: drop-shadow(10px 10px 16px rgb(0 0 0 / 0.45))
 			drop-shadow(-6px -6px 12px rgb(255 255 255 / 0.03));
-	}
-
-	.logo {
-		transition: transform 80ms linear;
 	}
 
 	.card {
@@ -1004,7 +887,7 @@
 	}
 
 	/* Desktop: heading on the left, both rails beside it, sliding out under a soft edge. */
-	/* Desktop: heading on one side, both rails on the other, sides swapping each era. */
+	/* Desktop: heading on the left, both rails beside it. */
 	@media (min-width: 1024px) {
 		.stage {
 			display: grid;
@@ -1012,25 +895,6 @@
 			align-items: center;
 			column-gap: 3.5rem;
 			padding-left: max(1rem, calc((100vw - 1280px) / 2 + 1rem));
-		}
-
-		.flip .stage {
-			grid-template-columns: minmax(0, 1fr) auto minmax(320px, 400px);
-			padding-left: 0;
-			padding-right: max(1rem, calc((100vw - 1280px) / 2 + 1rem));
-		}
-
-		.flip .head {
-			order: 3;
-		}
-
-		.flip .bars {
-			order: 2;
-		}
-
-		.flip .rails {
-			order: 1;
-			mask-image: linear-gradient(to left, transparent, black 2rem);
 		}
 
 		.head .years {

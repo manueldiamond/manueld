@@ -1,12 +1,11 @@
 <script>
 	import { aboutSections } from '$lib/constants/about';
 	import { ArrowRight, FileIcon } from 'lucide-svelte';
-	import { parallax, reveal } from '$lib/utils/inView';
+	import { reveal } from '$lib/utils/inView';
 </script>
 
 <!--ABOUT SECTION TOTALLY VIBE CODED(no human)-->
 <section
-	use:parallax
 	id="about"
 	class="relative isolate pt-20 mt-[25vh] pb-20 mx-auto overflow-hidden bg-linear-to-b from-transparent to-black/70"
 >
@@ -28,34 +27,28 @@
 
 		<div class="flex">
 			<div class="about-shapes sm:flex-2 relative flex items-center -z-10" use:reveal={0.2}>
-				<div class="drift absolute inset-0 flex items-center" style="--depth: 140px">
+				<div
+					class="about-shape absolute neumorphic aspect-square h-[60%] rotate- -left-0 skew-[20deg] translate-y-[60%] flex bg-linear-to-b! from-white/2! via-white/5 to-white/0 backdrop-blur-sm from-30%"
+				>
 					<div
-						class="about-shape absolute neumorphic aspect-square h-[60%] rotate- -left-0 skew-[20deg] translate-y-[60%] flex bg-linear-to-b! from-white/2! via-white/5 to-white/0 backdrop-blur-sm from-30%"
-					>
-						<div
-							class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 backdrop-blur-sm"
-						></div>
-					</div>
+						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 backdrop-blur-sm"
+					></div>
 				</div>
 
-				<div class="drift absolute inset-0 flex items-center" style="--depth: 220px">
+				<div
+					class="about-shape absolute neumorphic aspect-square h-[50%] rotate- -left-0 skew-[-20deg] translate-x-[160%] translate-y-[60%] bg-linear-60! from-white/2! via-white/10 to-white/0 backdrop-blur-sm from-30%"
+				>
 					<div
-						class="about-shape absolute neumorphic aspect-square h-[50%] rotate- -left-0 skew-[-20deg] translate-x-[160%] translate-y-[60%] bg-linear-60! from-white/2! via-white/10 to-white/0 backdrop-blur-sm from-30%"
-					>
-						<div
-							class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 backdrop-blur-sm"
-						></div>
-					</div>
+						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 backdrop-blur-sm"
+					></div>
 				</div>
 
-				<div class="drift absolute inset-0 flex items-center" style="--depth: 90px">
+				<div
+					class="about-shape absolute neumorphic aspect-square h-[80%] rotate- -left-0 skew-[-20deg] -translate- flex bg-white/0! from-white/0 via-white/2 to-white/0 backdrop-blur-sm from-30%"
+				>
 					<div
-						class="about-shape absolute neumorphic aspect-square h-[80%] rotate- -left-0 skew-[-20deg] -translate- flex bg-white/0! from-white/0 via-white/2 to-white/0 backdrop-blur-sm from-30%"
-					>
-						<div
-							class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 backdrop-blur-sm"
-						></div>
-					</div>
+						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 backdrop-blur-sm"
+					></div>
 				</div>
 			</div>
 			<div class="flex-7 pb-30 md:pb-40">
@@ -135,12 +128,6 @@
 		}
 	}
 
-	/* Each plate drifts at its own depth as the page scrolls. */
-	.drift {
-		transform: translate3d(0, calc(var(--par, 0) * var(--depth) * -1), 0);
-		will-change: transform;
-	}
-
 	/* The three plates swing in one after another as About arrives, and fold away when it leaves. */
 	.about-shape {
 		opacity: 0;
@@ -160,10 +147,10 @@
 			scale 1.1s cubic-bezier(0.16, 1, 0.3, 1),
 			rotate 1.1s cubic-bezier(0.16, 1, 0.3, 1);
 	}
-	:global(.about-shapes.is-in) .drift:nth-child(2) .about-shape {
+	:global(.about-shapes.is-in) .about-shape:nth-child(2) {
 		transition-delay: 0.15s;
 	}
-	:global(.about-shapes.is-in) .drift:nth-child(3) .about-shape {
+	:global(.about-shapes.is-in) .about-shape:nth-child(3) {
 		transition-delay: 0.3s;
 	}
 	@media (prefers-reduced-motion: reduce) {
