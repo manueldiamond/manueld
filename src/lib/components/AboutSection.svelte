@@ -28,26 +28,26 @@
 		<div class="flex">
 			<div class="about-shapes sm:flex-2 relative flex items-center -z-10" use:reveal={0.2}>
 				<div
-					class="about-shape absolute neumorphic aspect-square h-[60%] rotate- -left-0 skew-[20deg] translate-y-[60%] flex bg-linear-to-b! from-white/2! via-white/5 to-white/0 from-30%"
+					class="about-shape absolute neumorphic aspect-square h-[60%] rotate- -left-0 skew-[20deg] translate-y-[60%] flex bg-linear-to-b! from-white/2! via-white/5 to-white/0 backdrop-blur-sm from-30%"
 				>
 					<div
-						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
+						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 backdrop-blur-sm"
 					></div>
 				</div>
 
 				<div
-					class="about-shape absolute neumorphic aspect-square h-[50%] rotate- -left-0 skew-[-20deg] translate-x-[160%] translate-y-[60%] bg-linear-60! from-white/2! via-white/10 to-white/0 from-30%"
+					class="about-shape absolute neumorphic aspect-square h-[50%] rotate- -left-0 skew-[-20deg] translate-x-[160%] translate-y-[60%] bg-linear-60! from-white/2! via-white/10 to-white/0 backdrop-blur-sm from-30%"
 				>
 					<div
-						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
+						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 backdrop-blur-sm"
 					></div>
 				</div>
 
 				<div
-					class="about-shape absolute neumorphic aspect-square h-[80%] rotate- -left-0 skew-[-20deg] -translate- flex bg-white/0! from-white/0 via-white/2 to-white/0 from-30%"
+					class="about-shape absolute neumorphic aspect-square h-[80%] rotate- -left-0 skew-[-20deg] -translate- flex bg-white/0! from-white/0 via-white/2 to-white/0 backdrop-blur-sm from-30%"
 				>
 					<div
-						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
+						class=" z-10 absolute neumorphic-inner aspect-square h-full scale-[0.7] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 backdrop-blur-sm"
 					></div>
 				</div>
 			</div>
