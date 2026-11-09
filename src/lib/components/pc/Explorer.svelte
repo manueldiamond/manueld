@@ -217,13 +217,6 @@
 		</div>
 	</div>
 
-	<div
-		class="flex shrink-0 justify-between gap-3 border-t border-pewter/30 bg-black/30 px-3 py-1 text-[11px] text-cream/70"
-	>
-		<span>{shown.length} {shown.length === 1 ? 'object' : 'objects'}</span>
-		<span class="max-sm:hidden">Scroll the page to move through the folder</span>
-	</div>
-
 	<ProjectDetails
 		id={open.id}
 		startImageIdx={open.imgIdx}
