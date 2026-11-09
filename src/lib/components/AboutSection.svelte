@@ -1,6 +1,6 @@
 <script>
 	import { aboutSections } from '$lib/constants/about';
-	import { FileIcon } from 'lucide-svelte';
+	import { ArrowRight, FileIcon } from 'lucide-svelte';
 	import { reveal } from '$lib/utils/inView';
 </script>
 
@@ -61,6 +61,12 @@
 					{/each}
 				</div>
 				<div class="my-6 flex gap-2 flex-col sm:flex-row">
+					<a href="/about" class="block pri-button">
+						<div class="centered gap-2">
+							Read the full story
+							<ArrowRight />
+						</div>
+					</a>
 					<a href="/me/manuel-diamond-cv.pdf" class="block button">
 						<div class="centered gap-2">
 							Download Full CV
