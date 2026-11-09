@@ -72,8 +72,8 @@ export const projects: Project[] = [
 		],
 		techstack: ['React', 'Vite', 'Hono', 'Cloudflare Workers', 'D1', 'R2', 'Zod', 'Playwright'],
 		collaborators: [
-			{ ...manuelDiamond, role: 'Fullstack' },
-			{ ...eaMensah, role: 'Lead' }
+			{ ...manuelDiamond, role: 'Solo Fullstack Engineer' },
+			{ ...eaMensah, role: 'Project Owner' }
 		]
 	},
 	{
@@ -97,8 +97,8 @@ export const projects: Project[] = [
 		],
 		techstack: ['TypeScript', 'React', 'Expo', 'React Native', 'Supabase', 'Turborepo', 'Vite', 'Tailwind CSS'],
 		collaborators: [
-			{ ...manuelDiamond, role: 'Fullstack' },
-			{ ...eaMensah, role: 'Lead' }
+			{ ...manuelDiamond, role: 'Solo Fullstack Engineer' },
+			{ ...eaMensah, role: 'Project Owner' }
 		]
 	},
 	{
