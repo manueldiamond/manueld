@@ -17,6 +17,11 @@ const christopherOdor: Collaborator = {
 	image: '/curve-blue.webp'
 };
 
+const eaMensah: Collaborator = {
+	name: 'Elisha Mensah',
+	url: 'https://github.com/EA-MENSAH'
+};
+
 const isaacAheto: Collaborator = {
 	name: 'Isaac Aheto',
 	url: 'https://curvelabz.com',
@@ -52,8 +57,8 @@ export const projects: Project[] = [
 		technical_description:
 			'React single-page app and a Hono API, both on Cloudflare Workers with D1 and R2. Zod contracts shared between web and API, Playwright end to end tests, and an admin workspace for membership requests, reports and moderation.',
 		tags: ['Alumni Network', 'Messaging', 'Events', 'Venture Lab', 'Admin Dashboard'],
-		client: { name: 'Odadea 96', url: 'https://odadea96.org' },
-		clientLabel: 'Built for',
+		client: { name: 'Elisha Mensah', url: 'https://github.com/EA-MENSAH' },
+		clientLabel: 'Company',
 		images: [
 			'/odadea96/home.webp',
 			'/odadea96/member-home.webp',
@@ -66,17 +71,20 @@ export const projects: Project[] = [
 			'/odadea96/admin-dashboard.webp'
 		],
 		techstack: ['React', 'Vite', 'Hono', 'Cloudflare Workers', 'D1', 'R2', 'Zod', 'Playwright'],
-		collaborators: [manuelDiamond]
+		collaborators: [
+			{ ...manuelDiamond, role: 'Fullstack' },
+			{ ...eaMensah, role: 'Lead' }
+		]
 	},
 	{
 		name: 'The Builders Circle',
 		description:
 			'An invite-only community app for builders who learn, belong and lift each other. New members take a builder assessment, get an archetype and capability profile, then work through a 90 day journey of lessons, quizzes and challenges reviewed by the founders.',
 		technical_description:
-			'React web and admin apps plus an Expo mobile app in one Turborepo, on Supabase for magic-link auth, data and realtime messages and notifications. Invite-only sign up is enforced by a database trigger, not in the browser.',
+			'A TypeScript Turborepo with three apps: a React web app, a React admin app and an Expo mobile app for iOS and Android. Supabase is the backend: magic-link auth, Postgres data, realtime messages and notifications. Invite-only sign up is enforced by a database trigger, not in the browser.',
 		tags: ['Community Platform', 'Assessments', 'Learning Hub', 'Realtime Chat', 'Admin Dashboard'],
-		client: { name: 'The Builders Circle' },
-		clientLabel: 'Built for',
+		client: { name: 'Elisha Mensah', url: 'https://github.com/EA-MENSAH' },
+		clientLabel: 'Company',
 		images: [
 			'/builders-circle/archetype-result.webp',
 			'/builders-circle/home-journey.webp',
@@ -87,8 +95,11 @@ export const projects: Project[] = [
 			'/builders-circle/admin-archetypes.webp',
 			'/builders-circle/admin-challenges.webp'
 		],
-		techstack: ['React', 'Vite', 'Expo', 'React Native', 'Supabase', 'Turborepo', 'Tailwind CSS'],
-		collaborators: [manuelDiamond]
+		techstack: ['TypeScript', 'React', 'Expo', 'React Native', 'Supabase', 'Turborepo', 'Vite', 'Tailwind CSS'],
+		collaborators: [
+			{ ...manuelDiamond, role: 'Fullstack' },
+			{ ...eaMensah, role: 'Lead' }
+		]
 	},
 	{
 		name: 'National Scale Project',

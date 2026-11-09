@@ -167,18 +167,23 @@
 
 <section id="projects" bind:this={section} class="relative mt-20" style="height: {sectionHeight}">
 	<div class="sticky top-0 flex h-svh flex-col items-center overflow-hidden pt-14 sm:pt-16">
-		<h3
-			class="pc-heading container mx-auto mb-3 flex w-full items-center justify-end gap-5 text-right text-2xl text-cream sm:text-3xl"
-		>
-			{heading}
-			<div class="diamond-bullet"></div>
-		</h3>
+		<!-- Same gutters and container as the other sections, so the PC lines up with them. -->
+		<div class="w-full px-4 md:px-8">
+			<h3
+				class="pc-heading container mx-auto mb-3 flex w-full items-center justify-end gap-5 text-right text-2xl text-cream sm:text-3xl"
+			>
+				{heading}
+				<div class="diamond-bullet"></div>
+			</h3>
+		</div>
 
-		<div bind:this={monitor} class="monitor will-change-transform">
-			<div class="pc-case">
-				<div class="pc-bezel">
-					<div bind:this={screenEl} class="pc-screen" onfocusin={onFocusIn}>
-						{@render children()}
+		<div class="w-full px-4 md:px-8">
+			<div bind:this={monitor} class="monitor container mx-auto px-0! will-change-transform">
+				<div class="pc-case">
+					<div class="pc-bezel">
+						<div bind:this={screenEl} class="pc-screen" onfocusin={onFocusIn}>
+							{@render children()}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -191,7 +196,6 @@
 		opacity: var(--pc-intro, 1);
 	}
 	.monitor {
-		width: min(1180px, 96vw);
 		transform-origin: 50% 40%;
 	}
 	/* Moulded neumorphic case with a thin bezel: one dark drop shadow, no light-side halo. */
