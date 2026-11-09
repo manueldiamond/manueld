@@ -16,68 +16,68 @@
 			id: 'early',
 			when: '2020 to 2022',
 			title: 'Android builds',
-			body: 'Java with libGDX came first, then C# in Unity, then Godot. My Drive still has a dozen APKs from those years. I ran them on real phones again to get these screens.',
+			body: 'Started with Java and libGDX, then C# in Unity, then Godot, building and shipping Android games from 2020 to 2022. The screens below come from the original APKs, run on real devices.',
 			shots: [
 				{
 					src: img('brs-v7-fight'),
 					alt: 'Two robots in a sword duel with health bars, a round counter and a speed setting',
-					text: 'BRS, the game I kept rebuilding. Two robots, swords, rounds and a speed dial. This is version 7.1 from 2022.'
+					text: 'BRS v7.1, Android, 2022. A robot duelling game developed across several versions.'
 				},
 				{
 					src: img('brs-3d-duel'),
 					alt: 'The robot duel rebuilt in 3D',
-					text: 'The same duel, rebuilt in 3D.'
+					text: 'BRS 3D. The same game, rebuilt in 3D.'
 				},
 				{
 					src: img('corridor-cyan'),
 					alt: 'A 3D corridor of glossy cyan and black panels',
-					text: 'Experimenting with light and materials in 3D.'
+					text: 'Lighting and materials study, Godot.'
 				}
 			]
 		},
 		{
 			id: 'godot',
 			when: '2023',
-			title: 'Drawing my own characters',
-			body: 'I moved to Godot for good, writing GDScript and C#. I drew characters myself, cut them into parts and animated them in the engine. I recorded the sessions for a YouTube devlog that never launched, because web work started paying first.',
+			title: 'Character design and animation',
+			body: 'Godot development in GDScript and C#, with original characters designed, rigged and animated from scratch. Sessions were recorded for a game development channel on YouTube.',
 			shots: [
 				{
 					src: img('robot-drawing'),
 					alt: 'A line drawing of a robot character in a vector editor',
-					text: 'The robot started as a vector drawing.'
+					text: 'Character design in a vector editor.'
 				},
 				{
 					src: img('robot-rig'),
 					alt: 'The robot cut into parts and posed in the Godot editor',
-					text: 'Then it was split into parts and posed in Godot.'
+					text: 'The same character, rigged for animation in Godot.'
 				}
 			]
 		},
 		{
 			id: 'shipped',
 			when: 'Most recent',
-			title: 'Games people could play',
-			body: 'Game jams made me finish things. Ludum Dare 48, the Brackeys jam and Stop Waiting For Godot all came with a deadline. I published the results on itch.io.',
+			title: 'Published games',
+			body: 'Game jam entries and personal projects, published on itch.io. Jams include Ludum Dare 48, the Brackeys Game Jam and Stop Waiting For Godot.',
 			shots: [
 				{
 					src: img('itch-car'),
 					alt: 'A glowing vehicle racing through a neon level',
-					text: 'A neon racing platformer, built to look fast.'
+					text: 'Epic Platformer. A high-speed 3D platformer.'
 				},
 				{
 					src: img('itch-shooter'),
 					alt: 'A first-person shooter with enemies and a weapon bar',
-					text: 'A first-person shooter where each kill unlocks a stronger gun. Six weapons so far.'
+					text: 'Project 2. A first-person shooter with unlockable weapons, built in Godot.'
 				},
 				{
 					src: img('itch-button-hell'),
 					alt: 'A first-person view of a robot in a red room under a glowing green light',
-					text: 'Button Hell, for the Brackeys jam. One week to make it, and I still came in an hour late.'
+					text: 'Button Hell. Built in one week for the Brackeys Game Jam.'
 				},
 				{
 					src: img('itch-elden'),
 					alt: 'A dark 3D scene with a sword fighter on a red path',
-					text: 'Elden Ring Budget Edition. A fan remake made for fun.'
+					text: 'Elden Ring Budget Edition. A fan project.'
 				}
 			]
 		}
@@ -113,10 +113,11 @@
 
 	<section class="container mx-auto flex min-h-[60svh] flex-col justify-center py-20">
 		<h1 class="max-w-3xl text-4xl font-medium text-cream sm:text-6xl">
-			I learned to program because I wanted to make games.
+			Self-taught programmer with roots in game development.
 		</h1>
 		<p class="mt-6 max-w-xl text-base leading-[180%] text-cream/70 sm:text-lg">
-			Games taught me the fundamentals. The fundamentals became my job.
+			Game development is where I learned to program. It is also where the fundamentals behind
+			my client work come from.
 		</p>
 	</section>
 
@@ -174,21 +175,20 @@
 	<section class="chapter relative z-10 py-24 sm:py-32">
 		<div class="container mx-auto grid gap-16 lg:grid-cols-3 lg:gap-12">
 			<div>
-				<p class="mb-3 text-sm font-semibold uppercase text-cream/60">What it turned into</p>
-				<h2 class="mb-5 text-3xl text-cream">A programmer, not a stack</h2>
+				<p class="mb-3 text-sm font-semibold uppercase text-cream/60">Approach</p>
+				<h2 class="mb-5 text-3xl text-cream">Fundamentals first</h2>
 				<p class="leading-[190%] text-cream/80">
-					I'm not a front-end or back-end developer. I'm a programmer. React took me about a month.
-					I never formally studied CSS or FastAPI and I still use both, because the fundamentals
-					carry over. Give me a day with a new language and I can start making useful changes.
+					A strong grounding in programming fundamentals makes new languages and frameworks quick to
+					pick up. That is why my work spans web, mobile and backend rather than a single stack.
 				</p>
 			</div>
 			<div>
-				<p class="mb-3 text-sm font-semibold uppercase text-cream/60">How I use AI</p>
-				<h2 class="mb-5 text-3xl text-cream">Know the thing, then go faster</h2>
+				<p class="mb-3 text-sm font-semibold uppercase text-cream/60">AI</p>
+				<h2 class="mb-5 text-3xl text-cream">AI on solid ground</h2>
 				<p class="leading-[190%] text-cream/80">
-					AI can make you feel capable and incompetent at the same time. The fix is to know how to
-					do the work yourself, then let AI speed it up. I build my own tools around it, and I help
-					people who pay for AI subscriptions get real work out of them.
+					AI is most useful in the hands of someone who already understands the work. I use it to
+					move faster, build my own tooling around it, and help clients get practical value from
+					their AI tools.
 				</p>
 				<a
 					href="/ai"
@@ -199,10 +199,9 @@
 			</div>
 			<div>
 				<p class="mb-3 text-sm font-semibold uppercase text-cream/60">Now</p>
-				<h2 class="mb-5 text-3xl text-cream">Back to the low level</h2>
+				<h2 class="mb-5 text-3xl text-cream">Currently exploring</h2>
 				<p class="leading-[190%] text-cream/80">
-					These days I'm learning Raylib, C, Rust and graphics programming. I don't know what the
-					world will pay for in five years. I'm learning it anyway, because I enjoy it.
+					Low-level development and graphics programming, with C, Raylib and Rust.
 				</p>
 			</div>
 		</div>
@@ -210,9 +209,9 @@
 		<div
 			class="container mx-auto mt-24 flex flex-col items-start gap-5 border-t border-pewter/30 pt-12"
 		>
-			<h2 class="text-2xl text-cream sm:text-3xl">Want something built?</h2>
+			<h2 class="text-2xl text-cream sm:text-3xl">Work with me</h2>
 			<p class="max-w-xl leading-[180%] text-cream/70">
-				Web and mobile apps, or AI automations for your own work.
+				Web and mobile applications, and AI automation. Currently open to new work.
 			</p>
 			<div class="flex flex-col gap-2 sm:flex-row">
 				<a href="/#contact" class="pri-button">
