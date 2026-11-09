@@ -34,13 +34,26 @@
 		);
 	};
 
-	// Every frame is a damped spring with its own velocity. While held, the grabbed frame
-	// springs toward the pointer and each other frame springs toward its neighbour, so the
-	// turn ripples through the stack with weight and overshoot. On release the stack keeps
-	// its momentum, then springs home; frames further out let go a beat later.
+	// Every frame has its own velocity. While held, the grabbed frame is pulled toward the
+	// pointer and each other frame toward its neighbour, so the turn ripples through the
+	// stack with weight. On release the stack keeps its momentum, then glides home; frames
+	// further out let go a beat later.
 	const velocity = new Float32Array(64);
 
-	const delay = new Uint8Array(64);
+	// Stiffness follows each frame's height in the stack: the small top frames are light
+	// and quick, the big base frames heavy and slow. Damping sits just under critical, so
+	// nothing overshoots or bounces; the frames only glide in.
+	const stiffness = new Float32Array(64);
+
+	const damping = new Float32Array(64);
+
+	$effect(() => {
+		for (let i = 0; i < count; i++) {
+			const k = 0.09 + 0.3 * Math.pow((i + 1) / count, 1.2);
+			stiffness[i] = k;
+			damping[i] = Math.max(0, 1 - 1.7 * Math.sqrt(k) + k);
+		}
+	});
 
 	const SNAP = 15;
 
@@ -57,37 +70,45 @@
 
 	let carry = 0;
 
+	// The leader's angle, one entry per tick. Each follower replays it a fixed number of
+	// ticks later per step away, so every frame does exactly what the leader did, in turn.
+	const history = new Float32Array(256);
+
+	let tickCount = 0;
+
+	const LAG = 2;
+
 	function physics() {
-		let moving = false;
+		const lead = grabbed >= 0 ? grabbed : released;
+
+		if (lead < 0) return false;
+		let moving = grabbed >= 0;
 
 		for (let i = 0; i < count; i++) {
-			let goal = 0;
+			const behind = Math.abs(i - lead) * LAG;
 
-			let stiffness = 0.07;
+			// The leader is pulled to the pointer while held and home once let go.
+			const goal =
+				i === lead
+					? grabbed >= 0
+						? detent(target)
+						: 0
+					: history[(tickCount - behind + 256) % 256];
 
-			let damping = 0.8;
-
-			if (grabbed >= 0) {
-				goal = i === grabbed ? detent(target) : spin[i + (i < grabbed ? 1 : -1)];
-				stiffness = 0.16;
-				damping = i === grabbed ? 0.72 : 0.6;
-			} else if (delay[i] > 0) {
-				// Still coasting on its momentum before it starts heading home.
-				delay[i]--;
-				velocity[i] *= 0.9;
-				spin[i] += velocity[i];
-				moving = true;
-				continue;
-			}
-
-			velocity[i] = (velocity[i] + (goal - spin[i]) * stiffness) * damping;
+			velocity[i] = (velocity[i] + (goal - spin[i]) * stiffness[i]) * damping[i];
 			spin[i] += velocity[i];
 
-			if (grabbed >= 0 || Math.abs(spin[i]) > 0.05 || Math.abs(velocity[i]) > 0.05) moving = true;
-			else {
-				spin[i] = 0;
-				velocity[i] = 0;
-			}
+			if (Math.abs(spin[i]) > 0.05 || Math.abs(velocity[i]) > 0.05) moving = true;
+		}
+
+		tickCount = (tickCount + 1) % 256;
+		history[tickCount] = spin[lead];
+
+		if (!moving) {
+			spin.fill(0);
+			velocity.fill(0);
+			history.fill(0);
+			released = -1;
 		}
 
 		return moving;
@@ -113,12 +134,14 @@
 	}
 
 	function letGo() {
-		for (let i = 0; i < count; i++) {
-			// Drop whole turns first (they look identical), so the frame unwinds back the
-			// way it came, never more than half a turn.
-			spin[i] = ((((spin[i] + 180) % 360) + 360) % 360) - 180;
-			delay[i] = Math.min(10, Math.abs(i - released));
-		}
+		// Drop whole turns (they look identical) by the leader's count, from every frame and
+		// the replay alike, so the leader unwinds back the way it came, never more than half a turn.
+		const lead = spin[released];
+		const turns = lead - (((((lead + 180) % 360) + 360) % 360) - 180);
+
+		for (let i = 0; i < count; i++) spin[i] -= turns;
+
+		for (let t = 0; t < 256; t++) history[t] -= turns;
 	}
 
 	const run = () => {
@@ -129,6 +152,9 @@
 		// Touch keeps scrolling the page; mouse and pen can spin.
 		if (e.pointerType === 'touch' || e.button !== 0) return;
 		e.preventDefault();
+
+		// A new leader: start its replay from where it is now.
+		if (i !== released) history.fill(spin[i]);
 		grabbed = i;
 		target = spin[i];
 		lastAngle = angleAt(e, layers[i]);
