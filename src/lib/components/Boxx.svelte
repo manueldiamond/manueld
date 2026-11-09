@@ -21,6 +21,8 @@
 
 	let lastAngle = 0;
 
+	let released = -1;
+
 	let loop = 0;
 
 	const angleAt = (e: PointerEvent, el: HTMLElement) => {
@@ -32,44 +34,82 @@
 		);
 	};
 
-	// Released: each frame springs home from rest, so it picks up speed instead of
-	// slowing from the start, and frames further from the grabbed one let go a beat later.
+	// Every frame is a damped spring with its own velocity. While held, the grabbed frame
+	// springs toward the pointer and each other frame springs toward its neighbour, so the
+	// turn ripples through the stack with weight and overshoot. On release the stack keeps
+	// its momentum, then springs home; frames further out let go a beat later.
 	const velocity = new Float32Array(64);
-
-	const home = new Float32Array(64);
 
 	const delay = new Uint8Array(64);
 
-	let released = -1;
+	const SNAP = 15;
 
-	function step() {
-		loop = 0;
+	// Soft detents every 15 degrees: the target is pulled toward the nearest notch, more
+	// strongly the closer it is, so the frame clicks into angles without feeling locked.
+	const detent = (deg: number) => {
+		const notch = Math.round(deg / SNAP) * SNAP;
+		const off = (deg - notch) / (SNAP / 2);
+
+		return notch + Math.sign(off) * Math.pow(Math.abs(off), 2.4) * (SNAP / 2);
+	};
+
+	let lastTime = 0;
+
+	let carry = 0;
+
+	function physics() {
 		let moving = false;
 
 		for (let i = 0; i < count; i++) {
-			if (grabbed >= 0) {
-				// The grabbed frame chases the pointer; the rest chase the frame next to them,
-				// toward the grabbed one, which gives the procedural lag.
-				const goal = i === grabbed ? target : spin[i + (i < grabbed ? 1 : -1)];
-				spin[i] += (goal - spin[i]) * (i === grabbed ? 0.22 : 0.16);
-				moving = true;
-			} else if (delay[i] > 0) {
-				delay[i]--;
-				moving = true;
-			} else {
-				velocity[i] = (velocity[i] + (home[i] - spin[i]) * 0.07) * 0.8;
-				spin[i] += velocity[i];
+			let goal = 0;
 
-				if (Math.abs(home[i] - spin[i]) < 0.05 && Math.abs(velocity[i]) < 0.05) {
-					spin[i] = 0;
-					velocity[i] = 0;
-				} else moving = true;
+			let stiffness = 0.07;
+
+			let damping = 0.8;
+
+			if (grabbed >= 0) {
+				goal = i === grabbed ? detent(target) : spin[i + (i < grabbed ? 1 : -1)];
+				stiffness = 0.16;
+				damping = i === grabbed ? 0.72 : 0.6;
+			} else if (delay[i] > 0) {
+				// Still coasting on its momentum before it starts heading home.
+				delay[i]--;
+				velocity[i] *= 0.9;
+				spin[i] += velocity[i];
+				moving = true;
+				continue;
 			}
 
-			layers[i]?.style.setProperty('--spin', `${spin[i].toFixed(2)}deg`);
+			velocity[i] = (velocity[i] + (goal - spin[i]) * stiffness) * damping;
+			spin[i] += velocity[i];
+
+			if (grabbed >= 0 || Math.abs(spin[i]) > 0.05 || Math.abs(velocity[i]) > 0.05) moving = true;
+			else {
+				spin[i] = 0;
+				velocity[i] = 0;
+			}
 		}
 
+		return moving;
+	}
+
+	function step(now: number) {
+		loop = 0;
+		// Fixed 60 Hz steps, so the springs feel the same on a 120 Hz screen.
+		carry = Math.min(carry + (lastTime ? now - lastTime : 16.7), 100);
+		lastTime = now;
+		let moving = true;
+
+		while (carry >= 16.7) {
+			moving = physics();
+			carry -= 16.7;
+		}
+
+		for (let i = 0; i < count; i++)
+			layers[i]?.style.setProperty('--spin', `${spin[i].toFixed(2)}deg`);
+
 		if (moving) loop = requestAnimationFrame(step);
+		else lastTime = 0;
 	}
 
 	function letGo() {
@@ -77,9 +117,7 @@
 			// Drop whole turns first (they look identical), so the frame unwinds back the
 			// way it came, never more than half a turn.
 			spin[i] = ((((spin[i] + 180) % 360) + 360) % 360) - 180;
-			home[i] = 0;
-			velocity[i] = 0;
-			delay[i] = Math.min(12, Math.abs(i - released));
+			delay[i] = Math.min(10, Math.abs(i - released));
 		}
 	}
 
