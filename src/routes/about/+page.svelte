@@ -187,13 +187,13 @@
 			{
 				id: 'contract',
 				years: '2025 to 2026',
-				title: 'AI-driven rapid development',
+				title: 'Faster, without cutting corners',
 				text: [
 					'After graduating with a First Class BSc in Computer Science from Central University, Ghana, I joined my first company, then moved to contract work across several products.',
-					'Projects no longer take forever. I run several coding agents in parallel and built my own tools around them: a screenshot app that hands annotated snips to agents, voice calls with my agents, and an MCP server that gives them email, identity and publishing tools.'
+					'I spend a lot of time learning where AI tools save real time and where they cost it. The goal is balance: shipping sooner while keeping the quality and value the client is paying for. Along the way I built tools for my own workflow, including a screenshot and annotation app for macOS and a voice app for macOS and iOS.'
 				],
-				tags: ['TypeScript', 'Node.js', 'Expo', 'Laravel', 'Cloudflare', 'Swift', 'AI agents'],
-				link: { href: '/ai', label: 'How I work with AI' },
+				tags: ['TypeScript', 'Node.js', 'Expo', 'Laravel', 'Cloudflare', 'Swift'],
+				link: { href: '/ai', label: 'My development workflow' },
 				rows: [
 					[
 						{
@@ -217,11 +217,11 @@
 						project('AREF 2026 Admission Portal')
 					],
 					[
-						tool('SnipCanvas', 'Native macOS snip and annotate, built for agents', [
+						tool('SnipCanvas', 'Native macOS screenshot and annotation app', [
 							'/me/journey/tools/snipcanvas-1.webp',
 							'/me/journey/tools/snipcanvas-2.webp'
 						]),
-						tool('Voice Call Agents', 'Phone calls with my coding agents, macOS and iOS', [
+						tool('Voice Call Agents', 'Voice app for my development workflow, macOS and iOS', [
 							'/me/journey/tools/voice-call.webp',
 							'/me/journey/tools/voice-3.webp',
 							'/me/journey/tools/voice-1.webp',
@@ -456,7 +456,7 @@
 	<title>About · Manuel Diamond</title>
 	<meta
 		name="description"
-		content="Self-taught programmer with roots in game development: Java and libGDX from 2016, Godot, game jams and devlogs, then web development, freelance work and AI-driven development."
+		content="Self-taught programmer with roots in game development: Java and libGDX from 2016, Godot, game jams and devlogs, then web development, freelance and contract work."
 	/>
 </svelte:head>
 
@@ -472,7 +472,7 @@
 				<h1 class="text-5xl font-medium text-cream">About</h1>
 				<p class="mt-4 mb-10 text-base font-medium text-pewter lg:max-w-[520px]">
 					Self-taught programmer with roots in game development. I started making games in 2016,
-					moved into web development in 2023, and now build with AI-driven development on contract.
+					moved into web development in 2023, and now work on contract across several products.
 				</p>
 				<div class="flex flex-col gap-2 sm:flex-row">
 					<a href="/#contact" class="pri-button">
@@ -678,8 +678,8 @@
 					release one or two games next year, and a product of my own.
 				</p>
 				<p class="mt-4 leading-[190%] text-cream/80 md:text-lg">
-					I use AI to build faster. It is still more fun to be competent, so I keep digging into the
-					code and learning what I don't know yet.
+					New tools make me faster, but it is still more fun to be competent, so I keep digging into
+					the code and learning what I don't know yet.
 				</p>
 				<div class="mt-8 flex items-center gap-5 text-cream/70">
 					<SiRaylib size={28} title="Raylib" />
@@ -737,7 +737,7 @@
 	>
 		<h2 class="text-3xl text-cream sm:text-4xl">Work with me</h2>
 		<p class="max-w-xl text-cream/70">
-			Web and mobile applications, and AI automation. Currently open to new work.
+			Web and mobile applications, and workflow automation. Currently open to new work.
 		</p>
 		<div class="flex flex-col gap-2 sm:flex-row">
 			<a href="/#contact" class="pri-button">
