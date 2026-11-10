@@ -42,8 +42,25 @@
 		pc?.pin();
 		document.body.style.overflow = 'hidden';
 
+		// Smooth scrolling moves the page on its own, so body overflow alone does not hold it.
+		// Swallow wheel and touch moves outside the window before they reach it; inside, the
+		// window's own scroller takes them (it carries data-lenis-prevent).
+		const hold = (e: Event) => {
+			if (e.target instanceof Node && dialogEl?.contains(e.target)) return;
+
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		};
+
+		const opts = { capture: true, passive: false };
+
+		window.addEventListener('wheel', hold, opts);
+		window.addEventListener('touchmove', hold, opts);
+
 		return () => {
 			document.body.style.overflow = '';
+			window.removeEventListener('wheel', hold, opts);
+			window.removeEventListener('touchmove', hold, opts);
 		};
 	});
 
@@ -105,6 +122,7 @@
 {#if project}
 	<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 	<div
+		data-lenis-prevent
 		class="absolute z-30 inset-0 bg-black/60"
 		onclick={(e) => {
 			e.stopPropagation();
@@ -149,7 +167,7 @@
 					</div>
 				</div>
 
-				<div class="flex flex-col overflow-y-auto overscroll-contain flex-1">
+				<div class="flex flex-col overflow-y-auto overscroll-contain touch-pan-y flex-1">
 					{#if project.confidential}
 						<div class="shrink-0 bg-black/40 border-b border-pewter/30">
 							<ConfidentialArt class="mx-auto block h-[min(320px,40vh)] w-full" />
