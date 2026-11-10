@@ -10,7 +10,7 @@
 </script>
 
 <script lang="ts">
-	import { setContext, type Snippet } from 'svelte';
+	import { onMount, setContext, type Snippet } from 'svelte';
 	import { prefersReducedMotion } from '$lib/utils/inView';
 
 	let { children, heading }: { children: Snippet; heading: string } = $props();
@@ -22,6 +22,27 @@
 	let screenEl: HTMLElement;
 
 	let pane: HTMLElement | null = null;
+
+	// Scanlines and glare on the glass are off by default; a tiny switch on the case turns them on.
+	let crt = $state(false);
+
+	onMount(() => {
+		try {
+			crt = localStorage.getItem('pc-crt') === '1';
+		} catch {
+			// Storage blocked: stay off.
+		}
+	});
+
+	function setCrt(on: boolean) {
+		crt = on;
+
+		try {
+			localStorage.setItem('pc-crt', on ? '1' : '0');
+		} catch {
+			// Storage blocked: the choice lasts for this visit only.
+		}
+	}
 
 	// The pane's first child is slid with a GPU transform rather than scrollTop:
 	// scrolling an overflow-hidden box repaints the whole monitor layer every frame.
@@ -181,10 +202,18 @@
 			<div bind:this={monitor} class="monitor container mx-auto px-0! will-change-transform">
 				<div class="pc-case">
 					<div class="pc-bezel">
-						<div bind:this={screenEl} class="pc-screen" onfocusin={onFocusIn}>
+						<div bind:this={screenEl} class="pc-screen" class:crt onfocusin={onFocusIn}>
 							{@render children()}
 						</div>
 					</div>
+					<label class="crt-toggle">
+						<input
+							type="checkbox"
+							checked={crt}
+							onchange={(e) => setCrt(e.currentTarget.checked)}
+						/>
+						CRT
+					</label>
 				</div>
 			</div>
 		</div>
@@ -201,6 +230,7 @@
 	/* Moulded neumorphic case with a thin bezel: one dark drop shadow, no light-side halo. */
 	/* Square corners, like every other surface on the site. */
 	.pc-case {
+		position: relative;
 		border-radius: 0;
 		padding: 7px;
 		background: linear-gradient(150deg, #2a2b2e, #1f2022 70%);
@@ -232,7 +262,7 @@
 		isolation: isolate;
 	}
 	/* CRT glass: faint scanlines, a vignette and a glare streak. Kept light so text stays crisp. */
-	.pc-screen::after {
+	.pc-screen.crt::after {
 		content: '';
 		position: absolute;
 		inset: 0;
@@ -244,5 +274,50 @@
 			radial-gradient(120% 90% at 50% 50%, transparent 62%, rgb(0 0 0 / 0.45) 100%),
 			repeating-linear-gradient(0deg, rgb(0 0 0 / 0.07) 0 1px, transparent 1px 3px);
 		box-shadow: inset 0 0 40px rgb(0 0 0 / 0.55);
+	}
+	/* Sits inside the case's bottom edge; never taller than the 7px edge, so the bezel keeps its size. */
+	.crt-toggle {
+		position: absolute;
+		right: 12px;
+		bottom: 0;
+		height: 7px;
+		display: flex;
+		align-items: center;
+		gap: 2px;
+		font-size: 5px;
+		line-height: 1;
+		letter-spacing: 0.08em;
+		color: rgb(255 255 255 / 0.3);
+		cursor: pointer;
+		user-select: none;
+	}
+	.crt-toggle:hover {
+		color: rgb(255 255 255 / 0.55);
+	}
+	.crt-toggle input {
+		appearance: none;
+		margin: 0;
+		width: 5px;
+		height: 5px;
+		border: 1px solid currentColor;
+		background: transparent;
+		cursor: pointer;
+	}
+	.crt-toggle input:checked {
+		background: currentColor;
+	}
+	.crt-toggle input:focus-visible {
+		outline: 1px solid rgb(255 255 255 / 0.7);
+		outline-offset: 1px;
+	}
+	@media (min-width: 640px) {
+		.crt-toggle {
+			height: 10px;
+			font-size: 6px;
+		}
+		.crt-toggle input {
+			width: 6px;
+			height: 6px;
+		}
 	}
 </style>
