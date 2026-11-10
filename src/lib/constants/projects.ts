@@ -144,7 +144,12 @@ export const projects: Project[] = [
 			'/bridge/bridgex-home.webp',
 			'/bridge/create req.webp',
 			'/bridge/chatpage.webp',
-			'/bridge/sidebar.webp'
+			'/bridge/sidebar.webp',
+			'/bridge/store-1.webp',
+			'/bridge/store-2.webp',
+			'/bridge/store-3.webp',
+			'/bridge/store-4.webp',
+			'/bridge/store-5.webp'
 		],
 		techstack: ['React Native', 'Expo', 'TypeScript', 'Node.js', 'Express'],
 		collaborators: [

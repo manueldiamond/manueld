@@ -264,16 +264,16 @@
 								{/each}
 							</div>
 							{#if project.additionalLinks}
-								<div class=" flex gap-1 flex-row flex-wrap my-1">
+								<div class="flex gap-x-4 gap-y-1 flex-row flex-wrap items-center my-1">
 									<p class="uppercase text-carafe/80 font-bold text-xs">Additional Links</p>
 									{#each project.additionalLinks as { label, url }}
 										<a
 											href={url}
 											target="_blank"
 											rel="noopener"
-											class="over text-pewter text-sm font-semibold py-1 flex gap-0.5 flex-1 min-w-max"
+											class="over text-pewter text-sm font-semibold py-1 flex items-center gap-1 min-w-max"
 										>
-											<Link class="inline-block w-4 h-4 ml-1" />
+											<Link class="inline-block w-4 h-4" />
 											{label}
 										</a>
 									{/each}
