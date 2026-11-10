@@ -110,7 +110,7 @@ export const projects: Project[] = [
 		tags: ['Go-Live Tracker', 'Kanban Board', 'Sprints', 'Dependencies', 'Reporting'],
 		client: { name: 'Elisha Mensah', url: 'https://github.com/EA-MENSAH' },
 		clientLabel: 'Company',
-		images: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => `/project-management/pm-${n}.webp`),
+		images: [8, 1, 2, 3, 4, 5, 6, 7, 9].map((n) => `/project-management/pm-${n}.webp`),
 		techstack: ['React', 'TypeScript', 'NestJS', 'Cloudflare Workers', 'D1'],
 		collaborators: [
 			{ ...manuelDiamond, role: 'Solo Fullstack Engineer' },
