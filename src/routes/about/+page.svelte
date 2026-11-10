@@ -169,10 +169,6 @@
 								'Interior design and finishing company website'
 							),
 							tags: ['Next.js', 'Framer Motion']
-						},
-						{
-							...game('carehms', 2, 'CareHMS', 'Hospital patient registration'),
-							tags: ['Next.js', 'React Hook Form', 'Zod']
 						}
 					]
 				]
