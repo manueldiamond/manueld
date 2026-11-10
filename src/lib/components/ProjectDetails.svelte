@@ -113,7 +113,11 @@
 
 	const plugins = [Autoplay({ delay: 4000 })];
 
-	const options: EmblaOptionsType = $derived({ startIndex: startImageIdx });
+	const options: EmblaOptionsType = $derived({
+		startIndex: startImageIdx,
+		align: 'center',
+		containScroll: false
+	});
 </script>
 
 <svelte:window onkeydown={onKey} />
@@ -178,14 +182,21 @@
 							use:emblaCarouselSvelte={{ options, plugins }}
 							onemblaInit={initEmbla}
 						>
-							<div class="flex gap-3 h-max w-full">
+							<!-- Screenshots sit side by side at their own width, the current one snapped to the
+							     centre, so narrow phone shots show several at once. -->
+							<div class="flex gap-3 items-center h-[min(400px,60vh)] w-full py-2">
 								{#each project.images as imgSrc, id}
+									<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
 									<img
-										class="drop-shadow-xl object-contain w-full min-w-full object-center max-h-[min(400px,60vh)]"
+										class="drop-shadow-xl shrink-0 grow-0 w-auto h-auto max-h-full max-w-[85%] object-contain transition-opacity duration-300 {id ===
+										(currentImageId ?? 0)
+											? 'opacity-100'
+											: 'opacity-50 cursor-pointer'}"
 										src={imgSrc}
 										alt="{project.name} image {id + 1}"
-										loading={id === startImageIdx ? 'eager' : 'lazy'}
 										decoding="async"
+										onload={() => emblaApi?.reInit()}
+										onclick={() => emblaApi?.scrollTo(id)}
 									/>
 								{/each}
 							</div>
