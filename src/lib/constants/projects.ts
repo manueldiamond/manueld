@@ -102,6 +102,19 @@ export const projects: Project[] = [
 		]
 	},
 	{
+		name: 'Project Management App',
+		description:
+			'A project management workspace for running delivery across several teams. A go-live tracker shows what is ready to launch, a Kanban board and sprints carry the day-to-day work, and dependency and progress charts show where a programme stands.',
+		technical_description:
+			'React single-page app with a NestJS API, deployed on Cloudflare Workers with D1. Role-based access, progress snapshots for charts over time, PDF reports and a fullscreen go-live view for review meetings.',
+		tags: ['Go-Live Tracker', 'Kanban Board', 'Sprints', 'Dependencies', 'Reporting'],
+		client: { name: 'Contract' },
+		clientLabel: 'Engagement',
+		images: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => `/project-management/pm-${n}.webp`),
+		techstack: ['React', 'TypeScript', 'NestJS', 'Cloudflare Workers', 'D1'],
+		collaborators: [{ ...manuelDiamond, role: 'Fullstack Engineer' }]
+	},
+	{
 		name: 'National Scale Project',
 		description:
 			'Worked on a national-level project involving an ecosystem of 20+ unified communication systems. Project details are hidden due to confidentiality.',
