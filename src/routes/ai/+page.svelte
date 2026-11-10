@@ -1,5 +1,4 @@
 <script lang="ts">
-	import '@fontsource/fira-code/400.css';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import Boxx from '$lib/components/Boxx.svelte';
@@ -29,8 +28,23 @@
 			mark: { img: '/ai/cursor.svg', alt: 'Cursor' }
 		},
 		{
+			title: 'Claude Code',
+			body: 'Then Claude Code in the terminal. Default settings, nothing configured, just me and one agent going back and forth.',
+			mark: { img: '/ai/claudecode-color.svg', alt: 'Claude Code' }
+		},
+		{
+			title: 'Token efficiency',
+			body: 'Next I worked on cost. Cheaper DeepSeek agents took the token-heavy jobs, Claude Code and Codex orchestrated them, and pipelines let the agents hand work to each other.',
+			mark: { img: '/ai/deepseek-color.svg', alt: 'DeepSeek' }
+		},
+		{
+			title: 'Process',
+			body: "I learned the RPI framework (research, plan, implement), test-driven development and Matt Pocock's skills. My agents started following a process instead of improvising.",
+			mark: { text: 'RPI' }
+		},
+		{
 			title: 'Today',
-			body: 'A local MCP server, a small software factory that automates most of my work, custom tools around my workflow, and voice agents.',
+			body: 'T3 Code handles the orchestration and automates most of my work. I rarely ask an agent to write code now. I ask it to build the tools and checks that let the next big job run for hours and come back right.',
 			mark: { img: '/ai/t3code.webp', alt: 'T3 Code' }
 		}
 	];
@@ -43,33 +57,13 @@
 		'Speak out loud',
 		'Snip and annotate'
 	];
-
-	const skills = [
-		{ name: 'RPI', note: 'Research, plan, implement' },
-		{ name: 'TDD', note: 'Tests first, then code' },
-		{ name: "Matt Pocock's skills", note: '' },
-		{ name: 'My own skills', note: 'Written as the work repeats' }
-	];
-
-	const subs = [
-		{ name: 'Claude Code', logo: '/ai/claudecode-color.svg', role: 'Several subscriptions' },
-		{ name: 'Codex', logo: '/ai/codex-color.svg', role: 'Several subscriptions' },
-		{ name: 'OpenCode', logo: '/ai/opencode.svg', role: 'Backup for token-heavy jobs' }
-	];
-
-	const loop = [
-		'I ask an agent to do the job',
-		'Slower, more tokens, but it gets done',
-		'The job comes back again',
-		'It becomes a tool in the MCP'
-	];
 </script>
 
 <svelte:head>
 	<title>Building with AI · Manuel Diamond</title>
 	<meta
 		name="description"
-		content="How Manuel Diamond went from AI sceptic to building with Claude Code, Codex, OpenCode, a personal MCP server and T3 Code."
+		content="How Manuel Diamond went from AI sceptic to building the tools, checks and pipelines that let coding agents do most of his work."
 	/>
 </svelte:head>
 
@@ -86,8 +80,8 @@
 				<p class="mb-4 text-sm font-semibold uppercase text-pewter">Notes on my process</p>
 				<h1 class="text-4xl font-medium text-cream sm:text-5xl">Building with AI</h1>
 				<p class="mt-4 mb-10 text-base font-medium text-pewter lg:max-w-[520px]">
-					I learned to code without it, ignored it for years, then went all in. This is how I build
-					now.
+					I learned to code without it, ignored it for years, then went all in. Now I use AI to
+					build the tools that make my work faster.
 				</p>
 				<div class="flex flex-col gap-2 sm:flex-row">
 					<a href="#stack" class="pri-button">
@@ -208,7 +202,7 @@
 		</div>
 	</section>
 
-	<!-- Manuel MCP: the tool hub, then the loop that keeps growing it. -->
+	<!-- Manuel MCP: the tool hub. -->
 	<section class="relative overflow-hidden bg-black/40 py-20">
 		<div class="container mx-auto">
 			<h2 class="mb-10 flex items-center justify-end gap-5 text-right text-3xl text-cream">
@@ -218,13 +212,9 @@
 
 			<div class="grid items-center gap-12 lg:grid-cols-[1fr_1.2fr]">
 				<div class="text-base leading-[190%] text-cream/80 md:text-lg">
-					<p class="mb-6">
-						A local MCP server holding the repeatable jobs I ask my agents to do. I built it because
-						I needed it, not for anyone else.
-					</p>
-					<p class="text-pewter">
-						Most of it exists as skills too. The MCP wins because any coding agent picks it up,
-						whatever the model or the agent.
+					<p>
+						When I learned about MCP, I saw how far a coding agent goes when you hand it scripts. So
+						every task I repeat becomes a script on a local server, and any agent I run can use it.
 					</p>
 				</div>
 
@@ -265,153 +255,26 @@
 				</div>
 			</div>
 
-			<h3 class="mt-20 mb-6 text-sm font-semibold uppercase text-cream/50">How it grows</h3>
-			<ol class="loop grid gap-3 sm:grid-cols-2 lg:grid-cols-4" use:reveal={0.3}>
-				{#each loop as step, i}
-					<li
-						class="loop-step relative flex min-h-24 items-center gap-4 border border-pewter/35 bg-mblack/70 p-4 text-cream/85"
-						style="--delay: {i * 110}ms"
-					>
-						<span class="diamond-bullet shrink-0 scale-75"></span>
-						<span>{step}</span>
-					</li>
-				{/each}
-			</ol>
-			<p class="mt-4 text-sm text-pewter">
-				Then the next job starts the loop again, and the server keeps getting bigger.
-			</p>
 		</div>
 	</section>
 
-	<!-- Setup timeline: three eras left to right, the current one given the most room. -->
+	<!-- Closing: why the work goes into systems, not prompts. -->
 	<section class="py-20">
 		<div class="container mx-auto">
-			<h2 class="mb-3 flex items-center justify-end gap-5 text-right text-3xl text-cream">
-				How my setup evolved
+			<h2 class="mb-10 flex items-center justify-end gap-5 text-right text-3xl text-cream">
+				Why I build this way
 				<span class="diamond-bullet"></span>
 			</h2>
-			<p class="mb-12 text-right text-pewter">From a bare terminal to a bench of agents.</p>
-
-			<ol
-				class="setup relative grid gap-10 lg:grid-cols-[1fr_1fr_1.35fr] lg:gap-6"
-				use:reveal={0.2}
-			>
-				<span
-					aria-hidden="true"
-					class="absolute top-[11px] right-0 left-0 h-[3px] rounded-full bg-linear-to-r from-carafe/0 via-carafe-light to-carafe-light max-lg:hidden"
-				></span>
-				<span
-					aria-hidden="true"
-					class="absolute top-0 bottom-0 left-[9px] w-[3px] rounded-full bg-linear-to-b from-carafe/0 via-carafe-light to-carafe/0 lg:hidden"
-				></span>
-
-				<li class="setup-step relative flex flex-col gap-4 pl-10 lg:pl-0" style="--delay: 0ms">
-					<span class="setup-node" aria-hidden="true"></span>
-					<p class="text-sm font-semibold uppercase text-cream/50 lg:mt-9">Then · The CLI</p>
-					<figure
-						class="flex flex-1 flex-col border border-pewter/40 bg-black/50 shadow-lg shadow-black/40"
-					>
-						<div
-							class="flex items-center gap-3 border-b border-pewter/30 px-4 py-2 text-xs font-semibold text-cream/60"
-						>
-							<img src="/ai/claudecode-color.svg" alt="" class="size-4" />
-							<span>Claude Code</span>
-						</div>
-						<pre
-							class="terminal flex-1 overflow-x-auto p-4 text-[12px] leading-6 text-cream/80 sm:text-[13px]"><span
-								class="text-pewter">~ $</span
-							> claude
-<span class="text-pewter">  no CLAUDE.md</span>
-<span class="text-pewter">  no skills</span>
-<span class="text-pewter">  default everything</span>
-
-<span class="text-carafe-light">&gt;</span> build the booking page
-<span class="text-pewter">  Writing BookingPage.tsx</span>
-<span class="text-carafe-light">&gt;</span> no, use the existing form
-<span class="text-pewter">  Rewriting BookingPage.tsx</span>
-<span class="text-carafe-light">&gt;</span> still wrong, start again
-<span class="text-pewter">  ...</span></pre>
-						<figcaption class="border-t border-pewter/30 p-4 text-cream/80">
-							Claude Code in a bare terminal. Default settings, no skills, nothing configured.
-						</figcaption>
-					</figure>
-				</li>
-
-				<li class="setup-step relative flex flex-col gap-4 pl-10 lg:pl-0" style="--delay: 160ms">
-					<span class="setup-node" aria-hidden="true"></span>
-					<p class="text-sm font-semibold uppercase text-cream/50 lg:mt-9">Next · Skills</p>
-					<div
-						class="flex flex-1 flex-col gap-4 border border-pewter/40 bg-black/30 p-4 shadow-lg shadow-black/40"
-					>
-						<ul class="grid gap-2">
-							{#each skills as skill}
-								<li
-									class="flex items-center gap-3 border border-pewter/30 bg-mblack/80 px-3 py-2.5"
-								>
-									<span class="diamond-bullet shrink-0 scale-50"></span>
-									<span>
-										<span class="block font-semibold text-cream">{skill.name}</span>
-										{#if skill.note}<span class="block text-sm text-pewter">{skill.note}</span>{/if}
-									</span>
-								</li>
-							{/each}
-						</ul>
-						<p class="mt-auto text-cream/80">
-							Then I learned about skills. My agents started following a process instead of
-							improvising.
-						</p>
-					</div>
-				</li>
-
-				<li class="setup-step relative flex flex-col gap-4 pl-10 lg:pl-0" style="--delay: 320ms">
-					<span class="setup-node setup-node--now" aria-hidden="true"></span>
-					<p class="text-sm font-semibold uppercase text-cream lg:mt-9">Now · T3 Code</p>
-					<div
-						class="neumorphic flex flex-1 flex-col gap-6 border border-carafe-light/50 p-5 sm:p-6"
-					>
-						<div class="flex items-center gap-4">
-							<img
-								src="/ai/t3code.webp"
-								alt="T3 Code app icon"
-								class="size-16 shrink-0 drop-shadow-xl drop-shadow-black sm:size-20"
-							/>
-							<div>
-								<p class="text-2xl font-medium text-cream">T3 Code</p>
-								<p class="text-pewter">Every agent, one window.</p>
-							</div>
-						</div>
-
-						<ul class="grid gap-2 sm:grid-cols-3">
-							{#each subs as sub}
-								<li
-									class="flex items-center gap-3 border border-pewter/35 bg-mblack/80 px-3 py-3 sm:flex-col sm:text-center"
-								>
-									<img src={sub.logo} alt="{sub.name} logo" class="size-8 shrink-0" />
-									<span>
-										<span class="block font-semibold text-cream">{sub.name}</span>
-										<span class="block text-sm text-pewter">{sub.role}</span>
-									</span>
-								</li>
-							{/each}
-						</ul>
-
-						<div class="flex flex-wrap gap-2">
-							{#each ['Orchestrator v2', 'Automations', 'Manuel MCP', 'Voice agents'] as chip}
-								<span
-									class="border border-carafe-light/50 bg-carafe-light/15 px-3 py-1.5 text-sm font-semibold text-cream"
-									>{chip}</span
-								>
-							{/each}
-						</div>
-
-						<p class="text-cream/80">
-							Several Claude Code and Codex subscriptions run side by side, with OpenCode as the
-							backup for token-heavy jobs. Orchestrator v2 coordinates them, and a lot of the
-							routine runs as automations.
-						</p>
-					</div>
-				</li>
-			</ol>
+			<div class="ml-auto max-w-3xl text-base leading-[190%] text-cream/80 md:text-lg">
+				<p class="mb-6">
+					AI still loses context, makes things up and has no taste. Prompting harder doesn't fix
+					that. Systems do: tools, checks and processes that catch the mistakes before I see them.
+				</p>
+				<p>
+					I don't want to be the person in the middle, passing messages to a model all day. I build
+					the systems that take that job away, so my time goes to the decisions that need a person.
+				</p>
+			</div>
 
 			<div class="mt-16 flex flex-col gap-2 sm:flex-row sm:justify-end">
 				<a href="/#projects" class="button">
@@ -428,9 +291,6 @@
 </main>
 
 <style>
-	.terminal {
-		font-family: 'Fira Code', monospace;
-	}
 	.ai-word {
 		font-weight: 900;
 		font-size: clamp(10rem, 40vw, 30rem);
@@ -444,9 +304,7 @@
 	   as it scrolls in, and steps back out when it leaves. */
 	.story-step,
 	.stack-card,
-	.mcp-chip,
-	.loop-step,
-	.setup-step {
+	.mcp-chip {
 		opacity: 0;
 		translate: 0 18px;
 		transition:
@@ -455,9 +313,7 @@
 	}
 	:global(.story-step.is-in),
 	:global(.stack-card.is-in),
-	:global(.mcp-hub.is-in) .mcp-chip,
-	:global(.loop.is-in) .loop-step,
-	:global(.setup.is-in) .setup-step {
+	:global(.mcp-hub.is-in) .mcp-chip {
 		opacity: 1;
 		translate: 0 0;
 		transition:
@@ -473,9 +329,7 @@
 	@media (prefers-reduced-motion: reduce) {
 		.story-step,
 		.stack-card,
-		.mcp-chip,
-		.loop-step,
-		.setup-step {
+		.mcp-chip {
 			opacity: 1;
 			translate: 0 0;
 			transition: none;
@@ -483,27 +337,5 @@
 		.mcp-chip {
 			translate: -50% -50%;
 		}
-	}
-
-	/* One diamond per era on the rail; the current era's is solid and lit. */
-	.setup-node {
-		position: absolute;
-		top: 2px;
-		left: 2px;
-		width: 18px;
-		height: 18px;
-		rotate: 45deg;
-		background: var(--color-mblack);
-		border: 2px solid var(--color-carafe-light);
-	}
-	@media (min-width: 1024px) {
-		.setup-node {
-			left: 0;
-		}
-	}
-	.setup-node--now {
-		background: var(--color-cream);
-		border-color: var(--color-cream);
-		box-shadow: 0 0 14px hsl(33.3 39.3% 95.1% / 0.45);
 	}
 </style>
