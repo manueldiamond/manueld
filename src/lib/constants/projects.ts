@@ -108,11 +108,14 @@ export const projects: Project[] = [
 		technical_description:
 			'React single-page app with a NestJS API, deployed on Cloudflare Workers with D1. Role-based access, progress snapshots for charts over time, PDF reports and a fullscreen go-live view for review meetings.',
 		tags: ['Go-Live Tracker', 'Kanban Board', 'Sprints', 'Dependencies', 'Reporting'],
-		client: { name: 'Contract' },
-		clientLabel: 'Engagement',
+		client: { name: 'Elisha Mensah', url: 'https://github.com/EA-MENSAH' },
+		clientLabel: 'Company',
 		images: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => `/project-management/pm-${n}.webp`),
 		techstack: ['React', 'TypeScript', 'NestJS', 'Cloudflare Workers', 'D1'],
-		collaborators: [{ ...manuelDiamond, role: 'Fullstack Engineer' }]
+		collaborators: [
+			{ ...manuelDiamond, role: 'Fullstack Engineer' },
+			{ ...eaMensah, role: 'Project Owner' }
+		]
 	},
 	{
 		name: 'National Scale Project',
@@ -132,7 +135,11 @@ export const projects: Project[] = [
 		tags: ['Android', 'iOS', 'Location Based', 'Realtime Systems', 'Chat Systems'],
 		client: { name: 'Bridge and Ladder Synergy', url: 'https://bridgexng.com' },
 		clientLabel: 'Built for',
-		url: 'https://bridgexng.com',
+		url: 'https://bridgexng.com/download',
+		additionalLinks: [
+			{ url: 'https://apps.apple.com/app/bridgex/id6785179357', label: 'App Store' },
+			{ url: 'https://play.google.com/store/apps/details?id=com.bridgexng.mobile', label: 'Google Play' }
+		],
 		images: [
 			'/bridge/bridgex-home.webp',
 			'/bridge/create req.webp',
